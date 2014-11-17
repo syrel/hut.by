@@ -1,8 +1,16 @@
 /**
  * Created by aliaksei on 03/08/14.
  */
-define(['hutby/main/PagerViewHolder', 'hutby/lib/Utils', 'hutby/lib/WindowEvents', 'hutby/announcements/OnExpandFlat', 'hutby/common/Global', 'jquery', 'jquery.animo'],
-    function(PagerViewHolder, Utils, WindowEvents,OnExpandFlat, Global, $){
+define([
+    'hutby/main/PagerViewHolder',
+    'hutby/lib/Utils',
+    'hutby/lib/WindowEvents',
+    'hutby/announcements/OnFlatExpanded',
+    'hutby/common/Global',
+    'jquery',
+    'jquery.animo'
+],
+    function(PagerViewHolder, Utils, WindowEvents,OnFlatExpanded, Global, $){
 
     function Pager (catalog, prefix) {
         var _this = this;
@@ -172,7 +180,7 @@ define(['hutby/main/PagerViewHolder', 'hutby/lib/Utils', 'hutby/lib/WindowEvents
             holder.address().html(flats[currentIndex].getAddress());
             holder.address().click(function(e){
                 e.preventDefault();
-                catalog.announcer().announce(new OnExpandFlat(flats[currentIndex]));
+                catalog.announcer().announce(new OnFlatExpanded(flats[currentIndex]));
             });
 
             _this.swap();

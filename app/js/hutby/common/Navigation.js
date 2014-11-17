@@ -8,11 +8,11 @@ define([
     'hutby/category/CategoryPreview',
     'hutby/category/Category',
     'hutby/common/Global',
-    'hutby/announcements/OnExpandFlat',
+    'hutby/announcements/OnFlatExpanded',
     'hutby/lib/Utils',
     'hutby/lib/Dictionary',
     'hutby/lib/WindowEvents'
-], function($, Pager, CategoryPreview, Category, Global, OnExpandFlat, Utils, Dictionary, WindowEvents){
+], function($, Pager, CategoryPreview, Category, Global, OnFlatExpanded, Utils, Dictionary, WindowEvents){
 
     function Navigation(catalog) {
         var _this = this;
@@ -50,7 +50,7 @@ define([
             _this.showOffcanvas();
             _this.collapseAllAccordions();
             _this.makeOffcanvasFullWidth();
-            //_this.alignLinksCenter();
+            _this.alignLinksCenter();
             _this.disableOffcanvasExit();
             pager.show();
         };
@@ -198,7 +198,7 @@ define([
         /////////////////////////// A N N O U N C E M E N T S ///////////////////////
         /////////////////////////////////////////////////////////////////////////////
         _this.bindAnnouncements = function () {
-            catalog.announcer().onSendTo(OnExpandFlat, _this.onExpandFlat, _this);
+            catalog.announcer().onSendTo(OnFlatExpanded, _this.onExpandFlat, _this);
         };
 
         _this.onExpandFlat = function (ann) {
@@ -263,7 +263,7 @@ define([
             $.each(flats, function(index, flat){
                 html.append($('<li><a href="'+flat.getLink()+'">'+flat.getAddress()+'</a></li>').click(function(e){
                     _this.hideOffcanvas();
-                    catalog.announcer().announce(new OnExpandFlat(flat, true));
+                    catalog.announcer().announce(new OnFlatExpanded(flat, true));
                     e.preventDefault();
                 }));
             });

@@ -1,23 +1,28 @@
 /**
  * Created by aliaksei on 05/08/14.
  */
-define(['hutby/category/CategoryViewHolder', 'hutby/category/FlatDescription', 'hutby/lib/Dictionary','hutby/lib/Utils','hutby/common/Global', 'hutby/announcements/OnExpandFlat', 'jquery', 'jquery.animo','hutby/common/Catalog'],
-    function (CategoryViewHolder, FlatDescription, Dictionary, Utils, Global, OnExpandFlat, $) {
+define([
+    'hutby/category/CategoryViewHolder',
+    'hutby/category/FlatDescription',
+    'hutby/ui/HorizontalFlatList',
+    'hutby/lib/Dictionary',
+    'hutby/lib/Utils',
+    'hutby/common/Global',
+    'hutby/announcements/OnFlatExpanded',
+    'jquery',
+    'jquery.animo',
+    'hutby/common/Catalog'
+],
+    function (CategoryViewHolder, FlatDescription, HorizontalFlatList, Dictionary, Utils, Global, OnFlatExpanded, $) {
 
     function Category (catalog, prefix) {
         var _this = this;
 
-        var listShowEffect = 'moveInLeft';
-        var listShowSpeed = 0.4;
-        var flatLinkMaxWidth = 19;
-        var activeLinkID = '.active';
-
         var holder = new CategoryViewHolder(prefix);
-
-        var flatLinkDictionary;
 
         var currentRooms;
 
+        var flatList;
         var flatDescription;
 
         _this.createContainer = function () {
@@ -26,66 +31,36 @@ define(['hutby/category/CategoryViewHolder', 'hutby/category/FlatDescription', '
             }
         };
 
-        _this.createFlatList = function () {
-            if (Utils.isUndefined(holder.flatList())) {
-                if (Utils.isUndefined(holder.container())) _this.createContainer();
-                holder.container().append($(_this.buildFlatList()));
+        /**
+         * Removes flat list with animation or without, depending on passed isAnimated parameter.
+         * @param isAnimated
+         */
+        _this.removeFlatList = function(isAnimated) {
+            if (!Utils.isUndefined(flatList)) {
+                flatList.remove();
+                flatList = null;
             }
         };
 
-        _this.createFlatLinks = function (rooms, animate ,_callback) {
-            if (Utils.isUndefined(holder.flatList())) _this.createFlatList();
-            if (holder.flatList().length === 0) return;
 
-            holder.flatList().css('visibility','hidden');
-            holder.flatList().empty();
+        /**
+         * Adds flat list with animation or without. If list already exists removes it
+         * using removeFlatList method.
+         * @param isAnimated
+         */
+        _this.showFlatList = function (isAnimated) {
+            _this.removeFlatList(isAnimated);
+            flatList = new HorizontalFlatList(catalog.flats(_this.getCurrentRooms()));
+            _this.holder().container().prepend(flatList);
 
-            _this.setLastLinkInactive();
-            flatLinkDictionary = new Dictionary();
-
-            var flatLinkWidth = Math.min(Math.floor(100/catalog.flats(rooms).length),flatLinkMaxWidth);
-            $.each(catalog.flats(rooms), function(index, flat) {
-                var link = $(_this.buildFlatLink(flat));
-
-                flatLinkDictionary.put(flat,link);
-
-                link.css('width',flatLinkWidth+'%').click(function(e){
-                    e.preventDefault();
-                    catalog.announcer().announce(new OnExpandFlat(flat, true));
-                });
-
-                holder.flatList().append(link);
-            });
-
-            /*
-             Only after all images are loaded
-             */
-            Utils.attachOnLoadListener(holder.flatList().find('img'), function() {
-                holder.flatList().css('visibility','visible');
-
-                if (animate) {
-                    holder.flatList().animo({ animation: listShowEffect, duration: listShowSpeed }, function() {
-                        Utils.call(_callback);
-                    });
-                }
-
-                else Utils.call(_callback);
-            }, function(element){
-                element.animo({ animation: 'fadeIn', duration: 0.5 });
-            });
+            flatList.open(isAnimated);
         };
+
 
         _this.buildContainer = function () {
             return '<div id="'+holder.containerID().slice(1)+'" class="hutby-category-container"></div>'
         };
 
-        _this.buildFlatList = function () {
-            return '<div class="hutby-category-flat-list"><div id="'+holder.flatListID().slice(1)+'"></div></div>';
-        };
-
-        _this.buildFlatLink = function (_flat) {
-            return '<a href="'+_flat.getLink()+'"><img src="'+_flat.getPhoto(0)+'"><p>'+_flat.getAddress()+'</p></a>';
-        };
 
         _this.holder = function () {
             return holder;
@@ -95,29 +70,20 @@ define(['hutby/category/CategoryViewHolder', 'hutby/category/FlatDescription', '
             if (currentRooms === rooms) return;
             openFlat = Utils.isUndefined(openFlat) ? false : openFlat;
 
-            _this.createFlatLinks(rooms, animate);
             currentRooms = rooms;
+            _this.showFlatList(animate);
 
-            if (openFlat) catalog.announcer().announce(new OnExpandFlat(catalog.flats(rooms)[0], animate, false));
+            if (openFlat) {
+                catalog.announcer().announce(new OnFlatExpanded(catalog.flats(rooms)[0], animate, false));
+            }
             else _this.removeFlat(animate);
         };
 
         _this.removeFlat = function (animate, _callback) {
-            _this.setLastLinkInactive();
             if (!Utils.isUndefined(flatDescription)) {
                 flatDescription.destroy(animate, _callback);
             }
             else Utils.call(_callback);
-        };
-
-        _this.setLastLinkInactive = function(){
-            if (!Utils.isUndefined(holder.flatList())){
-                holder.flatList().find(activeLinkID).removeClass(activeLinkID.slice(1));
-            }
-        };
-
-        _this.setLinkActive = function(flat) {
-            flatLinkDictionary.get(flat).addClass(activeLinkID.slice(1));
         };
 
         _this.expandFlat = function (flat, animate, _callback) {
@@ -125,8 +91,6 @@ define(['hutby/category/CategoryViewHolder', 'hutby/category/FlatDescription', '
             _this.removeFlat(animate, function(){
                 flatDescription = new FlatDescription(_this, flat, prefix+'description-');
                 flatDescription.show(animate, _callback);
-                _this.setLastLinkInactive();
-                _this.setLinkActive(flat);
             });
         };
 
@@ -137,7 +101,9 @@ define(['hutby/category/CategoryViewHolder', 'hutby/category/FlatDescription', '
         _this.getCurrentRooms = function () {
             return currentRooms;
         };
-    };
+
+        _this.createContainer();
+    }
 
     return Category;
 });

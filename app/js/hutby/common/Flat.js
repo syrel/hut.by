@@ -1,7 +1,12 @@
 /**
  * Created by aliaksei on 03/08/14.
  */
-define(['hutby/lib/Dictionary','hutby/lib/Utils'], function(Dictionary, Utils) {
+define([
+    'hutby/lib/Dictionary',
+    'hutby/lib/Announcer',
+    'hutby/announcements/OnFlatExpanded',
+    'hutby/lib/Utils'
+], function(Dictionary,Announcer, OnFlatExpanded, Utils) {
 
     function Flat() {
 
@@ -13,7 +18,9 @@ define(['hutby/lib/Dictionary','hutby/lib/Utils'], function(Dictionary, Utils) {
         var address;
         var rooms;
 
-        var overview = new function(){
+        var announcer = new Announcer();
+
+        var overview = new function() {
             var _this = this;
 
             var title = 'Студия в центре';
@@ -124,6 +131,14 @@ define(['hutby/lib/Dictionary','hutby/lib/Utils'], function(Dictionary, Utils) {
 
         _this.getSpecifications = function(){
             return specifications;
+        };
+
+        _this.announcer = function () {
+            return announcer;
+        };
+
+        _this.expand = function (isAnimated) {
+            _this.announcer().announce(new OnFlatExpanded(_this, isAnimated, true));
         };
     }
 

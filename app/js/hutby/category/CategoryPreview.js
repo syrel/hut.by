@@ -1,8 +1,16 @@
 /**
  * Created by aliaksei on 03/08/14.
  */
-define(['hutby/category/CategoryPreviewViewHolder', 'hutby/lib/Utils', 'hutby/common/Global', 'hutby/announcements/OnExpandFlat', 'jquery', 'jquery.jscrollpane', 'jquery.animo'],
-    function (CategoryPreviewViewHolder, Utils, Global, OnExpandFlat, $) {
+define([
+    'hutby/category/CategoryPreviewViewHolder',
+    'hutby/lib/Utils',
+    'hutby/common/Global',
+    'hutby/announcements/OnFlatExpanded',
+    'jquery',
+    'jquery.jscrollpane',
+    'jquery.animo'
+],
+    function (CategoryPreviewViewHolder, Utils, Global, OnFlatExpanded, $) {
     function debug(msg) {
         //console.log(msg);
     }
@@ -147,7 +155,7 @@ define(['hutby/category/CategoryPreviewViewHolder', 'hutby/lib/Utils', 'hutby/co
             $.each(_flats, function(index, flat){
                 holder.scrollPane().append($(_this.buildLink(index,flat)).click(function(e){
                     e.preventDefault();
-                    catalog.announcer().announce(new OnExpandFlat(flat));
+                    catalog.announcer().announce(new OnFlatExpanded(flat));
                 }));
             });
 
@@ -188,7 +196,7 @@ define(['hutby/category/CategoryPreviewViewHolder', 'hutby/lib/Utils', 'hutby/co
 
         _this.cancelShowing = function(){
             clearTimeout(showingTimer);
-        }
+        };
 
         _this.isBoxCreated = function() {
             return !Utils.isUndefined(holder.container());

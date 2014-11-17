@@ -4,11 +4,13 @@
 define ([
     'hutby/common/Flat',
     'hutby/lib/Dictionary',
+    'hutby/announcements/OnFlatExpanded',
     'hutby/lib/Announcer'
 
 ], function(
     Flat,
     Dictionary,
+    OnFlatExpanded,
     Announcer
 ){
 
@@ -25,6 +27,7 @@ define ([
             }
 
             flats.get(flat.getRooms()).push(flat);
+            flat.announcer().onSendTo(OnFlatExpanded, _this.oFlatExpanded, _this);
             count++;
         };
 
@@ -42,6 +45,10 @@ define ([
 
         _this.possibleRooms = function () {
             return flats.keys();
+        };
+
+        _this.oFlatExpanded = function(ann) {
+            _this.announcer().announce(ann);
         };
 
         _this.announcer = function(){

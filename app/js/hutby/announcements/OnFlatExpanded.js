@@ -3,7 +3,7 @@
  */
 
 define([], function(){
-    function OnExpandFlat(flat, animation, switchCategory){
+    function OnFlatExpanded(flat, animation, switchCategory){
         var _this = this;
 
         animation = (typeof animation === 'undefined' || animation === null) ? false : animation;
@@ -21,5 +21,5 @@ define([], function(){
             return switchCategory;
         };
     }
-    return OnExpandFlat;
+    return OnFlatExpanded;
 });
