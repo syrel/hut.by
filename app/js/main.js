@@ -25,6 +25,7 @@ define(['hutby/common/Navigation', 'hutby/common/Flat', 'hutby/common/Catalog', 
     var catalog = new Catalog();
 
     var flat = new Flat();
+    flat.setRooms(1);
     flat.addPhoto("img/deluxe_room.jpeg");
     flat.addPhoto("img/image4.jpg");
     flat.addPhoto("img/zgrada_zaton47.jpg");
@@ -33,15 +34,17 @@ define(['hutby/common/Navigation', 'hutby/common/Flat', 'hutby/common/Catalog', 
     flat.addPhoto("img/image4.jpg");
     flat.setAddress('Сурганова 90');
     flat.setCost('60$');
-    catalog.addOneRoomFlat(flat);
+    catalog.addFlat(flat);
 
     flat = new Flat();
+    flat.setRooms(1);
     flat.addPhoto("img/zgrada_zaton47.jpg");
     flat.setAddress('пр. Независимости 75');
     flat.setCost('50$');
-    catalog.addOneRoomFlat(flat);
+    catalog.addFlat(flat);
 
     flat = new Flat();
+    flat.setRooms(1);
     flat.addPhoto("img/deluxe_room.jpeg");
     flat.addPhoto("img/image4.jpg");
     flat.addPhoto("img/zgrada_zaton47.jpg");
@@ -52,15 +55,17 @@ define(['hutby/common/Navigation', 'hutby/common/Flat', 'hutby/common/Catalog', 
     flat.addPhoto("img/img3.jpg");
     flat.setAddress('пр. Ботаническая 12');
     flat.setCost('70$');
-    catalog.addOneRoomFlat(flat);
+    catalog.addFlat(flat);
 
     flat = new Flat();
+    flat.setRooms(1);
     flat.addPhoto("img/image4.jpg");
     flat.setAddress('Кирова 77');
     flat.setCost('60$');
-    catalog.addOneRoomFlat(flat);
+    catalog.addFlat(flat);
 
     flat = new Flat();
+    flat.setRooms(1);
     flat.addPhoto("http://img.hut.by/pictures/855900cce566a3fe5962c579779f71b696.jpg");
     flat.addPhoto("http://img.hut.by/pictures/56488cdf92ef1d4d44ca3b126f7e8d3949.jpg");
     flat.addPhoto("http://img.hut.by/pictures/1726b2df7c05a9a441307e9f69a7b5ba91.jpg");
@@ -90,14 +95,15 @@ define(['hutby/common/Navigation', 'hutby/common/Flat', 'hutby/common/Catalog', 
     flat.addSpecification('locations7', new Flat.Specification('Расположение','Центр города'));
     flat.addSpecification('metro-stations7', new Flat.Specification('Рядом метро','Ст. метро Октябрьская (2 мин. пешком)'));
 
-    catalog.addOneRoomFlat(flat);
+    catalog.addFlat(flat);
 
     flat = new Flat();
+    flat.setRooms(2);
     flat.addPhoto("img/img3.jpg");
     flat.setAddress('пр. Независимости 15');
     flat.setCost('90$');
 
-    catalog.addTwoRoomFlat(flat);
+    catalog.addFlat(flat);
 
     var navigation = new Navigation(catalog);
     navigation.initializeEvents();

@@ -10,8 +10,9 @@ define([
     'hutby/common/Global',
     'hutby/announcements/OnExpandFlat',
     'hutby/lib/Utils',
+    'hutby/lib/Dictionary',
     'hutby/lib/WindowEvents'
-], function($, Pager, CategoryPreview, Category, Global, OnExpandFlat, Utils, WindowEvents){
+], function($, Pager, CategoryPreview, Category, Global, OnExpandFlat, Utils, Dictionary, WindowEvents){
 
     function Navigation(catalog) {
         var _this = this;
@@ -197,7 +198,7 @@ define([
         /////////////////////////// A N N O U N C E M E N T S ///////////////////////
         /////////////////////////////////////////////////////////////////////////////
         _this.bindAnnouncements = function () {
-            catalog.announcer().onSendTo(OnExpandFlat, _this.onExpandFlat);
+            catalog.announcer().onSendTo(OnExpandFlat, _this.onExpandFlat, _this);
         };
 
         _this.onExpandFlat = function (ann) {
@@ -243,7 +244,8 @@ define([
 
         _this.makeAccordionFLatActive = function (flat) {
             var link = _this.getCategoryLink(flat.getRooms());
-            $($('#'+Global.getData(link).id).find('a')[flat.getIndex()]).addClass('active-flat');
+            console.log($('#'+Global.getData(link).id).find('a'));
+            $($('#'+Global.getData(link).id).find('a')[Dictionary._indexInArray(catalog.flats(flat.getRooms()),flat)]).addClass('active-flat');
         };
 
         _this.makeAllAccordionFlatInactive = function () {
@@ -256,7 +258,7 @@ define([
         };
 
         _this.buildFlatLinks = function(rooms) {
-            var flats = catalog.roomFlats(rooms);
+            var flats = catalog.flats(rooms);
             var html = $('<ul id="'+Global.getData(_this.getCategoryLink(rooms)).id+'" class="content"></ul>');
             $.each(flats, function(index, flat){
                 html.append($('<li><a href="'+flat.getLink()+'">'+flat.getAddress()+'</a></li>').click(function(e){

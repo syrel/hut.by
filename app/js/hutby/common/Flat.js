@@ -9,9 +9,9 @@ define(['hutby/lib/Dictionary','hutby/lib/Utils'], function(Dictionary, Utils) {
 
         var photos = [];
         var cost;
+        var costDescription = 'от  10 суток, $60';
         var address;
         var rooms;
-        var index;
 
         var overview = new function(){
             var _this = this;
@@ -19,6 +19,7 @@ define(['hutby/lib/Dictionary','hutby/lib/Utils'], function(Dictionary, Utils) {
             var title = 'Студия в центре';
             var article = 'Квартира-студия — тип жилого помещения, основным отличием которого является отсутствие капитальных стен или перегородок между комнатой и кухнейТакой тип жилья пришел в Россию в начале 1990-х годов с Запада. Архитектурно-планировочное решение жилья как квартиры-студии было создано Людвигом Мис ван дер Роэ в США в 1920-х годах. Пространство, полностью свободное от внутренних стен, стало очень популярно в Америке и Европе, особенно, в среде творческой молодёжи.';
 
+            var description = ['Интернет (Wi-Fi)', 'Отчетные документы'];
 
             _this.getTitle = function() {
                 return title;
@@ -34,6 +35,14 @@ define(['hutby/lib/Dictionary','hutby/lib/Utils'], function(Dictionary, Utils) {
 
             _this.setArticle = function(_article) {
                 article = _article;
+            };
+
+            _this.getDescription = function () {
+                return description;
+            };
+
+            _this.setDescription = function (_description) {
+                description = _description;
             };
         };
 
@@ -60,6 +69,14 @@ define(['hutby/lib/Dictionary','hutby/lib/Utils'], function(Dictionary, Utils) {
             cost = _cost;
         };
 
+        _this.getCostDescription = function () {
+            return costDescription;
+        };
+
+        _this.setCostDescription = function (_costDescription) {
+            costDescription = _costDescription;
+        };
+
         _this.getAddress = function() {
             return address;
         };
@@ -70,14 +87,6 @@ define(['hutby/lib/Dictionary','hutby/lib/Utils'], function(Dictionary, Utils) {
 
         _this.getLink = function() {
             return '#';
-        };
-
-        _this.setIndex = function (_index) {
-            index = _index;
-        };
-
-        _this.getIndex = function () {
-            return index;
         };
 
         _this.getTitle = function () {

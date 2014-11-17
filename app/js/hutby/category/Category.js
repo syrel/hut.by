@@ -43,11 +43,11 @@ define(['hutby/category/CategoryViewHolder', 'hutby/category/FlatDescription', '
             _this.setLastLinkInactive();
             flatLinkDictionary = new Dictionary();
 
-            var flatLinkWidth = Math.min(Math.floor(100/catalog.roomFlats(rooms).length),flatLinkMaxWidth);
-            $.each(catalog.roomFlats(rooms), function(index, flat) {
+            var flatLinkWidth = Math.min(Math.floor(100/catalog.flats(rooms).length),flatLinkMaxWidth);
+            $.each(catalog.flats(rooms), function(index, flat) {
                 var link = $(_this.buildFlatLink(flat));
 
-                flatLinkDictionary.put(index,link);
+                flatLinkDictionary.put(flat,link);
 
                 link.css('width',flatLinkWidth+'%').click(function(e){
                     e.preventDefault();
@@ -98,7 +98,7 @@ define(['hutby/category/CategoryViewHolder', 'hutby/category/FlatDescription', '
             _this.createFlatLinks(rooms, animate);
             currentRooms = rooms;
 
-            if (openFlat) catalog.announcer().announce(new OnExpandFlat(catalog.roomFlats(rooms)[0], animate, false));
+            if (openFlat) catalog.announcer().announce(new OnExpandFlat(catalog.flats(rooms)[0], animate, false));
             else _this.removeFlat(animate);
         };
 
@@ -117,7 +117,7 @@ define(['hutby/category/CategoryViewHolder', 'hutby/category/FlatDescription', '
         };
 
         _this.setLinkActive = function(flat) {
-            flatLinkDictionary.get(flat.getIndex()).addClass(activeLinkID.slice(1));
+            flatLinkDictionary.get(flat).addClass(activeLinkID.slice(1));
         };
 
         _this.expandFlat = function (flat, animate, _callback) {

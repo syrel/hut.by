@@ -243,7 +243,7 @@ define(['hutby/category/CategoryPreviewViewHolder', 'hutby/lib/Utils', 'hutby/co
         _this.hoverAction = function(_rooms, _anchor) {
             if (!Global.isPageContentVisible()) return;
             _this.preventFromHiding();
-            _this.show(catalog.roomFlats(_rooms), _anchor);
+            _this.show(catalog.flats(_rooms), _anchor);
         };
 
         _this.unhoverAction = function(_rooms, _anchor) {
