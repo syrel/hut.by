@@ -1,0 +1,168 @@
+$browser-prefixes: ('-webkit-', '-moz-', '-ms-', '-o-', '');
+$webkit : 1;
+$moz : 2;
+$ms : 3;
+$o : 4;
+$default : 5;
+
+$__variable: null;
+
+@mixin setArgument($variable){
+  $__variable : $variable;
+}
+
+@function getArgument(){
+  @return $__variable;
+}
+
+@function prefix($browser){
+  @return nth($browser-prefixes, $browser);
+}
+
+
+@mixin browser-key-value($key, $value, $browser) {
+  #{prefix($browser)}#{$key}: $value;
+}
+
+@mixin all-browser-key-value($key, $value) {
+  @for $i from 0 to (length($browser-prefixes)) {
+    @include browser-key-value($key, $value, $i+1);
+  }
+}
+
+%acceleration-fix {
+  @include all-browser-key-value('backface-visibility', hidden);
+  @include all-browser-key-value('perspective', 1000);
+}
+
+@mixin keyframes($name, $browser) {
+  @if $browser == $webkit {
+    @-webkit-keyframes #{$name} {
+      @content;
+    }
+  }
+  @else if $browser == $moz {
+    @-moz-keyframes #{$name} {
+      @content;
+    }
+  }
+  @else if $browser == $ms {
+    @-ms-keyframes #{$name} {
+      @content;
+    }
+  }
+  @else if $browser == $o {
+    @-o-keyframes #{$name} {
+      @content;
+    }
+  }
+  @else if $browser == $default {
+    @keyframes #{$name} {
+      @content;
+    }
+  }
+}
+
+@mixin animation-name($name){
+  .animated.#{$name} {
+    @extend %acceleration-fix;
+    @include all-browser-key-value('animation-name', $name);
+  }
+}
+
+@mixin transform($value, $browser) {
+  @include browser-key-value('transform', $value, $browser);
+}
+
+@mixin backface-visibility($value, $browser) {
+  @include browser-key-value('backface-visibility', $value, $browser);
+}
+
+@mixin perspective($value, $browser){
+  @include browser-key-value('perspective', $value, $browser);
+}
+
+@mixin opacity($value, $browser) {
+  opacity: $value;
+}
+
+@mixin animation($name){
+  @for $browser from 1 to (length($browser-prefixes) + 1) {
+    @include keyframes($name, $browser) {
+      @include setArgument($browser);
+      @content;
+    }
+  }
+  @include animation-name($name);
+}
+
+///////////////////////////////////////////////////////////////////////////
+////////////////////////// A N I M A T I O N S ////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+@include animation(fadeOut) {
+  0% {
+    @include transform(translateZ(0), getArgument());
+    @include opacity(1, getArgument());
+  }
+  100% {
+    @include transform(translateZ(0), getArgument());
+    @include opacity(0, getArgument());
+  }
+}
+
+@include animation(fadeIn) {
+  0% {
+    @include transform(translateZ(0), getArgument());
+    @include opacity(0, getArgument());
+  }
+  100% {
+    @include transform(translateZ(0), getArgument());
+    @include opacity(1, getArgument());
+  }
+}
+
+@include animation(fadeInLeftBig) {
+  0% {
+    @include transform(translateZ(0), getArgument());
+    @include opacity(0, getArgument());
+    @include transform(translateX(-2000px), getArgument());
+  }
+  100% {
+    @include transform(translateZ(0), getArgument());
+    @include opacity(1, getArgument());
+    @include transform(translateX(0), getArgument());
+  }
+}
+
+@include animation(moveInLeft) {
+  0% {
+    @include transform(translateZ(0), getArgument());
+    @include transform(translateX(-2000px), getArgument());
+  }
+  100% {
+    @include transform(translateZ(0), getArgument());
+    @include transform(translateX(0), getArgument());
+  }
+}
+
+@include animation(zoomInLeft) {
+  0% {
+    @include transform(translateZ(0), getArgument());
+    @include transform(scale(.95, .95) translate(-2000px, 0), getArgument());
+  }
+  60% {
+    @include transform(translateZ(0), getArgument());
+    @include transform(scale(.95, .95) translate(0, 0), getArgument());
+  }
+}
+
+@include animation(zoomOutLeft) {
+  40% {
+    @include transform(translateZ(0), getArgument());
+    @include transform(scale(.95, .95) translate(0, 0), getArgument());
+  }
+  100% {
+    @include transform(translateZ(0), getArgument());
+    @include transform(scale(.95, .95) translate(-2000px, 0), getArgument());
+  }
+}

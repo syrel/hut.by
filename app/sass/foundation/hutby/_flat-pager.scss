@@ -1,0 +1,133 @@
+@import "../components/global";
+
+$flat-pager-arrow-left-image: 'flat-pager-arrow-left.png';
+$flat-pager-arrow-right-image: 'flat-pager-arrow-right.png';
+$flat-pager-arrow-width: 5em;
+$flat-pager-arrow-background-color: transparent;
+$flat-pager-arrow-hover-background-color: rgba(255, 255, 255, 0.3);
+$flat-pager-arrow-transition-speed: 0.1s;
+
+$flat-pager-slogan-container-width: 8em;
+
+$flat-pager-phone-image: 'phone-icon.png';
+
+$flat-pager-short-info-transition-speed: 0.1s;
+$flat-pager-short-info-border-height: 0.2em;
+$flat-pager-short-info-border: $flat-pager-short-info-border-height solid transparent;
+
+@mixin flat-pager-arrow {
+  top: 0px;
+  width: $flat-pager-arrow-width;
+  z-index: $flat-pager-arrow-z-index;
+  background-color: $flat-pager-arrow-background-color;
+}
+
+.#{$prefix}-flat-pager-container {
+  @extend %absolute, %full-size;
+
+  display: none;
+
+  z-index: $flat-pager-container-z-index;
+}
+
+///////////////////////////////////////////////////////////////////////////
+/////////////////////////////// P H O T O /////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+.#{$prefix}-flat-pager-photo {
+  @extend %absolute, %full-size, %margin-center, %block, %-ms-transparency;
+  z-index: $flat-pager-photo-z-index;
+
+  @include flexible-background(left);
+}
+
+.#{$prefix}-flat-pager-photo.active {
+  z-index: $flat-pager-photo-fadeIn-z-index;
+}
+
+///////////////////////////////////////////////////////////////////////////
+////////////////////////// S H O R T   I N F O ////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+.#{$prefix}-flat-pager-short-info-container {
+  @extend %absolute, .#{$prefix}-floating-info;
+
+  z-index: $flat-pager-floating-z-index;
+  right: 0;
+}
+
+.#{$prefix}-flat-pager-short-info-element {
+  @extend %block, %full-height;
+  @include border-color-transition($flat-pager-short-info-transition-speed);
+
+  border-top: $flat-pager-short-info-border;
+  border-bottom: $flat-pager-short-info-border;
+
+  &:hover, &:active {
+    border-bottom-color: #00bcd4;
+  }
+}
+
+.#{$prefix}-flat-pager-short-info-phone {
+  @extend .#{$prefix}-flat-pager-short-info-element;
+  padding-left: 2em;
+  padding-right: 2em;
+  background-image: url($css-images-path + $flat-pager-phone-image);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: 35%;
+  float: left;
+}
+
+.#{$prefix}-flat-pager-short-info-address {
+  @extend .#{$prefix}-flat-pager-short-info-element;
+  float: right;
+  padding-left: 0em;
+  padding-right: 1em;
+  line-height: $floating-info-height - 2 * $flat-pager-short-info-border-height;
+}
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////////////////// S L O G A N //////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+.#{$prefix}-flat-pager-slogan-container {
+  @extend %absolute;
+
+  z-index: $flat-pager-floating-z-index;
+  width: $flat-pager-slogan-container-width;
+
+  p {
+    @extend .#{$prefix}-floating-info;
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////////////////// A R R O W S //////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+.#{$prefix}-flat-pager-arrow-left {
+  @extend %absolute, %full-height;
+  @include background-color-transition($flat-pager-arrow-transition-speed);
+  @include flat-pager-arrow;
+
+  background: url($css-images-path + $flat-pager-arrow-left-image) no-repeat center;
+  left: 0px;
+}
+
+.#{$prefix}-flat-pager-arrow-left:hover {
+  background-color: $flat-pager-arrow-hover-background-color;
+}
+
+.#{$prefix}-flat-pager-arrow-right {
+  @extend %absolute, %full-height;
+  @include background-color-transition($flat-pager-arrow-transition-speed);
+  @include flat-pager-arrow;
+
+  background: url($css-images-path + $flat-pager-arrow-right-image) no-repeat center;
+  right: 0px;
+}
+
+.#{$prefix}-flat-pager-arrow-right:hover {
+  background-color: $flat-pager-arrow-hover-background-color;
+}

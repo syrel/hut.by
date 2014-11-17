@@ -1,0 +1,141 @@
+@import "../components/global";
+
+// Create presentational classes for grid
+//
+// $size - Name of class to use, i.e. "large" will generate .large-1, .large-2, etc.
+$prefix: 'hutby';
+
+$floating-info-height: 2.5em;
+$floating-info-font-size: $floating-info-height / 2.5;
+$floating-info-margin-top: $floating-info-height / 5;
+
+$flat-category-container-z-index: 0;
+$flat-pager-container-z-index: $flat-category-container-z-index + 1;
+$flat-pager-photo-z-index: $flat-pager-container-z-index;
+$flat-pager-photo-fadeIn-z-index: $flat-pager-photo-z-index + 1;
+$flat-pager-arrow-z-index: $flat-pager-photo-z-index + 2;
+$flat-pager-floating-z-index: $flat-pager-photo-z-index + 3;
+
+$flat-pager-slogan-count: 3;
+
+$hutby-active-shadow-color: rgb(28, 217, 255);
+
+@mixin hutby-html-classes($size) {
+
+  .#{$size}-position-absolute {
+    position: absolute;
+  }
+
+  .#{$size}-position-static {
+    position: static;
+  }
+}
+
+@mixin flexible-background($position) {
+  background-position: $position;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@mixin border-radius($size){
+  -webkit-border-radius: $size;
+  -moz-border-radius: $size;
+  -ms-border-radius: $size;
+  -o-border-radius: $size;
+  border-radius: $size;
+}
+
+@mixin box-shadow-active($color) {
+  -webkit-box-shadow: 0px 0px 30px 0px $color;
+  -moz-box-shadow:    0px 0px 30px 0px $color;
+  -ms-box-shadow:    0px 0px 30px 0px $color;
+  -o-box-shadow:    0px 0px 30px 0px $color;
+  box-shadow:         0px 0px 30px 0px $color;
+}
+
+@mixin background-color-transition($speed) {
+  -webkit-transition: background-color $speed ease-out;
+  -moz-transition:    background-color $speed ease-out;
+  -ms-transition:     background-color $speed ease-out;
+  -o-transition:      background-color $speed ease-out;
+  transition:         background-color $speed ease-out;
+}
+
+@mixin border-color-transition($speed) {
+  -webkit-transition: border-color $speed ease-out;
+  -moz-transition:    border-color $speed ease-out;
+  -ms-transition:     border-color $speed ease-out;
+  -o-transition:      border-color $speed ease-out;
+  transition:         border-color $speed ease-out;
+}
+
+@mixin max-height-transition($speed) {
+  -webkit-transition: max-height $speed ease-out;
+  -moz-transition:    max-height $speed ease-out;
+  -ms-transition:     max-height $speed ease-out;
+  -o-transition:      max-height $speed ease-out;
+  transition:         max-height $speed ease-out;
+}
+
+@mixin box-shadow() {
+  -webkit-box-shadow: 7px 7px 30px 0px rgba(50, 50, 50, 0.68);
+  -moz-box-shadow:    7px 7px 30px 0px rgba(50, 50, 50, 0.68);
+  box-shadow:         7px 7px 30px 0px rgba(50, 50, 50, 0.68);
+}
+
+%full-width {
+  width: 100%;
+}
+
+%full-height {
+  height: 100%;
+}
+
+%absolute {
+  position: absolute;
+}
+
+%relative {
+  position: relative;
+}
+
+%margin-center {
+  margin: 0 auto;
+}
+
+%block {
+  display: block;
+}
+
+%none {
+  display: none;
+}
+
+%table {
+  display: table;
+}
+
+%inline-block {
+  display: inline-block;
+}
+
+%full-size {
+  @extend %full-width, %full-height;
+}
+
+%full-page {
+  @extend %full-size;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+%-ms-transparency {
+  background-color: transparent;
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)"; /* IE8 */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF);   /* IE6 & 7 */
+  zoom: 1;
+}
+
+%body-bg {
+  background: $body-bg;
+}

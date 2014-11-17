@@ -1,0 +1,87 @@
+@import "../components/global";
+
+$flat-category-preview-box-padding-size: 0.6em;
+$flat-category-preview-box-width: 15em;
+$flat-category-preview-box-margin-left: 1.5em;
+$flat-category-preview-box-z-index: $flat-pager-floating-z-index;
+$flat-category-preview-box-max-height: 70vh;
+$flat-category-preview-box-margin-top: $flat-pager-slogan-count * ($floating-info-height + $floating-info-margin-top) + $flat-category-preview-box-margin-left;
+$flat-category-preview-box-background-color: $body-bg-color;
+$flat-category-preview-box-triangle-size: $flat-category-preview-box-margin-left / 2;
+
+$flat-category-preview-box-info-container-height: 1.5em;
+$flat-category-preview-box-info-address-font-size: $flat-category-preview-box-info-container-height / 1.667;
+$flat-category-preview-box-info-address-background-color: rgba(0, 0, 0, 0.68);
+$flat-category-preview-box-info-cost-font-size: $flat-category-preview-box-info-container-height / 1.5;
+$flat-category-preview-box-info-cost-padding: 0.4em;
+$flat-category-preview-box-info-cost-background-color: #ec3232;
+
+.#{$prefix}-flat-category-preview-box-container {
+  @extend %absolute;
+  @include box-shadow;
+
+  z-index: $flat-category-preview-box-z-index;
+  margin-left: $flat-category-preview-box-margin-left;
+  top: $flat-category-preview-box-margin-top;
+  width: $flat-category-preview-box-width;
+  border: $flat-category-preview-box-padding-size solid $flat-category-preview-box-background-color;
+  background-color: $flat-category-preview-box-background-color;
+}
+
+.#{$prefix}-flat-category-preview-box-container:after {
+  right: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-right-color: $flat-category-preview-box-background-color;
+  border-width: $flat-category-preview-box-triangle-size;
+  margin-top: -$flat-category-preview-box-triangle-size;
+  margin-right: $flat-category-preview-box-padding-size - 0.05em;
+}
+
+.#{$prefix}-flat-category-preview-box-scrollpane {
+  @extend %full-size, %relative;
+  overflow-y: hidden;
+  max-height: $flat-category-preview-box-max-height;
+}
+
+.#{$prefix}-flat-category-preview-box-link {
+  @extend %block, %relative;
+  margin-bottom: $flat-category-preview-box-padding-size;
+}
+
+.#{$prefix}-flat-category-preview-box-link:last-child {
+  margin-bottom: 0.0em !important;
+}
+
+.#{$prefix}-flat-category-preview-box-link img {
+  @extend %full-width;
+}
+
+.#{$prefix}-flat-category-preview-box-link-info-container {
+  @extend %absolute, %full-width;
+  left: 0;
+  bottom: 0;
+  height: $flat-category-preview-box-info-container-height;
+  line-height: $flat-category-preview-box-info-container-height;
+}
+
+.#{$prefix}-flat-category-preview-box-link-info-address {
+  @extend %full-height;
+  background-color: $flat-category-preview-box-info-address-background-color;
+  font-size: $flat-category-preview-box-info-address-font-size;
+}
+
+.#{$prefix}-flat-category-preview-box-link-info-cost {
+  @extend %full-height;
+  float: right;
+  background-color: $flat-category-preview-box-info-cost-background-color;
+  padding-right: $flat-category-preview-box-info-cost-padding;
+  padding-left: $flat-category-preview-box-info-cost-padding;
+  font-size: $flat-category-preview-box-info-cost-font-size;
+  text-shadow: none;
+}
+

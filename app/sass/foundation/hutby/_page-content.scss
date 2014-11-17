@@ -1,0 +1,119 @@
+@import "../components/global";
+@import "../components/offcanvas";
+
+$page-content-background-image: 'bg-grey-radial.jpg';
+
+.#{$prefix}-page {
+  @extend %full-page;
+}
+
+.#{$prefix}-page-content-wrapper {
+  @extend %full-size;
+  //overflow: hidden;
+  padding-left: $side-nav-off-canvas-width;
+}
+
+.#{$prefix}-page-content {
+  @extend %full-size, %relative;
+  //overflow: hidden;
+
+  background-image: url($css-images-path + $page-content-background-image);
+  //background-size: cover;
+}
+
+.#{$prefix}-floating-info {
+  @extend %body-bg;
+  height: $floating-info-height;
+  line-height: $floating-info-height;
+  font-size: $floating-info-font-size;
+  margin-top: $floating-info-margin-top;
+  margin-bottom: 0;
+}
+
+.left-off-canvas-menu-full-width {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+@media #{$small-up} {
+  .#{$prefix}-page-content {
+    background: $body-bg-solid;
+  }
+
+  .#{$prefix}-page-content-wrapper {
+    padding-left: 0;
+  }
+
+  .left-off-canvas-menu {
+    width: 80%;
+    max-width: $side-nav-off-canvas-width;
+    margin-top: $tabbar-height;
+    padding-bottom: $tabbar-height;
+  }
+
+  .#{$prefix}-sidenav-footer-position-wrapper {
+    margin: 0 auto (-($footer-height + $tabbar-height));
+    padding-top: 1.5em;
+  }
+
+  .#{$prefix}-sidenav-footer-position-helper {
+    height: ($footer-height + $tabbar-height);
+  }
+
+  .#{$prefix}-sidenav-footer {
+    margin-bottom: $tabbar-height;
+  }
+
+  .#{$prefix}-sidenav {
+    background: $body-bg-solid;
+  }
+
+  .#{$prefix}-sidenav-header-link {
+    display: none;
+  }
+
+  .exit-off-canvas {
+    display: block;
+  }
+}
+
+@media #{$medium-up} {
+  .#{$prefix}-page-content {
+    background-image: url($css-images-path + $page-content-background-image);
+  }
+
+  .#{$prefix}-page-content-wrapper {
+    padding-left: $side-nav-off-canvas-width;
+  }
+
+  .left-off-canvas-menu {
+    width: $side-nav-off-canvas-width;
+    margin-top: 0;
+  }
+
+  .#{$prefix}-sidenav-footer-position-wrapper {
+    margin: 0 auto (-$footer-height);
+    padding-top: 0;
+  }
+
+  .#{$prefix}-sidenav-footer-position-helper {
+    height: $tabbar-height;
+  }
+
+  .#{$prefix}-sidenav-footer {
+    margin-bottom: 0;
+  }
+
+  .#{$prefix}-sidenav {
+    background: $body-bg;
+  }
+
+  .#{$prefix}-sidenav-header-link {
+    display: block;
+  }
+
+  .exit-off-canvas {
+    display: none;
+    visibility: hidden;
+  }
+}

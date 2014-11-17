@@ -1,0 +1,169 @@
+@import "../components/global";
+
+$header-link-font-family: 'Dosis', sans-serif;
+$header-link-font-size: rem-calc(64);
+$header-middle-text-size: 11;
+$header-middle-margin: 1rem;
+
+$horizontal-line-padding: 0.5rem;
+$horizontal-line-width: 90%;
+$horizontal-line-color: #555555;
+
+$footer-link-height: rem-calc(45);
+$footer-link-count: 2;
+$footer-padding-height: rem-calc(24);
+$footer-height: $footer-link-count * $footer-link-height + 3 * $footer-padding-height;
+
+.#{$prefix}-sidenav {
+  @extend %full-height;
+  overflow-y: auto;
+  background: $body-bg;
+}
+
+///////////////////////////////////////////////////////////////////////////
+////////////////////////////// H E A D E R ////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+.#{$prefix}-sidenav-header-link {
+  @extend %block;
+
+  font-family: $header-link-font-family;
+  font-size: $header-link-font-size;
+  line-height: $header-link-font-size;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  text-align: center;
+}
+
+// Helper classes to place footer in side navigation on the main page
+.#{$prefix}-sidenav-footer-position-wrapper {
+  min-height: 100%;
+  height: auto !important;
+  margin: 0 auto (-$footer-height);  // the bottom margin is the negative value of the footer's height
+
+  h1 {
+    text-align: center;
+    span {
+      display: block;
+      width: 70%;
+      text-align: center;
+      border-bottom: 1px solid #f5f5f5;
+      line-height: rem-calc(($header-middle-text-size - 1)/2);
+      margin: 0 auto;
+      margin-top: $header-middle-margin - em-calc($header-link-font-size);
+      margin-bottom: $header-middle-margin;
+    }
+
+    span small {
+      @extend %body-bg;
+      font-size: rem-calc($header-middle-text-size);
+      line-height: rem-calc($header-middle-text-size/2);
+      color: #f5f5f5;
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+  }
+
+  hr {
+    margin: 0 auto;
+    margin-top: nth($side-nav-link-padding,1) + $side-nav-font-size / 2 + $horizontal-line-padding;
+    margin-bottom: nth($side-nav-link-padding,1) + $horizontal-line-padding;
+    width: $horizontal-line-width;
+    border-color: $horizontal-line-color;
+  }
+
+
+
+  dd {
+
+    ul {
+      //list-style-type: circle;
+
+      li {
+        text-align: left;
+        padding-left: 0em;
+        font-size: rem-calc(14.5);
+
+        a {
+          color: rgba(255,255,255,0.85) !important;
+
+          &.active-flat {
+            &:after {
+              content: "//";
+              color: $active-color;
+              text-shadow: 0px 0px 30px $active-color;
+              font-size: rem-calc(18);
+              text-align: right;
+              display: inline-block;
+              float: right;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .category-link.active {
+    color: $active-color !important;
+    text-shadow: 0px 0px 30px $active-color;
+  }
+
+  ul {
+    @extend .side-nav;
+
+    a.active {
+      color: $active-color !important;
+      text-shadow: 0px 0px 30px $active-color;
+    }
+  }
+
+  .#{$prefix}-sidenav-footer-position-helper {/* see page-content */}
+}
+
+///////////////////////////////////////////////////////////////////////////
+////////////////////////////// F O O T E R ////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+.#{$prefix}-sidenav-footer {
+  height: $footer-height; // .push must be the same height as .footer
+  padding-top: $footer-padding-height;
+
+  ul {
+    @extend .side-nav;
+
+    li {
+      padding: 0;
+      margin: 0;
+
+      &:hover {
+        background-color: transparent !important;
+
+      }
+
+      a {
+        text-align: center;
+        padding: 0 !important;
+        margin: 0 !important;
+        line-height: $footer-link-height !important;
+        height: $footer-link-height !important;
+
+        &:hover {
+          text-shadow: 0px 0px 27px rgba(28, 217, 255, 1);
+          background-color: transparent  !important;
+        }
+      }
+    }
+  }
+
+
+  hr {
+    margin: 0 auto;
+    padding-bottom: $footer-padding-height / 1.3 !important;
+    border-color: $horizontal-line-color;
+    width: $horizontal-line-width;
+  }
+}
+
+
+
+
+
