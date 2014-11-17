@@ -8,10 +8,10 @@ define([
     'hutby/lib/Utils',
     'hutby/lib/Dictionary'
     ],function($, OnFlatExpanded, Utils, Dictionary){
+
     /**
-     *
-     * @param catalog - main model
-     * @param flats - array of Flat objects to be displayed
+     * I'm a presentation of a flat links positioned horizontally.
+     * @param flats - array of Flat models to be displayed
      * @constructor
      */
     function HorizontalFlatList(flats){
@@ -22,9 +22,9 @@ define([
         var listShowSpeed = 0.4;
 
         var _this = $('<div class="'+listID+'"></div>');
-        var flatList = $('<div id="'+listID+'"></div>');
+        var flatList = $('<div></div>');
 
-        var flatLinkDictionary = new Dictionary();
+        var flatLinks = new Dictionary();
 
         /**
          * Initialize method, executed during object construction
@@ -48,35 +48,53 @@ define([
         };
 
         /**
-         * Build and adds to dom a link for specified flat model
+         * Builds a link and adds it to dom for specified flat model
          * @param _flat
          * @returns {*|HTMLElement}
          */
         _this.addLinkFor = function (_flat) {
             var link = $(_this.buildLinkFor(_flat));
-            flatLinkDictionary.put(_flat,link);
+            flatLinks.put(_flat,link);
             flatList.append(link);
             return link;
         };
 
+        /**
+         * Calculates the width of a link. It depends on the number of flats
+         * @returns {number}
+         */
         _this.calculateLinkWidth = function () {
             return Math.min(Math.floor(100/flats.length),flatLinkMaxWidth);
         };
 
+        /**
+         * Hides me using css option
+         */
         _this.cssHidden = function () {
             _this.css('visibility','hidden');
         };
 
-        _this.setLastLinkInactive = function(){
+        /**
+         * Makes all flat links be inactive
+         */
+        _this.setLinksInactive = function(){
             flatList.find(activeLinkID).removeClass(activeLinkID.slice(1));
         };
 
+        /**
+         * Makes a corresponding link for a flat look as active
+         * @param flat
+         */
         _this.setLinkActive = function(flat) {
-            flatLinkDictionary.get(flat).addClass(activeLinkID.slice(1));
+            flatLinks.get(flat).addClass(activeLinkID.slice(1));
         };
 
+        /**
+         * Event handler on flat expanded action
+         * @param ann
+         */
         _this.onFlatExpanded = function(ann) {
-            _this.setLastLinkInactive();
+            _this.setLinksInactive();
             _this.setLinkActive(ann.flat());
         };
 
@@ -90,6 +108,16 @@ define([
                 });
             });
 
+            _this.setOnLoadListener(animate ,_callback);
+        };
+
+
+        /**
+         * Sets a callback that will be fired when all images are loaded.
+         * @param animate
+         * @param _callback
+         */
+        _this.setOnLoadListener = function (animate ,_callback) {
             /*
              Only after all images are loaded
              */
@@ -106,7 +134,7 @@ define([
             }, function(element){
                 element.animo({ animation: 'fadeIn', duration: 0.5 });
             });
-        };
+        }
 
         _this.initialize();
 
