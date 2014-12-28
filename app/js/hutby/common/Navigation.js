@@ -5,6 +5,8 @@
 define([
     'jquery',
     'hutby/main/Pager',
+    'hutby/ui/VerticalTextualFlatList',
+    'hutby/ui/CategoryAccordion',
     'hutby/category/CategoryPreview',
     'hutby/category/Category',
     'hutby/common/Global',
@@ -12,7 +14,7 @@ define([
     'hutby/lib/Utils',
     'hutby/lib/Dictionary',
     'hutby/lib/WindowEvents'
-], function($, Pager, CategoryPreview, Category, Global, OnFlatExpanded, Utils, Dictionary, WindowEvents){
+], function($, Pager, VerticalTextualFlatList, CategoryAccordion, CategoryPreview, Category, Global, OnFlatExpanded, Utils, Dictionary, WindowEvents){
 
     function Navigation(catalog) {
         var _this = this;
@@ -27,6 +29,7 @@ define([
             _this.bindAnnouncements();
             _this.initializeOffcanvasEvents();
 
+            _this.initializeAccordions();
             _this.switchToMain();
             //_this.switchToCategory(1, openFlatAutomatically);
             //_this.switchToFlat(catalog.roomFlats(1)[4]);
@@ -46,9 +49,9 @@ define([
         /////////////////////////////////////////////////////////////////////////////
         _this.switchToMain = function() {
             _this.initializeMainEvents();
-            _this.makeAllLinksInactive();
+            //_this.makeAllLinksInactive();
             _this.showOffcanvas();
-            _this.collapseAllAccordions();
+            //_this.collapseAllAccordions();
             _this.makeOffcanvasFullWidth();
             _this.alignLinksCenter();
             _this.disableOffcanvasExit();
@@ -123,7 +126,7 @@ define([
             if (Global.isDisplayMedium()) _this.alignLinksLeft();
             _this.disableOffcanvasExit();
 
-            _this.switchCategoryLink(_rooms);
+
             _this.resetEvents();
             categoryPreview.hide(0.1,0, true);
             category.show(_rooms, false, openFlat);
@@ -152,7 +155,6 @@ define([
         _this.bindCategoryOneRoomFlatsLinkClick = function () {
             Global.oneRoomFlatsLink.click(function(e) {
                 //_this.hideOffcanvas();
-                _this.switchCategoryLink(1);
                 var autoOpen = (Global.isDisplaySmall() && !Global.isDisplayMedium()) ? false : openFlatAutomatically;
                 category.show(1, true, autoOpen);
                 e.preventDefault();
@@ -162,7 +164,6 @@ define([
         _this.bindCategoryTwoRoomFlatsLinkClick = function () {
             Global.twoRoomFlatsLink.click(function(e) {
                 //_this.hideOffcanvas();
-                _this.switchCategoryLink(2);
                 var autoOpen = (Global.isDisplaySmall() && !Global.isDisplayMedium()) ? false : openFlatAutomatically;
                 category.show(2, true, autoOpen);
                 e.preventDefault();
@@ -189,8 +190,8 @@ define([
             switchCategory = Utils.isUndefined(switchCategory) ? true : switchCategory;
 
             if (switchCategory) _this.switchToCategory(flat.getRooms(), false);
-            _this.makeAllAccordionFlatInactive();
-            _this.makeAccordionFLatActive(flat);
+            //_this.makeAllAccordionFlatInactive();
+            //_this.makeAccordionFLatActive(flat);
             category.expandFlat(flat, animation);
         };
 
@@ -209,69 +210,19 @@ define([
         ////////////////////////////////// L I N K S ////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////
 
-        _this.makeAllLinksInactive = function () {
-            Global.oneRoomFlatsLink.closest('div.hutby-sidenav-footer-position-wrapper').find('a.active').removeClass('active');
-        };
-
-        _this.makeLinkActive = function (link) {
-            link.addClass('active');
-        };
-
-        _this.makeCategoryLinkActive = function (rooms) {
-            _this.makeLinkActive(_this.getCategoryLink(rooms));
-        };
-
-        _this.switchCategoryLink = function (rooms) {
-            _this.makeAllLinksInactive();
-            _this.makeCategoryLinkActive(rooms);
-            _this.collapseAllAccordions();
-            _this.expandAccordion(rooms);
-            _this.makeAllAccordionFlatInactive();
-        };
-
-        _this.getCategoryLink = function (rooms) {
-            return Global.oneRoomFlatsLink.closest('div.hutby-sidenav-footer-position-wrapper').find('a.category-link').eq(rooms-1);
-        };
-
-        _this.expandAccordion = function (rooms) {
-            _this.createFlatLinks(rooms);
-            $('#'+Global.getData(_this.getCategoryLink(rooms)).id).addClass('active');
-        };
-
-        _this.collapseAllAccordions = function () {
-            Global.oneRoomFlatsLink.closest('dl.accordion').find('.content').removeClass('active');
-        };
-
-        _this.makeAccordionFLatActive = function (flat) {
-            var link = _this.getCategoryLink(flat.getRooms());
-            console.log($('#'+Global.getData(link).id).find('a'));
-            $($('#'+Global.getData(link).id).find('a')[Dictionary._indexInArray(catalog.flats(flat.getRooms()),flat)]).addClass('active-flat');
-            Global.oneRoomFlatsLink.closest('dl.accordion').find('a.active-flat').each(function() {
-                _this.redrawDom(this);
+        _this.initializeAccordions = function () {
+            var root = $('dl.accordion');
+            $.each(catalog.possibleRooms(), function(index, each){
+                root.append(new CategoryAccordion(catalog, each));
             });
         };
 
-        _this.makeAllAccordionFlatInactive = function () {
-            Global.oneRoomFlatsLink.closest('dl.accordion').find('a.active-flat').removeClass('active-flat');
-        };
-
-        _this.createFlatLinks = function(rooms) {
-            if ($('#'+Global.getData(_this.getCategoryLink(rooms)).id).length > 0) return;
-            _this.getCategoryLink(rooms).after(_this.buildFlatLinks(rooms));
-        };
-
-        _this.buildFlatLinks = function(rooms) {
-            var flats = catalog.flats(rooms);
-            var html = $('<ul id="'+Global.getData(_this.getCategoryLink(rooms)).id+'" class="content"></ul>');
-            $.each(flats, function(index, flat){
-                html.append($('<li><a href="'+flat.getLink()+'">'+flat.getAddress()+'</a></li>').click(function(e){
-                    _this.hideOffcanvas();
-                    catalog.announcer().announce(new OnFlatExpanded(flat, true));
-                    e.preventDefault();
-                }));
+        _this.collapseFlats = function(rooms) {
+            $.each(catalog.flats(rooms), function(index, each){
+                each.collapse(true);
             });
-            return html;
         };
+
 
         _this.alignLinksCenter = function() {
             $('.side-nav-link').each(function(){

@@ -5,12 +5,14 @@ define ([
     'hutby/common/Flat',
     'hutby/lib/Dictionary',
     'hutby/announcements/OnFlatExpanded',
+    'hutby/announcements/OnCategoryExpanded',
     'hutby/lib/Announcer'
 
 ], function(
     Flat,
     Dictionary,
     OnFlatExpanded,
+    OnCategoryExpanded,
     Announcer
 ){
 
@@ -20,6 +22,8 @@ define ([
         var flats = new Dictionary();
         var announcer = new Announcer();
         var count = 0;
+
+        var expandedCategory = null;
 
         _this.addFlat = function (flat) {
             if (!flats.isKeyExists(flat.getRooms())) {
@@ -49,6 +53,17 @@ define ([
 
         _this.oFlatExpanded = function(ann) {
             _this.announcer().announce(ann);
+        };
+
+        _this.expandedCategory = function () {
+            return expandedCategory;
+        };
+
+        _this.expandCategory = function (rooms, animated) {
+            if (_this.expandedCategory() !== rooms) {
+                expandedCategory = rooms;
+                _this.announcer().announce(new OnCategoryExpanded(rooms, animated));
+            }
         };
 
         _this.announcer = function(){
