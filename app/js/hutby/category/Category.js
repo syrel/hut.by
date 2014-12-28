@@ -37,6 +37,7 @@ define([
          */
         _this.removeFlatList = function(isAnimated) {
             if (!Utils.isUndefined(flatList)) {
+                flatList.destroy();
                 flatList.remove();
                 flatList = null;
             }

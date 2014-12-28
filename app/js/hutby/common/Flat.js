@@ -5,8 +5,9 @@ define([
     'hutby/lib/Dictionary',
     'hutby/lib/Announcer',
     'hutby/announcements/OnFlatExpanded',
+    'hutby/announcements/OnFlatCollapsed',
     'hutby/lib/Utils'
-], function(Dictionary,Announcer, OnFlatExpanded, Utils) {
+], function(Dictionary,Announcer, OnFlatExpanded, OnFlatCollapsed, Utils) {
 
     function Flat() {
 
@@ -17,6 +18,8 @@ define([
         var costDescription = 'от  10 суток, $60';
         var address;
         var rooms;
+
+        var isExpanded = false;
 
         var announcer = new Announcer();
 
@@ -57,7 +60,7 @@ define([
 
         /**
          * Adds new image to existing ones
-         * @param $image path to the image
+         * @param _imagePath path to the image
          */
         _this.addPhoto = function (_imagePath) {
             photos.push(_imagePath);
@@ -137,7 +140,19 @@ define([
             return announcer;
         };
 
+        _this.isExpanded = function () {
+            return isExpanded;
+        };
+
+        _this.collapse = function (isAnimated) {
+            if (!_this.isExpanded()) return;
+            isExpanded = false;
+            _this.announcer().announce(new OnFlatCollapsed(_this, isAnimated));
+        };
+
         _this.expand = function (isAnimated) {
+            if (_this.isExpanded()) return;
+            isExpanded = true;
             _this.announcer().announce(new OnFlatExpanded(_this, isAnimated, true));
         };
     }

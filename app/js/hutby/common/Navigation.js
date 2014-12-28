@@ -246,6 +246,9 @@ define([
             var link = _this.getCategoryLink(flat.getRooms());
             console.log($('#'+Global.getData(link).id).find('a'));
             $($('#'+Global.getData(link).id).find('a')[Dictionary._indexInArray(catalog.flats(flat.getRooms()),flat)]).addClass('active-flat');
+            Global.oneRoomFlatsLink.closest('dl.accordion').find('a.active-flat').each(function() {
+                _this.redrawDom(this);
+            });
         };
 
         _this.makeAllAccordionFlatInactive = function () {
