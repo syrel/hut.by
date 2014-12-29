@@ -30,25 +30,16 @@ define([
             _this.initializeOffcanvasEvents();
 
             _this.initializeAccordions();
+            _this.bindHeaderLink();
             _this.switchToMain();
             //_this.switchToCategory(1, openFlatAutomatically);
             //_this.switchToFlat(catalog.roomFlats(1)[4]);
-        };
-
-        _this.resetEvents = function () {
-            Global.oneRoomFlatsLink.unbind('click').click(false);
-            Global.twoRoomFlatsLink.unbind('click').click(false);
-            Global.oneRoomFlatsLink.unbind('mouseenter mouseleave').click(false);
-            Global.twoRoomFlatsLink.unbind('mouseenter mouseleave').click(false);
-            Global.headerLink.unbind('click').click(false);
-            Global.headerLink.unbind('mouseenter mouseleave').click(false);
         };
 
         /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////// M A I N ////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////
         _this.switchToMain = function() {
-            _this.initializeMainEvents();
             //_this.makeAllLinksInactive();
             _this.showOffcanvas();
             //_this.collapseAllAccordions();
@@ -58,15 +49,11 @@ define([
             pager.show();
         };
 
-        _this.initializeMainEvents = function () {
-            _this.resetEvents();
-
-            _this.bindMainHeaderLink();
-        };
-
-        _this.bindMainHeaderLink = function () {
+        _this.bindHeaderLink = function () {
             Global.headerLink.click(function(e){
                 e.preventDefault();
+                if (catalog.isCategoryExpanded())
+                    catalog.collapseCategory(true);
             });
         };
 
@@ -80,8 +67,6 @@ define([
             if (Global.isDisplayMedium()) _this.alignLinksLeft();
             _this.disableOffcanvasExit();
 
-
-            _this.resetEvents();
             categoryPreview.hide(0.1,0, true);
             category.show(_rooms, false, openFlat);
             pager.hide(_this.initializeCategoryEvents);
@@ -130,7 +115,9 @@ define([
         /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////// L I N K S ////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////
-
+        /**
+         * Initializes corresponding accordions for each category
+         */
         _this.initializeAccordions = function () {
             var root = $('dl.accordion');
             $.each(catalog.possibleRooms(), function(index, each){
