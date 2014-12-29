@@ -6,6 +6,7 @@ define([
         'hutby/lib/Utils',
         'hutby/common/Global',
         'hutby/announcements/OnFlatExpanded',
+        'hutby/announcements/OnCategoryExpanded',
         'hutby/announcements/OnCategoryPreviewShow',
         'hutby/announcements/OnCategoryPreviewHide',
         'jquery',
@@ -16,6 +17,7 @@ define([
         Utils,
         Global,
         OnFlatExpanded,
+        OnCategoryExpanded,
         OnCategoryPreviewShow,
         OnCategoryPreviewHide,
         $) {
@@ -45,6 +47,7 @@ define([
         _this.initialize = function () {
             catalog.announcer().onSendTo(OnCategoryPreviewShow, _this.onCategoryPreviewShow, _this);
             catalog.announcer().onSendTo(OnCategoryPreviewHide, _this.onCategoryPreviewHide, _this);
+            catalog.announcer().onSendTo(OnCategoryExpanded, _this.onCategoryExpanded, _this);
         };
 
         _this.onCategoryPreviewShow = function(ann) {
@@ -55,6 +58,10 @@ define([
         _this.onCategoryPreviewHide = function(ann) {
             if (!catalog.isCategoryExpanded())
                 _this.unhoverAction(ann.rooms(), ann.anchor());
+        };
+
+        _this.onCategoryExpanded = function () {
+            _this.hide();
         };
 
         /***
