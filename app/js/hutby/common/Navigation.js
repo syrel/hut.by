@@ -2,6 +2,7 @@
  * Created by aliaksei on 03/08/14.
  */
 
+"use strict";
 define([
     'jquery',
     'hutby/main/Pager',
@@ -44,7 +45,6 @@ define([
             _this.showOffcanvas();
             //_this.collapseAllAccordions();
             _this.makeOffcanvasFullWidth();
-            _this.alignLinksCenter();
             _this.disableOffcanvasExit();
             pager.show();
         };
@@ -64,7 +64,6 @@ define([
         _this.switchToCategory = function(_rooms, openFlat) {
             openFlat = Utils.isUndefined(openFlat) ? false : openFlat;
 
-            if (Global.isDisplayMedium()) _this.alignLinksLeft();
             _this.disableOffcanvasExit();
 
             categoryPreview.hide(0.1,0, true);
@@ -90,7 +89,6 @@ define([
         _this.switchToFlat = function(flat, animation, switchCategory) {
             _this.makeOffcanvasDefaultWidth();
             _this.enableOffcanvasExit();
-            _this.alignLinksLeft();
 
             animation = Utils.isUndefined(animation) ? false : animation;
             switchCategory = Utils.isUndefined(switchCategory) ? true : switchCategory;
@@ -129,27 +127,6 @@ define([
             $.each(catalog.flats(rooms), function(index, each){
                 each.collapse(true);
             });
-        };
-
-
-        _this.alignLinksCenter = function() {
-            $('.side-nav-link').each(function(){
-                this.style.textAlign = 'center';
-                _this.redrawDom(this);
-            });
-        };
-
-        _this.alignLinksLeft = function() {
-            $('.side-nav-link').each(function(){
-                this.style.textAlign = "left";
-                _this.redrawDom(this);
-            });
-        };
-
-        _this.redrawDom = function(element) {
-            element.style.display='run-in';
-            element.offsetHeight;
-            element.style.display='block';
         };
 
         /////////////////////////////////////////////////////////////////////////////

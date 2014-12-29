@@ -31,6 +31,7 @@ define([
          * Configurates header link and sets event callbacks for click and hover/unhover actions
          */
         _this.initializeHeaderLink = function () {
+            _this.alignLinkCenter();
             headerLink.text(Strings.categoryName(rooms));
             headerLink.click(function(e){
                 e.preventDefault();
@@ -72,6 +73,7 @@ define([
         };
 
         _this.onCategoryExpanded = function(ann) {
+            _this.alignLinkLeft();
             if (ann.rooms() === rooms)
                 _this.expand();
             else
@@ -79,7 +81,16 @@ define([
         };
 
         _this.onCategoryCollapsed = function(){
+            _this.alignLinkCenter();
             _this.collapse();
+        };
+
+        _this.alignLinkCenter = function() {
+           headerLink.css('text-align','center');
+        };
+
+        _this.alignLinkLeft = function() {
+            headerLink.css('text-align','left');
         };
 
         _this.initialize();
