@@ -6,6 +6,7 @@ define ([
     'hutby/lib/Utils',
     'hutby/lib/Dictionary',
     'hutby/announcements/OnFlatExpanded',
+    'hutby/announcements/OnFlatCollapsed',
     'hutby/announcements/OnCategoryExpanded',
     'hutby/announcements/OnCategoryCollapsed',
     'hutby/announcements/OnCategoryPreviewShow',
@@ -17,6 +18,7 @@ define ([
     Utils,
     Dictionary,
     OnFlatExpanded,
+    OnFlatCollapsed,
     OnCategoryExpanded,
     OnCategoryCollapsed,
     OnCategoryPreviewShow,
@@ -32,6 +34,7 @@ define ([
         var count = 0;
 
         var expandedCategory = null;
+        var expandedFlat = null;
 
         _this.addFlat = function (flat) {
             if (!flats.isKeyExists(flat.getRooms())) {
@@ -39,7 +42,8 @@ define ([
             }
 
             flats.get(flat.getRooms()).push(flat);
-            flat.announcer().onSendTo(OnFlatExpanded, _this.oFlatExpanded, _this);
+            flat.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
+            flat.announcer().onSendTo(OnFlatCollapsed, _this.onFlatCollapsed, _this);
             count++;
         };
 
@@ -59,12 +63,26 @@ define ([
             return flats.keys();
         };
 
-        _this.oFlatExpanded = function(ann) {
+        _this.onFlatExpanded = function(ann) {
+            expandedFlat = ann.flat();
+            _this.announcer().announce(ann);
+        };
+
+        _this.onFlatCollapsed = function(ann) {
+            expandedFlat = null;
             _this.announcer().announce(ann);
         };
 
         _this.expandedCategory = function () {
             return expandedCategory;
+        };
+
+        _this.expandedFlat = function () {
+            return expandedFlat;
+        };
+
+        _this.isFlatExpanded = function () {
+            return !Utils.isUndefined(_this.expandedFlat());
         };
 
         _this.isCategoryExpanded = function () {
@@ -80,6 +98,10 @@ define ([
         _this.expandCategory = function (rooms, animated) {
             if (_this.expandedCategory() !== rooms) {
                 expandedCategory = rooms;
+                if(_this.isFlatExpanded()) {
+                    _this.expandedFlat().collapse();
+                }
+                _this.flats(_this.expandedCategory())[0].expand();
                 _this.announcer().announce(new OnCategoryExpanded(rooms, animated));
             }
         };

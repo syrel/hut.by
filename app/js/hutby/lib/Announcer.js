@@ -82,8 +82,8 @@ define(['hutby/lib/Dictionary'], function(Dictionary){
         _this.unsubscribe = function (_to) {
             _this.notificationsOf(_to).forEach(function(notification){
                 var array = triggers.get(notification.trigger());
-                var index = triggers._indexInArray(array, notification);
-                triggers._removeFromArrayAt(array, index);
+                var index = Dictionary._indexInArray(array, notification);
+                Dictionary._removeFromArrayAt(array, index);
                 notification.destroy();
             });
 
