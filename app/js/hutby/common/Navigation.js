@@ -62,58 +62,12 @@ define([
             _this.resetEvents();
 
             _this.bindMainHeaderLink();
-
-            _this.bindMainOneRoomFlatsLinkClick();
-            _this.bindMainTwoRoomFlatsLinkClick();
-
-            _this.bindMainOneRoomFlatsLinkHover();
-            _this.bindMainTwoRoomFlatsLinkHover();
         };
 
         _this.bindMainHeaderLink = function () {
             Global.headerLink.click(function(e){
                 e.preventDefault();
             });
-        };
-
-        _this.bindMainOneRoomFlatsLinkClick = function() {
-            Global.oneRoomFlatsLink.click(function(e) {
-                //_this.hideOffcanvas();
-                var autoOpen = (Global.isDisplaySmall() && !Global.isDisplayMedium()) ? false : openFlatAutomatically;
-                _this.switchToCategory(1, autoOpen);
-                e.preventDefault();
-            });
-        };
-
-        _this.bindMainTwoRoomFlatsLinkClick = function() {
-            Global.twoRoomFlatsLink.click(function(e) {
-                //_this.hideOffcanvas();
-                var autoOpen = (Global.isDisplaySmall() && !Global.isDisplayMedium()) ? false : openFlatAutomatically;
-                _this.switchToCategory(2, autoOpen);
-                e.preventDefault();
-            });
-        };
-
-        _this.bindMainOneRoomFlatsLinkHover = function() {
-            Global.oneRoomFlatsLink.hover(
-                function() {
-                    categoryPreview.hoverAction(1, $(this));
-                },
-                function() {
-                    categoryPreview.unhoverAction(1, $(this));
-                }
-            );
-        };
-
-        _this.bindMainTwoRoomFlatsLinkHover = function() {
-            Global.twoRoomFlatsLink.hover(
-                function() {
-                    categoryPreview.hoverAction(2, $(this));
-                },
-                function() {
-                    categoryPreview.unhoverAction(2, $(this));
-                }
-            );
         };
 
 
@@ -134,49 +88,16 @@ define([
         };
 
         _this.initializeCategoryEvents = function(){
-
             _this.bindCategoryHeaderLink();
-
-            _this.bindCategoryOneRoomFlatsLinkClick();
-            _this.bindCategoryTwoRoomFlatsLinkClick();
-
-            _this.bindCategoryOneRoomFlatsLinkHover();
-            _this.bindCategoryTwoRoomFlatsLinkHover();
-
         };
 
         _this.bindCategoryHeaderLink = function () {
             Global.headerLink.click(function(e){
-                _this.switchToMain();
                 e.preventDefault();
+                catalog.collapseCategory(true);
             });
         };
 
-        _this.bindCategoryOneRoomFlatsLinkClick = function () {
-            Global.oneRoomFlatsLink.click(function(e) {
-                //_this.hideOffcanvas();
-                var autoOpen = (Global.isDisplaySmall() && !Global.isDisplayMedium()) ? false : openFlatAutomatically;
-                category.show(1, true, autoOpen);
-                e.preventDefault();
-            });
-        };
-
-        _this.bindCategoryTwoRoomFlatsLinkClick = function () {
-            Global.twoRoomFlatsLink.click(function(e) {
-                //_this.hideOffcanvas();
-                var autoOpen = (Global.isDisplaySmall() && !Global.isDisplayMedium()) ? false : openFlatAutomatically;
-                category.show(2, true, autoOpen);
-                e.preventDefault();
-            });
-        };
-
-        _this.bindCategoryOneRoomFlatsLinkHover = function (){
-            // nothing to do here
-        };
-
-        _this.bindCategoryTwoRoomFlatsLinkHover = function (){
-            // nothing to do here
-        };
         /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////// F L A T  ///////////////////////////////
         /////////////////////////////////////////////////////////////////////////////

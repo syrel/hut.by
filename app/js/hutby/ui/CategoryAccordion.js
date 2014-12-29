@@ -6,15 +6,16 @@ define([
     'jquery',
     'hutby/ui/VerticalTextualFlatList',
     'hutby/announcements/OnCategoryExpanded',
+    'hutby/category/CategoryPreview',
     'hutby/common/Strings'
 
-],function($, VerticalTextualFlatList, OnCategoryExpanded, Strings){
+],function($, VerticalTextualFlatList, OnCategoryExpanded, CategoryPreview, Strings){
 
     function CategoryAccordion(catalog, rooms) {
         var _this = $('<dd class="accordion-navigation"></dd>');
         var flats = catalog.flats(rooms);
         var flatList = new VerticalTextualFlatList(flats);
-        var headerLink = $('<a class="side-nav-link category-link" href="#"></a>');
+        var headerLink = $('<a class="side-nav-link category-link" href="index.html"></a>');
 
         _this.initialize = function () {
             _this.initializeHeaderLink();
@@ -23,11 +24,25 @@ define([
             catalog.announcer().onSendTo(OnCategoryExpanded, _this.onCategoryExpanded, _this);
         };
 
+        /**
+         * Configurates header link and sets event callbacks for click and hover/unhover actions
+         */
         _this.initializeHeaderLink = function () {
-            headerLink.text(Strings.categoryName(rooms)).click(function(e){
+            headerLink.text(Strings.categoryName(rooms));
+            headerLink.click(function(e){
                 e.preventDefault();
                 catalog.expandCategory(rooms, true);
+                return false;
             });
+            headerLink.hover(
+                function() {
+                    catalog.showCategoryPreview(rooms, $(this));
+                },
+                function() {
+                    catalog.hideCategoryPreview(rooms, $(this));
+                }
+            );
+
             _this.append(headerLink);
         };
 

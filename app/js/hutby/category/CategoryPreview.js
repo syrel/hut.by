@@ -2,15 +2,23 @@
  * Created by aliaksei on 03/08/14.
  */
 define([
-    'hutby/category/CategoryPreviewViewHolder',
-    'hutby/lib/Utils',
-    'hutby/common/Global',
-    'hutby/announcements/OnFlatExpanded',
-    'jquery',
-    'jquery.jscrollpane',
-    'jquery.animo'
-],
-    function (CategoryPreviewViewHolder, Utils, Global, OnFlatExpanded, $) {
+        'hutby/category/CategoryPreviewViewHolder',
+        'hutby/lib/Utils',
+        'hutby/common/Global',
+        'hutby/announcements/OnFlatExpanded',
+        'hutby/announcements/OnCategoryPreviewShow',
+        'hutby/announcements/OnCategoryPreviewHide',
+        'jquery',
+        'jquery.jscrollpane',
+        'jquery.animo'
+], function (
+        CategoryPreviewViewHolder,
+        Utils,
+        Global,
+        OnFlatExpanded,
+        OnCategoryPreviewShow,
+        OnCategoryPreviewHide,
+        $) {
     function debug(msg) {
         //console.log(msg);
     }
@@ -32,6 +40,22 @@ define([
 
         var currentFlats;
         var visible = false;
+
+
+        _this.initialize = function () {
+            catalog.announcer().onSendTo(OnCategoryPreviewShow, _this.onCategoryPreviewShow, _this);
+            catalog.announcer().onSendTo(OnCategoryPreviewHide, _this.onCategoryPreviewHide, _this);
+        };
+
+        _this.onCategoryPreviewShow = function(ann) {
+            if (!catalog.isCategoryExpanded())
+                _this.hoverAction(ann.rooms(), ann.anchor());
+        };
+
+        _this.onCategoryPreviewHide = function(ann) {
+            if (!catalog.isCategoryExpanded())
+                _this.unhoverAction(ann.rooms(), ann.anchor());
+        };
 
         /***
          * Shows flats preview list and controls logic of timeouts to make it user-friendly
@@ -257,6 +281,8 @@ define([
         _this.unhoverAction = function(_rooms, _anchor) {
             _this.hide();
         };
+
+        _this.initialize();
     }
 
     return CategoryPreview;

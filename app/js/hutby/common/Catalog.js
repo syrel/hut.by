@@ -3,16 +3,24 @@
  */
 define ([
     'hutby/common/Flat',
+    'hutby/lib/Utils',
     'hutby/lib/Dictionary',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnCategoryExpanded',
+    'hutby/announcements/OnCategoryCollapsed',
+    'hutby/announcements/OnCategoryPreviewShow',
+    'hutby/announcements/OnCategoryPreviewHide',
     'hutby/lib/Announcer'
 
 ], function(
     Flat,
+    Utils,
     Dictionary,
     OnFlatExpanded,
     OnCategoryExpanded,
+    OnCategoryCollapsed,
+    OnCategoryPreviewShow,
+    OnCategoryPreviewHide,
     Announcer
 ){
 
@@ -59,11 +67,29 @@ define ([
             return expandedCategory;
         };
 
+        _this.isCategoryExpanded = function () {
+            return !Utils.isUndefined(_this.expandedCategory());
+        };
+
+        _this.collapseCategory = function (animated) {
+            var category = expandedCategory;
+            expandedCategory = null;
+            _this.announcer().announce(new OnCategoryCollapsed(category, animated));
+        };
+
         _this.expandCategory = function (rooms, animated) {
             if (_this.expandedCategory() !== rooms) {
                 expandedCategory = rooms;
                 _this.announcer().announce(new OnCategoryExpanded(rooms, animated));
             }
+        };
+
+        _this.showCategoryPreview = function (rooms, anchor) {
+            _this.announcer().announce(new OnCategoryPreviewShow(rooms, anchor));
+        };
+
+        _this.hideCategoryPreview = function (rooms, anchor) {
+            _this.announcer().announce(new OnCategoryPreviewHide(rooms, anchor));
         };
 
         _this.announcer = function(){

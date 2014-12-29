@@ -2,15 +2,17 @@
  * Created by aliaksei on 03/08/14.
  */
 define([
-    'hutby/main/PagerViewHolder',
-    'hutby/lib/Utils',
-    'hutby/lib/WindowEvents',
-    'hutby/announcements/OnFlatExpanded',
-    'hutby/common/Global',
-    'jquery',
-    'jquery.animo'
+        'hutby/main/PagerViewHolder',
+        'hutby/lib/Utils',
+        'hutby/lib/WindowEvents',
+        'hutby/announcements/OnFlatExpanded',
+        'hutby/announcements/OnCategoryExpanded',
+        'hutby/announcements/OnCategoryCollapsed',
+        'hutby/common/Global',
+        'jquery',
+        'jquery.animo'
 ],
-    function(PagerViewHolder, Utils, WindowEvents,OnFlatExpanded, Global, $){
+    function(PagerViewHolder, Utils, WindowEvents,OnFlatExpanded, OnCategoryExpanded, OnCategoryCollapsed, Global, $){
 
     function Pager (catalog, prefix) {
         var _this = this;
@@ -34,6 +36,19 @@ define([
         var timer;
         var isWasVisible; //initialize later
         var block = false;
+
+        _this.initialize = function () {
+            catalog.announcer().onSendTo(OnCategoryExpanded, _this.onCategoryExpanded, _this);
+            catalog.announcer().onSendTo(OnCategoryCollapsed, _this.onCategoryCollapsed, _this);
+        };
+
+        _this.onCategoryExpanded = function () {
+            _this.hide();
+        };
+
+        _this.onCategoryCollapsed = function () {
+            _this.show();
+        };
 
         _this.setFlats = function (_flats) {
             flats = _flats;
@@ -216,6 +231,7 @@ define([
         /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////// I N I T ////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////
+        _this.initialize();
     }
 
     return Pager;

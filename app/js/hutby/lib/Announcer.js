@@ -16,7 +16,7 @@ define(['hutby/lib/Dictionary'], function(Dictionary){
             var to = _to;
 
             _this.notify = function(_ann){
-                console.log(''+_this);
+                console.log(''+_this.toString());
                 return send(_ann);
             };
 
@@ -39,7 +39,7 @@ define(['hutby/lib/Dictionary'], function(Dictionary){
             };
 
             _this.toString = function () {
-                return 'on: '+_on.name + ' to: '+to.constructor.name;
+                return 'on: '+_on.name + ' to: '+_to.constructor.name;
             };
         }
 
