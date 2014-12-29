@@ -2,26 +2,29 @@
  * Created by aliaksei on 28.12.2014.
  */
 
+"use strict";
 define([
     'jquery',
     'hutby/ui/VerticalTextualFlatList',
     'hutby/announcements/OnCategoryExpanded',
+    'hutby/announcements/OnCategoryCollapsed',
     'hutby/category/CategoryPreview',
     'hutby/common/Strings'
 
-],function($, VerticalTextualFlatList, OnCategoryExpanded, CategoryPreview, Strings){
+],function($, VerticalTextualFlatList, OnCategoryExpanded, OnCategoryCollapsed, CategoryPreview, Strings){
 
     function CategoryAccordion(catalog, rooms) {
         var _this = $('<dd class="accordion-navigation"></dd>');
         var flats = catalog.flats(rooms);
         var flatList = new VerticalTextualFlatList(flats);
-        var headerLink = $('<a class="side-nav-link category-link" href="index.html"></a>');
+        var headerLink = $('<a class="side-nav-link category-link" href="/index.html"></a>');
 
         _this.initialize = function () {
             _this.initializeHeaderLink();
             _this.initializeFlatList();
 
             catalog.announcer().onSendTo(OnCategoryExpanded, _this.onCategoryExpanded, _this);
+            catalog.announcer().onSendTo(OnCategoryCollapsed, _this.onCategoryCollapsed, _this);
         };
 
         /**
@@ -73,6 +76,10 @@ define([
                 _this.expand();
             else
                 _this.collapse();
+        };
+
+        _this.onCategoryCollapsed = function(){
+            _this.collapse();
         };
 
         _this.initialize();
