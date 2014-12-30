@@ -103,33 +103,22 @@ define([
             });
         };
 
-        _this.hide = function (_callback) {
-            if (!_this.isVisible()) {
-                Utils.call(_callback);
-                return;
-            }
-
+        _this.hide = function () {
             _this.stopSwapping();
-
             var duration = Global.isDisplaySmall() ? 0 : pagerHideSpeed;
 
+            holder.container().animoStop();
             holder.container().animo( { animation: pagerHideEffect, duration: duration }, function() {
                 holder.container().hide(0);
                 _this.updateVisibility();
-                Utils.call(_callback);
             });
         };
 
         _this.show = function () {
             if (Global.isDisplaySmall()) return;
-
             _this.createPager();
 
-            if (_this.isVisible()) {
-                _this.swap();
-                return;
-            }
-
+            holder.container().animoStop();
             holder.container().show(0).animo({ animation: pagerShowEffect, duration: pagerShowSpeed }, function(){
                 _this.updateVisibility();
                 _this.swap();

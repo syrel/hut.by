@@ -33,6 +33,7 @@ define([
             _this.initializeAccordions();
             _this.bindHeaderLink();
             _this.switchToMain();
+            pager.show();
             //_this.switchToCategory(1, openFlatAutomatically);
             //_this.switchToFlat(catalog.roomFlats(1)[4]);
         };
@@ -46,7 +47,7 @@ define([
             //_this.collapseAllAccordions();
             _this.makeOffcanvasFullWidth();
             _this.disableOffcanvasExit();
-            pager.show();
+            //pager.show();
         };
 
         _this.bindHeaderLink = function () {
@@ -68,7 +69,7 @@ define([
 
             categoryPreview.hide(0.1,0, true);
             category.show(_rooms, false, openFlat);
-            pager.hide(_this.initializeCategoryEvents);
+            //pager.hide(_this.initializeCategoryEvents);
         };
 
         _this.initializeCategoryEvents = function(){

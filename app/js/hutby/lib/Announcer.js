@@ -16,7 +16,7 @@ define(['hutby/lib/Dictionary'], function(Dictionary){
             var to = _to;
 
             _this.notify = function(_ann){
-                console.log(''+_this.toString());
+                //console.log(''+_this.toString());
                 return send(_ann);
             };
 

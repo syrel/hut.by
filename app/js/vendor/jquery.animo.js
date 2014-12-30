@@ -308,19 +308,33 @@ define(['jquery'], function ($) {
                         callback($me);
                     }
                 });
+            },
 
+            stopCallback: function() {
+                var $me = this;
+                var type = "AnimationEnd";
+                var binding = type.toLowerCase() + " webkit" + type + " o" + type + " MS" + type;
+                $me.element.unbind(binding);
             }
         };
 
         $.fn.animo = function (options, callback, other_cb) {
 
             return this.each(function () {
-
                 new animo(this, options, callback, other_cb);
-
             });
-
         };
+
+        $.fn.animoStop = function () {
+
+            return this.each(function () {
+                var $me = $(this);
+                $me.stop();
+                var type = "AnimationEnd";
+                var binding = type.toLowerCase() + " webkit" + type + " o" + type + " MS" + type;
+                $me.unbind(binding);
+            });
+        }
 
     })($, window, document)
 
