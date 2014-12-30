@@ -25,7 +25,6 @@ define([
         var category = new Category(catalog, 'hutby-category-');
 
         _this.initializeEvents = function() {
-            _this.bindAnnouncements();
             _this.initializeOffcanvasEvents();
 
             _this.initializeAccordions();
@@ -91,13 +90,6 @@ define([
         /////////////////////////////////////////////////////////////////////////////
         /////////////////////////// A N N O U N C E M E N T S ///////////////////////
         /////////////////////////////////////////////////////////////////////////////
-        _this.bindAnnouncements = function () {
-            catalog.announcer().onSendTo(OnFlatExpanded, _this.onExpandFlat, _this);
-        };
-
-        _this.onExpandFlat = function (ann) {
-            _this.switchToFlat(ann.flat(), ann.animation(), ann.switchCategory());
-        };
 
         /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////// L I N K S ////////////////////////////////
@@ -109,12 +101,6 @@ define([
             var root = $('dl.accordion');
             $.each(catalog.possibleRooms(), function(index, each){
                 root.append(new CategoryAccordion(catalog, each));
-            });
-        };
-
-        _this.collapseFlats = function(rooms) {
-            $.each(catalog.flats(rooms), function(index, each){
-                each.collapse(true);
             });
         };
 

@@ -25,6 +25,15 @@ define([
         var flatList;
         var flatDescription;
 
+        _this.initialize = function() {
+            catalog.announcer().onSendTo(OnFlatExpanded, _this.onExpandFlat, _this);
+        };
+
+        _this.onExpandFlat = function (ann) {
+            _this.show(ann.flat().getRooms(), false, false);
+            _this.expandFlat(ann.flat(), ann.animation());
+        };
+
         _this.createContainer = function () {
             if (Utils.isUndefined(holder.container())) {
                 Global.pageContent.append($(_this.buildContainer()));
@@ -42,7 +51,6 @@ define([
                 flatList = null;
             }
         };
-
 
         /**
          * Adds flat list with animation or without. If list already exists removes it
@@ -103,6 +111,7 @@ define([
             return currentRooms;
         };
 
+        _this.initialize();
         _this.createContainer();
     }
 
