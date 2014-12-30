@@ -15,7 +15,19 @@ define([
     'hutby/lib/Utils',
     'hutby/lib/Dictionary',
     'hutby/lib/WindowEvents'
-], function($, Pager, VerticalTextualFlatList, CategoryAccordion, CategoryPreview, Category, Global, OnFlatExpanded, Utils, Dictionary, WindowEvents){
+], function(
+    $,
+    Pager,
+    VerticalTextualFlatList,
+    CategoryAccordion,
+    CategoryPreview,
+    Category,
+    Global,
+    OnFlatExpanded,
+    Utils,
+    Dictionary,
+    WindowEvents
+    ){
 
     function Navigation(catalog) {
         var _this = this;
@@ -55,12 +67,6 @@ define([
         /////////////////////////////////////////////////////////////////////////////
         /////////////////////////////// C A T E G O R Y /////////////////////////////
         /////////////////////////////////////////////////////////////////////////////
-        _this.switchToCategory = function(_rooms, openFlat) {
-            openFlat = Utils.isUndefined(openFlat) ? false : openFlat;
-            _this.disableOffcanvasExit();
-            category.show(_rooms, false, openFlat);
-        };
-
         _this.initializeCategoryEvents = function(){
             _this.bindCategoryHeaderLink();
         };
@@ -71,25 +77,6 @@ define([
                 catalog.collapseCategory(true);
             });
         };
-
-        /////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////// F L A T  ///////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////
-
-        _this.switchToFlat = function(flat, animation, switchCategory) {
-            _this.makeOffcanvasDefaultWidth();
-            _this.enableOffcanvasExit();
-
-            animation = Utils.isUndefined(animation) ? false : animation;
-            switchCategory = Utils.isUndefined(switchCategory) ? true : switchCategory;
-
-            if (switchCategory) _this.switchToCategory(flat.getRooms(), false);
-            category.expandFlat(flat, animation);
-        };
-
-        /////////////////////////////////////////////////////////////////////////////
-        /////////////////////////// A N N O U N C E M E N T S ///////////////////////
-        /////////////////////////////////////////////////////////////////////////////
 
         /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////// L I N K S ////////////////////////////////

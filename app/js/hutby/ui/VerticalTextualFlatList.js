@@ -8,7 +8,13 @@ define([
     'hutby/announcements/OnFlatCollapsed',
     'hutby/lib/Utils',
     'hutby/lib/Dictionary'
-    ],function($, OnFlatExpanded, OnFlatCollapsed, Utils, Dictionary){
+],function(
+    $,
+    OnFlatExpanded,
+    OnFlatCollapsed,
+    Utils,
+    Dictionary
+    ){
 
     /**
      * I'm a presentation of a flat links positioned horizontally.
