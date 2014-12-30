@@ -78,13 +78,6 @@ define([
         };
 
         /**
-         * Collapse all flats
-         */
-        _this.collapseFlats = function(){
-            $.each(flats,function(){this.collapse(true);})
-        };
-
-        /**
          * Makes a corresponding link for a flat look as active
          * @param flat
          */
@@ -119,8 +112,6 @@ define([
             $.each(flats, function(index, flat) {
                 _this.addLinkFor(flat).css('width',flatLinkWidth+'%').click(function(e){
                     e.preventDefault();
-                    if (flat.isExpanded()) return;
-                    _this.collapseFlats();
                     flat.expand(true);
                 });
             });

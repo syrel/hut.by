@@ -18,6 +18,7 @@ define([
         var costDescription = 'от  10 суток, $60';
         var address;
         var rooms;
+        var catalog;
 
         var isExpanded = false;
 
@@ -144,16 +145,30 @@ define([
             return isExpanded;
         };
 
+        _this.setCatalog = function (_catalog) {
+            catalog = _catalog;
+        };
+
+        _this.catalog = function () {
+            return catalog;
+        };
+
         _this.collapse = function (isAnimated) {
             if (!_this.isExpanded()) return;
             isExpanded = false;
-            _this.announcer().announce(new OnFlatCollapsed(_this, isAnimated));
+            var ann = new OnFlatCollapsed(_this, isAnimated);
+            _this.catalog().onFlatCollapsed(ann);
+            _this.announcer().announce(ann);
         };
 
-        _this.expand = function (isAnimated) {
-            if (_this.isExpanded()) return;
+        _this.expand = function (isAnimated, force) {
+            var wasExpanded = _this.isExpanded();
+            force = Utils.isUndefined(force) ? false : force;
+            if (_this.isExpanded() && !force) return;
             isExpanded = true;
-            _this.announcer().announce(new OnFlatExpanded(_this, isAnimated, true));
+            var ann = new OnFlatExpanded(_this, isAnimated, true);
+            _this.catalog().onFlatExpanded(ann);
+            if (!wasExpanded)_this.announcer().announce(ann);
         };
     }
 

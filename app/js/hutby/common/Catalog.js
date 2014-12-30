@@ -42,8 +42,7 @@ define ([
             }
 
             flats.get(flat.getRooms()).push(flat);
-            flat.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
-            flat.announcer().onSendTo(OnFlatCollapsed, _this.onFlatCollapsed, _this);
+            flat.setCatalog(_this);
             count++;
         };
 
@@ -64,8 +63,16 @@ define ([
         };
 
         _this.onFlatExpanded = function(ann) {
+            var theSame = _this.expandedFlat() === ann.flat();
+            if(_this.isFlatExpanded()) {
+                if (!theSame)
+                    _this.expandedFlat().collapse();
+            }
             expandedFlat = ann.flat();
-            _this.announcer().announce(ann);
+            if (!_this.isCategoryExpanded() || _this.expandedCategory() !== ann.flat().getRooms()) {
+                _this.expandCategory(ann.flat().getRooms(), true, false);
+            }
+            if (!theSame) _this.announcer().announce(ann);
         };
 
         _this.onFlatCollapsed = function(ann) {
@@ -95,13 +102,11 @@ define ([
             _this.announcer().announce(new OnCategoryCollapsed(category, animated));
         };
 
-        _this.expandCategory = function (rooms, animated) {
+        _this.expandCategory = function (rooms, animated, expandFlat) {
+            expandFlat = Utils.isUndefined(expandFlat) ? true : expandFlat;
             if (_this.expandedCategory() !== rooms) {
                 expandedCategory = rooms;
-                if(_this.isFlatExpanded()) {
-                    _this.expandedFlat().collapse();
-                }
-                _this.flats(_this.expandedCategory())[0].expand();
+                if (expandFlat) _this.flats(_this.expandedCategory())[0].expand();
                 _this.announcer().announce(new OnCategoryExpanded(rooms, animated));
             }
         };

@@ -37,8 +37,6 @@ define([
             $.each(flats, function(index, flat) {
                 _this.addLinkFor(flat).click(function(e){
                     e.preventDefault();
-                    if (flat.isExpanded()) return;
-                    _this.collapseFlats();
                     flat.expand(true);
                 });
             });
@@ -64,13 +62,6 @@ define([
             if (_flat.isExpanded()) _this.setLinkActive(_flat);
             _this.append(link);
             return link;
-        };
-
-        /**
-         * Collapse all flats
-         */
-        _this.collapseFlats = function(){
-            $.each(flats,function(){this.collapse(true);})
         };
 
         /**

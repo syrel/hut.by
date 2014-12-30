@@ -186,7 +186,7 @@ define([
             $.each(_flats, function(index, flat){
                 holder.scrollPane().append($(_this.buildLink(index,flat)).click(function(e){
                     e.preventDefault();
-                    catalog.announcer().announce(new OnFlatExpanded(flat));
+                    flat.expand(false,true);
                 }));
             });
 

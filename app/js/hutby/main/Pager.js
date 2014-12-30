@@ -135,6 +135,10 @@ define([
             _this.swapFlatTo(currentIndex - 1, _callback);
         };
 
+        _this.currentFlat = function () {
+            return flats[currentIndex];
+        };
+
         _this.stopSwapping = function(){
             clearTimeout(timer);
         };
@@ -186,7 +190,7 @@ define([
             holder.address().html(flats[currentIndex].getAddress());
             holder.address().click(function(e){
                 e.preventDefault();
-                catalog.announcer().announce(new OnFlatExpanded(flats[currentIndex]));
+                _this.currentFlat().expand(false, true);
             });
 
             _this.swap();

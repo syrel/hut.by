@@ -1,6 +1,8 @@
 /**
  * Created by aliaksei on 05/08/14.
  */
+
+"use strict";
 define([
     'hutby/category/CategoryViewHolder',
     'hutby/category/FlatDescription',
@@ -10,10 +12,16 @@ define([
     'hutby/common/Global',
     'hutby/announcements/OnFlatExpanded',
     'jquery',
-    'jquery.animo',
-    'hutby/common/Catalog'
-],
-    function (CategoryViewHolder, FlatDescription, HorizontalFlatList, Dictionary, Utils, Global, OnFlatExpanded, $) {
+    'jquery.animo'
+], function (
+    CategoryViewHolder,
+    FlatDescription,
+    HorizontalFlatList,
+    Dictionary,
+    Utils,
+    Global,
+    OnFlatExpanded,
+    $) {
 
     function Category (catalog, prefix) {
         var _this = this;
@@ -42,9 +50,8 @@ define([
 
         /**
          * Removes flat list with animation or without, depending on passed isAnimated parameter.
-         * @param isAnimated
          */
-        _this.removeFlatList = function(isAnimated) {
+        _this.removeFlatList = function() {
             if (!Utils.isUndefined(flatList)) {
                 flatList.destroy();
                 flatList.remove();
@@ -58,18 +65,16 @@ define([
          * @param isAnimated
          */
         _this.showFlatList = function (isAnimated) {
-            _this.removeFlatList(isAnimated);
+            _this.removeFlatList();
             flatList = new HorizontalFlatList(catalog.flats(_this.getCurrentRooms()));
             _this.holder().container().prepend(flatList);
 
             flatList.open(isAnimated);
         };
 
-
         _this.buildContainer = function () {
             return '<div id="'+holder.containerID().slice(1)+'" class="hutby-category-container"></div>'
         };
-
 
         _this.holder = function () {
             return holder;
