@@ -1,6 +1,8 @@
 /**
  * Created by aliaksei on 03/08/14.
  */
+
+"use strict";
 define([
         'hutby/main/PagerViewHolder',
         'hutby/lib/Utils',

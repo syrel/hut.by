@@ -21,10 +21,8 @@ define([
         var _this = this;
 
         var pager = new Pager(catalog, 'hutby-flat-pager-');
-        var categoryPreview = new CategoryPreview(catalog, 'hutby-flat-category-preview-box-');
+        new CategoryPreview(catalog, 'hutby-flat-category-preview-box-');
         var category = new Category(catalog, 'hutby-category-');
-
-        var openFlatAutomatically = true;
 
         _this.initializeEvents = function() {
             _this.bindAnnouncements();
@@ -42,12 +40,9 @@ define([
         //////////////////////////////////// M A I N ////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////
         _this.switchToMain = function() {
-            //_this.makeAllLinksInactive();
             _this.showOffcanvas();
-            //_this.collapseAllAccordions();
             _this.makeOffcanvasFullWidth();
             _this.disableOffcanvasExit();
-            //pager.show();
         };
 
         _this.bindHeaderLink = function () {
@@ -58,18 +53,13 @@ define([
             });
         };
 
-
         /////////////////////////////////////////////////////////////////////////////
         /////////////////////////////// C A T E G O R Y /////////////////////////////
         /////////////////////////////////////////////////////////////////////////////
         _this.switchToCategory = function(_rooms, openFlat) {
             openFlat = Utils.isUndefined(openFlat) ? false : openFlat;
-
             _this.disableOffcanvasExit();
-
-            categoryPreview.hide(0.1,0, true);
             category.show(_rooms, false, openFlat);
-            //pager.hide(_this.initializeCategoryEvents);
         };
 
         _this.initializeCategoryEvents = function(){
@@ -95,8 +85,6 @@ define([
             switchCategory = Utils.isUndefined(switchCategory) ? true : switchCategory;
 
             if (switchCategory) _this.switchToCategory(flat.getRooms(), false);
-            //_this.makeAllAccordionFlatInactive();
-            //_this.makeAccordionFLatActive(flat);
             category.expandFlat(flat, animation);
         };
 

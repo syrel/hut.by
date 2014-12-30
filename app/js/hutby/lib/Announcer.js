@@ -1,6 +1,8 @@
 /**
  * Created by aliaksei on 07/08/14.
  */
+
+"use strict";
 define(['hutby/lib/Dictionary'], function(Dictionary){
     function Announcer (){
         var _this = this;
