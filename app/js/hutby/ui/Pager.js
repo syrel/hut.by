@@ -4,7 +4,7 @@
 
 "use strict";
 define([
-        'hutby/main/PagerViewHolder',
+        '../main/PagerViewHolder',
         'hutby/lib/Utils',
         'hutby/lib/WindowEvents',
         'hutby/announcements/OnFlatExpanded',
@@ -13,11 +13,18 @@ define([
         'hutby/common/Global',
         'jquery',
         'jquery.animo'
-],
-    function(PagerViewHolder, Utils, WindowEvents,OnFlatExpanded, OnCategoryExpanded, OnCategoryCollapsed, Global, $){
+], function(
+    PagerViewHolder,
+    Utils,
+    WindowEvents,
+    OnFlatExpanded,
+    OnCategoryExpanded,
+    OnCategoryCollapsed,
+    Global,
+    $){
 
     function Pager (catalog, prefix) {
-        var _this = this;
+        var _this = $('<div class="hutby-flat-pager-container"></div>');
 
         var pagerHideEffect = 'zoomOutLeft';
         var pagerShowEffect = 'zoomInLeft';
@@ -45,11 +52,11 @@ define([
         };
 
         _this.onCategoryExpanded = function () {
-            _this.hide();
+            _this.hidePager();
         };
 
         _this.onCategoryCollapsed = function () {
-            _this.show();
+            _this.showPager();
         };
 
         _this.setFlats = function (_flats) {
@@ -105,23 +112,23 @@ define([
             });
         };
 
-        _this.hide = function () {
+        _this.hidePager = function () {
             _this.stopSwapping();
             var duration = Global.isDisplaySmall() ? 0 : pagerHideSpeed;
 
-            holder.container().animoStop();
-            holder.container().animo( { animation: pagerHideEffect, duration: duration }, function() {
-                holder.container().hide(0);
+            _this.animoStop();
+            _this.animo( { animation: pagerHideEffect, duration: duration }, function() {
+                _this.hide(0);
                 _this.updateVisibility();
             });
         };
 
-        _this.show = function () {
+        _this.showPager = function () {
             if (Global.isDisplaySmall()) return;
             _this.createPager();
 
-            holder.container().animoStop();
-            holder.container().show(0).animo({ animation: pagerShowEffect, duration: pagerShowSpeed }, function(){
+            _this.animoStop();
+            _this.show(0).animo({ animation: pagerShowEffect, duration: pagerShowSpeed }, function(){
                 _this.updateVisibility();
                 _this.swap();
             });
@@ -169,8 +176,7 @@ define([
         };
 
         _this.isVisible = function() {
-            if (Utils.isUndefined(holder.container())) return false;
-            return holder.container().is(':visible');
+            return _this.is(':visible');
         };
 
         _this.updateVisibility = function () {
@@ -197,15 +203,14 @@ define([
         };
 
         _this.createPager = function () {
-            if (Utils.isUndefined(holder.container())) {
-                Global.pageContent.append($(_this.buildPager(catalog.allFlats()[currentIndex])));
+            if (Utils.isUndefined(holder.address())) {
+                _this.append($(_this.buildPager(catalog.allFlats()[currentIndex])));
                 _this.initializeEvents();
             }
         };
 
         _this.buildPager = function(flat) {
-            return '<div id="hutby-flat-pager-container" class="hutby-flat-pager-container">'+
-                        '<div id="hutby-flat-pager-photo" class="hutby-flat-pager-photo" style="background-image: url('+flat.getPhoto(0)+');">&nbsp;</div>'+
+            return '<div id="hutby-flat-pager-photo" class="hutby-flat-pager-photo" style="background-image: url('+flat.getPhoto(0)+');">&nbsp;</div>'+
 
                         '<div class="hutby-flat-pager-short-info-container">'+
                             '<a class="hutby-flat-pager-short-info-phone" href="tel:+375293990099"></a>'+
@@ -219,14 +224,14 @@ define([
                         '</div>'+
 
                         '<a id="hutby-flat-pager-arrow-left" class="hutby-flat-pager-arrow-left"></a>'+
-                        '<a id="hutby-flat-pager-arrow-right" class="hutby-flat-pager-arrow-right"></a>'+
-                    '</div>';
+                        '<a id="hutby-flat-pager-arrow-right" class="hutby-flat-pager-arrow-right"></a>';
         };
 
         /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////// I N I T ////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////
         _this.initialize();
+        return _this;
     }
 
     return Pager;

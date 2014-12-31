@@ -5,7 +5,7 @@
 "use strict";
 define([
     'jquery',
-    'hutby/main/Pager',
+    'hutby/ui/Pager',
     'hutby/ui/VerticalTextualFlatList',
     'hutby/ui/CategoryAccordion',
     'hutby/category/CategoryPreview',
@@ -36,13 +36,14 @@ define([
         new CategoryPreview(catalog, 'hutby-flat-category-preview-box-');
         var category = new Category(catalog, 'hutby-category-');
 
+        Global.pageContent.append(pager);
         _this.initializeEvents = function() {
             _this.initializeOffcanvasEvents();
 
             _this.initializeAccordions();
             _this.bindHeaderLink();
             _this.switchToMain();
-            pager.show();
+            pager.showPager();
             //_this.switchToCategory(1, openFlatAutomatically);
             //_this.switchToFlat(catalog.roomFlats(1)[4]);
         };
