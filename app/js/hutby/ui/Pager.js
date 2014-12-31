@@ -4,15 +4,17 @@
 
 "use strict";
 define([
-        '../main/PagerViewHolder',
-        'hutby/lib/Utils',
-        'hutby/lib/WindowEvents',
-        'hutby/announcements/OnFlatExpanded',
-        'hutby/announcements/OnCategoryExpanded',
-        'hutby/announcements/OnCategoryCollapsed',
-        'hutby/common/Global',
-        'jquery',
-        'jquery.animo'
+    'hutby/main/PagerViewHolder',
+    'hutby/lib/Utils',
+    'hutby/lib/WindowEvents',
+    'hutby/announcements/OnFlatExpanded',
+    'hutby/announcements/OnCategoryExpanded',
+    'hutby/announcements/OnCategoryCollapsed',
+    'hutby/common/Global',
+    'hutby/ui/PagerLeftArrow',
+    'hutby/ui/PagerRightArrow',
+    'jquery',
+    'jquery.animo'
 ], function(
     PagerViewHolder,
     Utils,
@@ -21,6 +23,8 @@ define([
     OnCategoryExpanded,
     OnCategoryCollapsed,
     Global,
+    PagerLeftArrow,
+    PagerRightArrow,
     $){
 
     function Pager (catalog, prefix) {
@@ -40,6 +44,9 @@ define([
 
         var currentIndex = 0;
         var currentSpeed;
+
+        var leftArrow = new PagerLeftArrow();
+        var rightArrow = new PagerRightArrow();
 
         var flats = catalog.allFlats();
         var timer;
@@ -189,8 +196,8 @@ define([
 
         _this.initializeEvents = function () {
             _this.updateVisibility();
-            holder.leftArrow().click(_this.leftArrowClick);
-            holder.rightArrow().click(_this.rightArrowClick);
+            leftArrow.click(_this.leftArrowClick);
+            rightArrow.click(_this.rightArrowClick);
             WindowEvents.addOnResizeEvent(_this.windowOnResize);
 
             holder.address().html(flats[currentIndex].getAddress());
@@ -205,6 +212,8 @@ define([
         _this.createPager = function () {
             if (Utils.isUndefined(holder.address())) {
                 _this.append($(_this.buildPager(catalog.allFlats()[currentIndex])));
+                _this.append(leftArrow);
+                _this.append(rightArrow);
                 _this.initializeEvents();
             }
         };
@@ -221,10 +230,7 @@ define([
                             '<p>в Минске</p>'+
                             '<p>в центре</p>'+
                             '<p>у метро</p>'+
-                        '</div>'+
-
-                        '<a id="hutby-flat-pager-arrow-left" class="hutby-flat-pager-arrow-left"></a>'+
-                        '<a id="hutby-flat-pager-arrow-right" class="hutby-flat-pager-arrow-right"></a>';
+                        '</div>';
         };
 
         /////////////////////////////////////////////////////////////////////////////
