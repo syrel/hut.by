@@ -13,6 +13,7 @@ define([
     'hutby/common/Global',
     'hutby/ui/PagerLeftArrow',
     'hutby/ui/PagerRightArrow',
+    'hutby/ui/PagerPhoto',
     'jquery',
     'jquery.animo'
 ], function(
@@ -25,6 +26,7 @@ define([
     Global,
     PagerLeftArrow,
     PagerRightArrow,
+    PagerPhoto,
     $){
 
     function Pager (catalog, prefix) {
@@ -47,6 +49,7 @@ define([
 
         var leftArrow = new PagerLeftArrow();
         var rightArrow = new PagerRightArrow();
+        var photo = new PagerPhoto();
 
         var flats = catalog.allFlats();
         var timer;
@@ -56,6 +59,7 @@ define([
         _this.initialize = function () {
             catalog.announcer().onSendTo(OnCategoryExpanded, _this.onCategoryExpanded, _this);
             catalog.announcer().onSendTo(OnCategoryCollapsed, _this.onCategoryCollapsed, _this);
+            photo.setPhoto(_this.currentFlat().getPhoto(0));
         };
 
         _this.onCategoryExpanded = function () {
@@ -91,11 +95,10 @@ define([
 
         _this.swapImage = function(_imagePath, _callback) {
 
-            holder.photo().after(_this.buildNextPhoto(_imagePath));
-            var newPhoto = holder.photoActive();
-
-            $(holder.photoActiveID()).show(0).animo({ animation: pagerSwapEffect, duration: currentSpeed }, function() {
-                holder.photo().css('background-image', 'url('+_imagePath+')');
+            var newPhoto = _this.buildNextPhoto(_imagePath);
+            photo.after(newPhoto);
+            newPhoto.animo({ animation: pagerSwapEffect, duration: currentSpeed }, function() {
+                photo.setPhoto(_imagePath);
                 newPhoto.remove();
                 _callback()
             });
@@ -191,7 +194,10 @@ define([
         };
 
         _this.buildNextPhoto = function(imagePath) {
-            return '<div id="'+holder.photoActiveID().slice(1)+'" class="hutby-flat-pager-photo active" style="background-image: url('+imagePath+'); display: none;">&nbsp;</div>';
+            var nextPhoto = new PagerPhoto();
+            nextPhoto.beActive();
+            nextPhoto.setPhoto(imagePath);
+            return nextPhoto;
         };
 
         _this.initializeEvents = function () {
@@ -211,6 +217,7 @@ define([
 
         _this.createPager = function () {
             if (Utils.isUndefined(holder.address())) {
+                _this.append(photo);
                 _this.append($(_this.buildPager(catalog.allFlats()[currentIndex])));
                 _this.append(leftArrow);
                 _this.append(rightArrow);
@@ -219,18 +226,16 @@ define([
         };
 
         _this.buildPager = function(flat) {
-            return '<div id="hutby-flat-pager-photo" class="hutby-flat-pager-photo" style="background-image: url('+flat.getPhoto(0)+');">&nbsp;</div>'+
+            return  '<div class="hutby-flat-pager-short-info-container">'+
+                        '<a class="hutby-flat-pager-short-info-phone" href="tel:+375293990099"></a>'+
+                        '<a id="hutby-flat-pager-address" class="hutby-flat-pager-short-info-address" href="#" class="">'+flat.getAddress()+'</a>'+
+                    '</div>'+
 
-                        '<div class="hutby-flat-pager-short-info-container">'+
-                            '<a class="hutby-flat-pager-short-info-phone" href="tel:+375293990099"></a>'+
-                            '<a id="hutby-flat-pager-address" class="hutby-flat-pager-short-info-address" href="#" class="">'+flat.getAddress()+'</a>'+
-                        '</div>'+
-
-                        '<div class="text-center hutby-flat-pager-slogan-container">'+
-                            '<p>в Минске</p>'+
-                            '<p>в центре</p>'+
-                            '<p>у метро</p>'+
-                        '</div>';
+                    '<div class="text-center hutby-flat-pager-slogan-container">'+
+                        '<p>в Минске</p>'+
+                        '<p>в центре</p>'+
+                        '<p>у метро</p>'+
+                    '</div>';
         };
 
         /////////////////////////////////////////////////////////////////////////////
