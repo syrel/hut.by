@@ -28,7 +28,7 @@ define([
 
         _this.initialize = function () {
             innerWrap.append(new OffcanvasAside(catalog));
-            innerWrap.append(new PageContent());
+            innerWrap.append(new PageContent(catalog));
             innerWrap.append(offcanvasExit);
             _this.append(innerWrap);
             _this.updateOffcanvas();

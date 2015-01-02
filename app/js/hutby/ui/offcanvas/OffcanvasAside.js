@@ -6,12 +6,14 @@ define([
     'jquery',
     'hutby/lib/WindowEvents',
     'hutby/announcements/OnMediaSizeChanged',
+    'hutby/announcements/OnFlatExpanded',
     'hutby/ui/offcanvas/OffcanvasMenu',
     'hutby/ui/offcanvas/OffcanvasMenuFooter'
 ], function (
     $,
     WindowEvents,
     OnMediaSizeChanged,
+    OnFlatExpanded,
     OffcanvasMenu,
     OffcanvasMenuFooter
     ){
@@ -24,9 +26,14 @@ define([
             _this.append(new OffcanvasMenuFooter());
             _this.updateOffcanvasWidth();
             WindowEvents.announcer.onSendTo(OnMediaSizeChanged, _this.onMediaSizeChanged, _this);
+            catalog.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
         };
 
         _this.onMediaSizeChanged = function () {
+            _this.updateOffcanvasWidth();
+        };
+
+        _this.onFlatExpanded = function () {
             _this.updateOffcanvasWidth();
         };
 

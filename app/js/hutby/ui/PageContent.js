@@ -11,12 +11,12 @@ define([
     Global,
     OffcanvasMobilePageHeader ){
 
-    function PageContent() {
+    function PageContent(catalog) {
         var _this = $('<div class="hutby-page-content-wrapper"></div>');
         var content = $('<div class="columns hutby-page-content"></div>');
 
         _this.initialize = function() {
-            content.append(new OffcanvasMobilePageHeader());
+            content.append(new OffcanvasMobilePageHeader(catalog));
             _this.append(content);
             Global.registerPageContent(content);
         };
