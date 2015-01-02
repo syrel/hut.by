@@ -4,7 +4,6 @@
 
 "use strict";
 define([
-    'hutby/main/PagerViewHolder',
     'hutby/lib/Utils',
     'hutby/lib/WindowEvents',
     'hutby/announcements/OnFlatExpanded',
@@ -14,10 +13,10 @@ define([
     'hutby/ui/PagerLeftArrow',
     'hutby/ui/PagerRightArrow',
     'hutby/ui/PagerPhoto',
+    'hutby/ui/PagerAddress',
     'jquery',
     'jquery.animo'
 ], function(
-    PagerViewHolder,
     Utils,
     WindowEvents,
     OnFlatExpanded,
@@ -27,9 +26,22 @@ define([
     PagerLeftArrow,
     PagerRightArrow,
     PagerPhoto,
+    PagerAddress,
     $){
 
-    function Pager (catalog, prefix) {
+    function ShortInfo () {
+        return $('<div class="hutby-flat-pager-short-info-container"><a class="hutby-flat-pager-short-info-phone" href="tel:+375293990099"></a></div>');
+    }
+
+    function Slogan () {
+        return $('<div class="text-center hutby-flat-pager-slogan-container">'+
+                    '<p>в Минске</p>'+
+                    '<p>в центре</p>'+
+                    '<p>у метро</p>'+
+                '</div>');
+    }
+
+    function Pager (catalog) {
         var _this = $('<div class="hutby-flat-pager-container"></div>');
 
         var pagerHideEffect = 'zoomOutLeft';
@@ -42,14 +54,14 @@ define([
         var timeout = 5000;
         var defaultSpeed = 0.5;
 
-        var holder = new PagerViewHolder(prefix);
-
         var currentIndex = 0;
         var currentSpeed;
 
         var leftArrow = new PagerLeftArrow();
         var rightArrow = new PagerRightArrow();
         var photo = new PagerPhoto();
+        var address = new PagerAddress();
+        var initialized = false;
 
         var flats = catalog.allFlats();
         var timer;
@@ -60,6 +72,7 @@ define([
             catalog.announcer().onSendTo(OnCategoryExpanded, _this.onCategoryExpanded, _this);
             catalog.announcer().onSendTo(OnCategoryCollapsed, _this.onCategoryCollapsed, _this);
             photo.setPhoto(_this.currentFlat().getPhoto(0));
+            address.setFlat(_this.currentFlat());
         };
 
         _this.onCategoryExpanded = function () {
@@ -114,8 +127,8 @@ define([
             Utils.imagePreload(flats[_index].getPhoto(0), function() {
 
                 _this.swapImage(flats[_index].getPhoto(0), function() {
-                    holder.address().html(flats[_index].getAddress());
                     currentIndex = _index;
+                    address.setFlat(_this.currentFlat());
                     block = false;
                     _callback();
                 });
@@ -206,36 +219,21 @@ define([
             rightArrow.click(_this.rightArrowClick);
             WindowEvents.addOnResizeEvent(_this.windowOnResize);
 
-            holder.address().html(flats[currentIndex].getAddress());
-            holder.address().click(function(e){
-                e.preventDefault();
-                _this.currentFlat().expand(false, true);
-            });
-
             _this.swap();
         };
 
         _this.createPager = function () {
-            if (Utils.isUndefined(holder.address())) {
+            if (!initialized) {
                 _this.append(photo);
-                _this.append($(_this.buildPager(catalog.allFlats()[currentIndex])));
+                var shortInfo = new ShortInfo();
+                shortInfo.append(address);
+                _this.append(shortInfo);
+                _this.append(new Slogan());
                 _this.append(leftArrow);
                 _this.append(rightArrow);
                 _this.initializeEvents();
+                initialized = true;
             }
-        };
-
-        _this.buildPager = function(flat) {
-            return  '<div class="hutby-flat-pager-short-info-container">'+
-                        '<a class="hutby-flat-pager-short-info-phone" href="tel:+375293990099"></a>'+
-                        '<a id="hutby-flat-pager-address" class="hutby-flat-pager-short-info-address" href="#" class="">'+flat.getAddress()+'</a>'+
-                    '</div>'+
-
-                    '<div class="text-center hutby-flat-pager-slogan-container">'+
-                        '<p>в Минске</p>'+
-                        '<p>в центре</p>'+
-                        '<p>у метро</p>'+
-                    '</div>';
         };
 
         /////////////////////////////////////////////////////////////////////////////

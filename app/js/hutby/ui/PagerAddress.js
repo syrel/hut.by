@@ -10,7 +10,6 @@ define(['jquery'], function ($) {
         var flat = _flat;
 
         _this.initialize = function () {
-            _this.updateLink();
             _this.click(function(e) {
                 e.preventDefault();
                 _this.getFlat().expand(false, true);
@@ -29,6 +28,8 @@ define(['jquery'], function ($) {
         _this.updateLink = function () {
             _this.text(_this.getFlat().getAddress());
         };
+
+        _this.initialize();
 
         return _this;
     }
