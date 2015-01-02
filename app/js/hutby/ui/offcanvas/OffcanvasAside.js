@@ -4,10 +4,14 @@
 
 define([
     'jquery',
+    'hutby/lib/WindowEvents',
+    'hutby/announcements/OnMediaSizeChanged',
     'hutby/ui/offcanvas/OffcanvasMenu',
     'hutby/ui/offcanvas/OffcanvasMenuFooter'
 ], function (
     $,
+    WindowEvents,
+    OnMediaSizeChanged,
     OffcanvasMenu,
     OffcanvasMenuFooter
     ){
@@ -18,6 +22,18 @@ define([
         _this.initialize = function () {
             _this.append(new OffcanvasMenu(catalog));
             _this.append(new OffcanvasMenuFooter());
+            _this.updateOffcanvasWidth();
+            WindowEvents.announcer.onSendTo(OnMediaSizeChanged, _this.onMediaSizeChanged, _this);
+        };
+
+        _this.onMediaSizeChanged = function () {
+            _this.updateOffcanvasWidth();
+        };
+
+        _this.updateOffcanvasWidth = function () {
+            if (WindowEvents.isSmall && !catalog.isCategoryExpanded()) {
+                _this.addClass('left-off-canvas-menu-full-width');
+            } else _this.removeClass('left-off-canvas-menu-full-width');
         };
 
         _this.initialize();

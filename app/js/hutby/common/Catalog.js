@@ -5,24 +5,28 @@ define ([
     'hutby/common/Flat',
     'hutby/lib/Utils',
     'hutby/lib/Dictionary',
+    'hutby/lib/WindowEvents',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
     'hutby/announcements/OnCategoryExpanded',
     'hutby/announcements/OnCategoryCollapsed',
     'hutby/announcements/OnCategoryPreviewShow',
     'hutby/announcements/OnCategoryPreviewHide',
+    'hutby/announcements/OnMediaSizeChanged',
     'hutby/lib/Announcer'
 
 ], function(
     Flat,
     Utils,
     Dictionary,
+    WindowEvents,
     OnFlatExpanded,
     OnFlatCollapsed,
     OnCategoryExpanded,
     OnCategoryCollapsed,
     OnCategoryPreviewShow,
     OnCategoryPreviewHide,
+    OnMediaSizeChanged,
     Announcer
 ){
 
@@ -106,7 +110,8 @@ define ([
             expandFlat = Utils.isUndefined(expandFlat) ? true : expandFlat;
             if (_this.expandedCategory() !== rooms) {
                 expandedCategory = rooms;
-                if (expandFlat) _this.flats(_this.expandedCategory())[0].expand();
+                if (expandFlat && !WindowEvents.isSmall)
+                    _this.flats(_this.expandedCategory())[0].expand();
                 _this.announcer().announce(new OnCategoryExpanded(rooms, animated));
             }
         };

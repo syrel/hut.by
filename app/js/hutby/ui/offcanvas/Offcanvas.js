@@ -4,12 +4,18 @@
 
 define([
     'jquery',
+    'hutby/lib/WindowEvents',
+    'hutby/announcements/OnMediaSizeChanged',
+    'hutby/announcements/OnFlatExpanded',
     'hutby/ui/offcanvas/OffcanvasAside',
     'hutby/ui/PageContent',
     'hutby/common/Global'
 
 ],function(
     $,
+    WindowEvents,
+    OnMediaSizeChanged,
+    OnFlatExpanded,
     OffcanvasAside,
     PageContent,
     Global){
@@ -25,7 +31,22 @@ define([
             innerWrap.append(new PageContent());
             innerWrap.append(offcanvasExit);
             _this.append(innerWrap);
+            _this.updateOffcanvas();
+            WindowEvents.announcer.onSendTo(OnMediaSizeChanged, _this.onMediaSizeChanged, _this);
+            catalog.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
+        };
 
+        _this.onMediaSizeChanged = function () {
+            if (!WindowEvents.isSmall) {
+                _this.showOffcanvas();
+            }
+        };
+
+        _this.onFlatExpanded = function () {
+            _this.hideOffcanvas();
+        };
+
+        _this.updateOffcanvas = function () {
             _this.showOffcanvas();
         };
 
@@ -34,7 +55,7 @@ define([
         };
 
         _this.hideOffcanvas = function () {
-            if (Global.isDisplaySmall()) setTimeout(function(){
+            if (Global.isDisplayOnlySmall()) setTimeout(function(){
                 _this.removeClass(visibilityClass);
             }, 0);
         };

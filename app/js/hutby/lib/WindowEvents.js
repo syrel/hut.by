@@ -2,8 +2,16 @@
  * Created by aliaksei on 03/08/14.
  */
 
-define([''], function(){
+define([
+    'hutby/common/Global',
+    'hutby/lib/Announcer',
+    'hutby/announcements/OnMediaSizeChanged'
+], function(
+    Global,
+    Announcer,
+    OnMediaSizeChanged){
     function WindowEvents() {}
+
     WindowEvents.addEvent = function(elem, type, eventHandle) {
         if (elem == null || typeof(elem) === 'undefined') return;
         if ( elem.addEventListener ) {
@@ -18,6 +26,18 @@ define([''], function(){
     WindowEvents.addOnResizeEvent = function (__callback) {
         WindowEvents.addEvent(window, "resize", __callback);
     };
+
+    WindowEvents.isSmall = Global.isDisplayOnlySmall();
+
+    WindowEvents.announcer = new Announcer();
+
+    WindowEvents.addOnResizeEvent(function(){
+        var currentIsSmall = Global.isDisplayOnlySmall();
+        if (WindowEvents.isSmall !== currentIsSmall) {
+            WindowEvents.isSmall = currentIsSmall;
+            WindowEvents.announcer.announce(new OnMediaSizeChanged(WindowEvents.isSmall));
+        }
+    });
 
     return WindowEvents;
 });

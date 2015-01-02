@@ -28,4 +28,6 @@ require.config({
     }
 });
 
-requirejs(['main']);
+requirejs(['jquery','foundation','foundation.offcanvas', 'foundation.accordion'], function(){
+    requirejs(['main']);
+});

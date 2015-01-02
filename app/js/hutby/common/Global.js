@@ -23,6 +23,10 @@ define(['jquery'], function($){
         return matchMedia(Foundation.media_queries['small']).matches && matchMedia(Foundation.media_queries['medium']).matches;
     };
 
+    Global.isDisplayOnlySmall = function () {
+        return Global.isDisplaySmall() && !Global.isDisplayMedium();
+    };
+
     Global.getData = function (element) {
         return Foundation.utils.data_options(element);
     };

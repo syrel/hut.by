@@ -18,24 +18,6 @@ define([
     Catalog,
     $) {
 
-    Foundation.global.namespace = '';
-    Foundation.utils.register_media('small', 'foundation-mq-small');
-    Foundation.utils.register_media('medium', 'foundation-mq-medium');
-
-    $(document).foundation({
-        offcanvas : {
-            // Sets method in which offcanvas opens.
-            // [ move | overlap_single | overlap ]
-            open_method: 'overlap',
-            // Should the menu close when a menu link is clicked?
-            // [ true | false ]
-            close_on_click : false
-        },
-        accordion : {
-            toggleable: false
-        }
-    });
-
     var catalog = new Catalog();
 
     var flat = new Flat();
@@ -120,6 +102,20 @@ define([
     catalog.addFlat(flat);
 
     $('body').append(new Offcanvas(catalog));
+
+    $(document).foundation({
+        offcanvas : {
+            // Sets method in which offcanvas opens.
+            // [ move | overlap_single | overlap ]
+            open_method: 'overlap',
+            // Should the menu close when a menu link is clicked?
+            // [ true | false ]
+            close_on_click : false
+        },
+        accordion : {
+            toggleable: false
+        }
+    });
 
     var navigation = new Navigation(catalog);
     navigation.initializeEvents();
