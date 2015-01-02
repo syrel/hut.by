@@ -5,7 +5,7 @@
 "use strict";
 define([
     'jquery',
-    'hutby/ui/Pager',
+    'hutby/ui/pager/Pager',
     'hutby/ui/VerticalTextualFlatList',
     'hutby/ui/CategoryAccordion',
     'hutby/category/CategoryPreview',
@@ -38,11 +38,6 @@ define([
 
         Global.pageContent.append(pager);
         _this.initializeEvents = function() {
-            _this.initializeOffcanvasEvents();
-
-            _this.initializeAccordions();
-            _this.bindHeaderLink();
-            _this.switchToMain();
             pager.showPager();
             //_this.switchToCategory(1, openFlatAutomatically);
             //_this.switchToFlat(catalog.roomFlats(1)[4]);
@@ -51,51 +46,12 @@ define([
         /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////// M A I N ////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////
-        _this.switchToMain = function() {
-            _this.showOffcanvas();
-            _this.makeOffcanvasFullWidth();
-            _this.disableOffcanvasExit();
-        };
 
-        _this.bindHeaderLink = function () {
-            Global.headerLink.click(function(e){
-                e.preventDefault();
-                if (catalog.isCategoryExpanded())
-                    catalog.collapseCategory(true);
-            });
-        };
-
-        /////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////// C A T E G O R Y /////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////
-        _this.initializeCategoryEvents = function(){
-            _this.bindCategoryHeaderLink();
-        };
-
-        _this.bindCategoryHeaderLink = function () {
-            Global.headerLink.click(function(e){
-                e.preventDefault();
-                catalog.collapseCategory(true);
-            });
-        };
-
-        /////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////// L I N K S ////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////
-        /**
-         * Initializes corresponding accordions for each category
-         */
-        _this.initializeAccordions = function () {
-            var root = $('dl.accordion');
-            $.each(catalog.possibleRooms(), function(index, each){
-                root.append(new CategoryAccordion(catalog, each));
-            });
-        };
 
         /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////// O F F C A N V A S ////////////////////////////
         /////////////////////////////////////////////////////////////////////////////
-        _this.showOffcanvas = function () {
+        /*_this.showOffcanvas = function () {
             Global.offCanvas.addClass('offcanvas-overlap');
         };
 
@@ -136,7 +92,7 @@ define([
 
         _this.enableOffcanvasExit = function () {
             $('#exit-off-canvas').data('lol', 'false');
-        };
+        };*/
     }
 
     return Navigation;

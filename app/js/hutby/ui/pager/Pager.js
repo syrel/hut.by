@@ -10,10 +10,10 @@ define([
     'hutby/announcements/OnCategoryExpanded',
     'hutby/announcements/OnCategoryCollapsed',
     'hutby/common/Global',
-    'hutby/ui/PagerLeftArrow',
-    'hutby/ui/PagerRightArrow',
-    'hutby/ui/PagerPhoto',
-    'hutby/ui/PagerAddress',
+    'hutby/ui/pager/PagerLeftArrow',
+    'hutby/ui/pager/PagerRightArrow',
+    'hutby/ui/pager/PagerPhoto',
+    'hutby/ui/pager/PagerAddress',
     'jquery',
     'jquery.animo'
 ], function(

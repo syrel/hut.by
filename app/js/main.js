@@ -2,7 +2,21 @@
  * Created by aliaksei on 02/08/14.
  */
 
-define(['hutby/common/Navigation', 'hutby/common/Flat', 'hutby/common/Catalog', 'jquery', 'foundation', 'foundation.offcanvas', 'foundation.accordion'], function(Navigation, Flat, Catalog, $) {
+define([
+    'hutby/ui/offcanvas/Offcanvas',
+    'hutby/common/Navigation',
+    'hutby/common/Flat',
+    'hutby/common/Catalog',
+    'jquery',
+    'foundation',
+    'foundation.offcanvas',
+    'foundation.accordion'
+], function(
+    Offcanvas,
+    Navigation,
+    Flat,
+    Catalog,
+    $) {
 
     Foundation.global.namespace = '';
     Foundation.utils.register_media('small', 'foundation-mq-small');
@@ -104,6 +118,8 @@ define(['hutby/common/Navigation', 'hutby/common/Flat', 'hutby/common/Catalog', 
     flat.setCost('90$');
 
     catalog.addFlat(flat);
+
+    $('body').append(new Offcanvas(catalog));
 
     var navigation = new Navigation(catalog);
     navigation.initializeEvents();
