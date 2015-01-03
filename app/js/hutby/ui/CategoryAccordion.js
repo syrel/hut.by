@@ -28,7 +28,7 @@ define([
         };
 
         /**
-         * Configurates header link and sets event callbacks for click and hover/unhover actions
+         * Configures header link and sets event callbacks for click and hover/unhover actions
          */
         _this.initializeHeaderLink = function () {
             _this.alignLinkCenter();
@@ -36,7 +36,6 @@ define([
             headerLink.click(function(e){
                 e.preventDefault();
                 catalog.expandCategory(rooms, true);
-                //catalog.flats(rooms)[0].expand(catalog.isCategoryExpanded(), !catalog.isCategoryExpanded());
                 return false;
             });
             headerLink.hover(
@@ -73,6 +72,12 @@ define([
             flatList.collapse();
         };
 
+		/**
+         * I'm called when a category is expanded. As a result
+		 * header link will aligned to the left and accordion
+		 * will be expanded if I'm that expanded category, otherwise
+		 * collapsed
+         */
         _this.onCategoryExpanded = function(ann) {
             _this.alignLinkLeft();
             if (ann.rooms() === rooms)
@@ -81,15 +86,26 @@ define([
                 _this.collapse();
         };
 
+		/**
+         * I'm called when a category is collapse. As a result
+		 * header link will aligned to the center and accordion
+		 * will be collapsed
+         */
         _this.onCategoryCollapsed = function(){
             _this.alignLinkCenter();
             _this.collapse();
         };
 
+		/**
+         * Aligns category header's link text to the center
+         */
         _this.alignLinkCenter = function() {
            headerLink.css('text-align','center');
         };
-
+		
+		/**
+         * Aligns category header's link text to the left
+         */
         _this.alignLinkLeft = function() {
             headerLink.css('text-align','left');
         };
