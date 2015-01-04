@@ -153,6 +153,11 @@ define([
             return catalog;
         };
 
+        /**
+         * Collapses flat if and only if it is expanded. Notifies catalog
+         * about collapsed flat.
+         * @param isAnimated - true to use animation for collapsing
+         */
         _this.collapse = function (isAnimated) {
             if (!_this.isExpanded()) return;
             isExpanded = false;

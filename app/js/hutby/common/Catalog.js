@@ -92,6 +92,10 @@ define ([
             return expandedFlat;
         };
 
+        /**
+         * Tests if any flat is expanded.
+         * @returns {boolean} - true if flat is expanded. Otherwise false
+         */
         _this.isFlatExpanded = function () {
             return !Utils.isUndefined(_this.expandedFlat());
         };
@@ -116,6 +120,11 @@ define ([
             }
         };
 
+        /**
+         * Notifies all listeners that it is necessary to show category preview
+         * @param rooms - category preview to show
+         * @param anchor - an anchor element, that should be used to position preview
+         */
         _this.showCategoryPreview = function (rooms, anchor) {
             _this.announcer().announce(new OnCategoryPreviewShow(rooms, anchor));
         };
