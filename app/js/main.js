@@ -118,6 +118,5 @@ define([
         }
     });
 
-    var navigation = new Navigation(catalog);
-    navigation.initializeEvents();
+    new Navigation(catalog);
 });

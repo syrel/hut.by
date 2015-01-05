@@ -73,6 +73,7 @@ define([
             catalog.announcer().onSendTo(OnCategoryCollapsed, _this.onCategoryCollapsed, _this);
             photo.setPhoto(_this.currentFlat().getPhoto(0));
             address.setFlat(_this.currentFlat());
+            if (!catalog.isCategoryExpanded()) _this.showPager(false);
         };
 
         _this.onCategoryExpanded = function () {
@@ -146,12 +147,14 @@ define([
             });
         };
 
-        _this.showPager = function () {
+        _this.showPager = function (animated) {
             if (Global.isDisplaySmall()) return;
+            animated = Utils.isUndefined(animated) ? true : animated;
+
             _this.createPager();
 
             _this.animoStop();
-            _this.show(0).animo({ animation: pagerShowEffect, duration: pagerShowSpeed }, function(){
+            _this.show(0).animo({ animation: pagerShowEffect, duration: animated ? pagerShowSpeed : 0}, function(){
                 _this.updateVisibility();
                 _this.swap();
             });
@@ -233,6 +236,7 @@ define([
                 _this.append(rightArrow);
                 _this.initializeEvents();
                 initialized = true;
+                Global.pageContent.append(_this);
             }
         };
 
