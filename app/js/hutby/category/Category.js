@@ -11,6 +11,7 @@ define([
     'hutby/lib/Utils',
     'hutby/common/Global',
     'hutby/announcements/OnFlatExpanded',
+    'hutby/announcements/OnCategoryExpanded',
     'jquery',
     'jquery.animo'
 ], function (
@@ -21,6 +22,7 @@ define([
     Utils,
     Global,
     OnFlatExpanded,
+    OnCategoryExpanded,
     $) {
 
     function Category (catalog, prefix) {
@@ -28,18 +30,20 @@ define([
 
         var holder = new CategoryViewHolder(prefix);
 
-        var currentRooms;
-
         var flatList;
         var flatDescription;
 
         _this.initialize = function() {
-            catalog.announcer().onSendTo(OnFlatExpanded, _this.onExpandFlat, _this);
+            catalog.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
+            catalog.announcer().onSendTo(OnCategoryExpanded, _this.onCategoryExpanded, _this);
         };
 
-        _this.onExpandFlat = function (ann) {
-            _this.show(ann.flat().getRooms(), false, false);
+        _this.onFlatExpanded = function (ann) {
             _this.expandFlat(ann.flat(), ann.animation());
+        };
+
+        _this.onCategoryExpanded = function(ann) {
+            _this.showFlatList(ann.animation());
         };
 
         _this.createContainer = function () {
@@ -66,7 +70,7 @@ define([
          */
         _this.showFlatList = function (isAnimated) {
             _this.removeFlatList();
-            flatList = new HorizontalFlatList(catalog.flats(_this.getCurrentRooms()));
+            flatList = new HorizontalFlatList(catalog.flats(catalog.expandedCategory()));
             _this.holder().container().prepend(flatList);
 
             flatList.open(isAnimated);
@@ -78,19 +82,6 @@ define([
 
         _this.holder = function () {
             return holder;
-        };
-
-        _this.show = function (rooms, animate, openFlat) {
-            if (currentRooms === rooms) return;
-            openFlat = Utils.isUndefined(openFlat) ? false : openFlat;
-
-            currentRooms = rooms;
-            _this.showFlatList(animate);
-
-            if (openFlat) {
-                catalog.announcer().announce(new OnFlatExpanded(catalog.flats(rooms)[0], animate, false));
-            }
-            else _this.removeFlat(animate);
         };
 
         _this.removeFlat = function (animate, _callback) {
@@ -110,10 +101,6 @@ define([
 
         _this.scrollToDescription = function () {
             holder.container().animate({scrollTop: $(flatDescription.holder().containerID()).offset().top},500);
-        };
-
-        _this.getCurrentRooms = function () {
-            return currentRooms;
         };
 
         _this.initialize();

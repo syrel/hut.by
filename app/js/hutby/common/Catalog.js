@@ -115,7 +115,7 @@ define ([
             if (_this.expandedCategory() !== rooms) {
                 expandedCategory = rooms;
                 if (expandFlat && !WindowEvents.isSmall)
-                    _this.flats(_this.expandedCategory())[0].expand();
+                    _this.flats(_this.expandedCategory())[0].expand(animated);
                 _this.announcer().announce(new OnCategoryExpanded(rooms, animated));
             }
         };

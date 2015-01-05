@@ -35,7 +35,7 @@ define([
             headerLink.text(Strings.categoryName(rooms));
             headerLink.click(function(e){
                 e.preventDefault();
-                catalog.expandCategory(rooms, true);
+                catalog.expandCategory(rooms, catalog.isCategoryExpanded());
                 return false;
             });
             headerLink.hover(
