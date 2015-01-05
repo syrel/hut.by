@@ -5,7 +5,8 @@
     name: 'almond',
     include: ['main'],
     insertRequire: ['main'],
-    out: 'js/main.min.js',
+    out: 'js/app.min.js',
     wrap: true,
+    preserveLicenseComments: false,
     fileExclusionRegExp: /^(r|build)\.js$/
 })

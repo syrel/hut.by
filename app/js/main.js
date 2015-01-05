@@ -10,7 +10,8 @@ define([
     'jquery',
     'foundation',
     'foundation.offcanvas',
-    'foundation.accordion'
+    'foundation.accordion',
+    'modernizr'
 ], function(
     Offcanvas,
     Navigation,

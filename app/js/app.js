@@ -6,6 +6,7 @@ require.config({
     baseUrl: 'js/',
 
     paths: {
+        'modernizr' : 'vendor/modernizr',
         'jquery' : 'vendor/jquery',
         'jquery.animo' : 'vendor/jquery.animo',
         'jquery.cookie' : 'vendor/jquery.cookie',
@@ -29,6 +30,6 @@ require.config({
     }
 });
 
-requirejs(['jquery','foundation','foundation.offcanvas', 'foundation.accordion'], function(){
+requirejs(['modernizr','jquery','foundation','foundation.offcanvas', 'foundation.accordion'], function(){
     requirejs(['main']);
 });
