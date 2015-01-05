@@ -1,6 +1,7 @@
 /**
  * Created by aliaksei on 03/08/14.
  */
+
 require.config({
     baseUrl: 'js/',
 
