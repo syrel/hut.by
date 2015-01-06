@@ -54,19 +54,31 @@ define([
             _this.append(flatList);
         };
 
+        /**
+         * Styles header link to look like active
+         */
         _this.makeLinkActive = function () {
             headerLink.addClass('active');
         };
 
+        /**
+         * Style header link to look like inactive
+         */
         _this.makeLinkInactive = function () {
             headerLink.removeClass('active');
         };
 
+        /**
+         * Expands accordion and makes header link active
+         */
         _this.expand = function () {
             _this.makeLinkActive();
             flatList.expand();
         };
 
+        /**
+         * Collapses accordion and makes header link inactive
+         */
         _this.collapse = function () {
             _this.makeLinkInactive();
             flatList.collapse();
