@@ -16,14 +16,14 @@ define([
      * @constructor
      */
     function HorizontalFlatList(flats){
+        var _this = $('<div class="hutby-category-flat-list"></div>');
+        var flatList = $('<div></div>');
+
         var flatLinkMaxWidth = 19;
-        var listID = 'hutby-category-flat-list';
         var activeLinkID = '.active';
         var listShowEffect = 'moveInLeft';
         var listShowSpeed = 0.4;
 
-        var _this = $('<div class="'+listID+'"></div>');
-        var flatList = $('<div></div>');
 
         var flatLinks = new Dictionary();
 
@@ -102,10 +102,20 @@ define([
             _this.setLinkActive(ann.flat());
         };
 
+        /**
+         * Event handler on flat collapsed action
+         * @param ann
+         */
         _this.onFlatCollapsed = function(ann) {
             _this.setLinkInactive(ann.flat());
         };
 
+        /**
+         * Adds photo links for each flat to the dom and
+         * sets corresponding on click events
+         * @param animate
+         * @param _callback
+         */
         _this.open = function (animate ,_callback) {
             var flatLinkWidth = _this.calculateLinkWidth();
 

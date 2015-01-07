@@ -13,12 +13,21 @@ define([
 
 ],function($, VerticalTextualFlatList, OnCategoryExpanded, OnCategoryCollapsed, CategoryPreview, Strings){
 
+    /**
+     * @param catalog - catalog holding all flats
+     * @param rooms - flats with how much rooms will be shown in this accordion
+     * @returns {*|HTMLElement}
+     * @constructor
+     */
     function CategoryAccordion(catalog, rooms) {
         var _this = $('<dd class="accordion-navigation"></dd>');
         var flats = catalog.flats(rooms);
         var flatList = new VerticalTextualFlatList(flats);
         var headerLink = $('<a class="side-nav-link category-link" href="/index.html"></a>');
 
+        /**
+         * Constructor
+         */
         _this.initialize = function () {
             _this.initializeHeaderLink();
             _this.initializeFlatList();
@@ -50,6 +59,9 @@ define([
             _this.append(headerLink);
         };
 
+        /**
+         * Adds flats list to the dom
+         */
         _this.initializeFlatList = function () {
             _this.append(flatList);
         };
