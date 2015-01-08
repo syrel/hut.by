@@ -28,7 +28,7 @@ define([
         var flatLinks = new Dictionary();
 
         /**
-         * Initialize method, executed during object construction
+         * Initializing method, executed during object construction
          */
         _this.initialize = function () {
             _this.append(flatList);

@@ -37,11 +37,19 @@ define([
         };
 
         /**
-         * Configures header link and sets event callbacks for click and hover/unhover actions
+         * Configures header link
          */
         _this.initializeHeaderLink = function () {
             _this.alignLinkCenter();
             headerLink.text(Strings.categoryName(rooms));
+            _this.initializeHeaderLinkEvents();
+            _this.append(headerLink);
+        };
+
+        /**
+         * Sets event listeners for click and hover/unhover actions
+         */
+        _this.initializeHeaderLinkEvents = function () {
             headerLink.click(function(e){
                 e.preventDefault();
                 catalog.expandCategory(rooms, catalog.isCategoryExpanded());
@@ -55,8 +63,6 @@ define([
                     catalog.hideCategoryPreview(rooms, $(this));
                 }
             );
-
-            _this.append(headerLink);
         };
 
         /**

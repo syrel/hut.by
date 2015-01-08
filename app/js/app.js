@@ -6,6 +6,7 @@ require.config({
     baseUrl: 'js/',
 
     paths: {
+        'polymorphism' : 'hutby/lib/Polymorphism',
         'modernizr' : 'vendor/modernizr',
         'jquery' : 'vendor/jquery',
         'jquery.animo' : 'vendor/jquery.animo',
@@ -15,10 +16,13 @@ require.config({
         'jquery.jscrollpane' : 'vendor/jquery.jscrollpane',
         'foundation' : 'foundation/foundation',
         'foundation.offcanvas' : 'foundation/foundation.offcanvas',
-        'foundation.accordion' : 'foundation/foundation.accordion'
+        'foundation.accordion' : 'foundation/foundation.accordion',
+        'dom' : 'hutby/lib/dom/Dom',
+        'div' : 'hutby/lib/dom/Div'
     },
 
     shim: {
+        'polymorphism' : {},
         'jquery.animo' : ['jquery'],
         'jquery.cookie' : ['jquery'],
         'jquery.mousewheel' : ['jquery'],
