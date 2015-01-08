@@ -21,12 +21,11 @@ define([
         /**
          * Initializing method, executed during object construction
          */
-        _this.initialize = override(_this.initialize,function() {
-            this.super();
+        _this.initialize = function() {
             content.append(new OffcanvasMobilePageHeader(catalog));
             _this.append(content);
             Global.registerPageContent(content);
-        });
+        };
 
         _this.initialize();
 
