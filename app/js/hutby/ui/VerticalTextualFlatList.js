@@ -4,12 +4,18 @@
 
 define([
     'jquery',
+    'ul',
+    'li',
+    'a',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
     'hutby/lib/Utils',
     'hutby/lib/Dictionary'
 ],function(
     $,
+    Ul,
+    Li,
+    A,
     OnFlatExpanded,
     OnFlatCollapsed,
     Utils,
@@ -21,9 +27,9 @@ define([
      * @param flats - array of Flat models to be displayed
      * @constructor
      */
-    function VerticalTextualFlatList(flats){
+    function VerticalTextualFlatList(flats) {
 
-        var _this = $('<ul class="content"></ul>');
+        var _this = new Ul().class('content');
 
         var flatLinks = new Dictionary();
 
@@ -39,6 +45,9 @@ define([
             _this.build();
         };
 
+        /**
+         * Creates and adds to the dom links for each flat
+         */
         _this.build = function () {
             $.each(flats, function(index, flat) {
                 _this.addLinkFor(flat).click(function(e){
@@ -54,7 +63,7 @@ define([
          * @returns {*|HTMLElement}
          */
         _this.buildLinkFor = function (_flat) {
-            return $('<li><a href="'+_flat.getLink()+'">'+_flat.getAddress()+'</a></li>');
+            return new Li().add(new A().href(_flat.getLink()).text(_flat.getAddress()));
         };
 
         /**
@@ -75,7 +84,7 @@ define([
          * @param flat
          */
         _this.setLinkActive = function(flat) {
-            flatLinks.get(flat).find('a').addClass('active-flat');
+            flatLinks.get(flat).findMe('a').active(true);
         };
 
         /**
@@ -83,7 +92,7 @@ define([
          * @param flat
          */
         _this.setLinkInactive = function (flat) {
-            flatLinks.get(flat).find('a').removeClass('active-flat');
+            flatLinks.get(flat).findMe('a').active(false);
         };
 
         /**
@@ -99,11 +108,11 @@ define([
         };
 
         _this.expand = function () {
-            _this.addClass('active');
+            _this.active(true);
         };
 
         _this.collapse = function () {
-            _this.removeClass('active');
+            _this.active(false);
         };
 
         /**

@@ -75,8 +75,14 @@ $footer-height: $footer-link-count * $footer-link-height + 3 * $footer-padding-h
 
   dd {
 
+    a {
+      &.active {
+        color: $active-color;
+        text-shadow: 0px 0px 30px $active-color;
+      }
+    }
+
     ul {
-      //list-style-type: circle;
 
       li {
         text-align: left;
@@ -84,9 +90,11 @@ $footer-height: $footer-link-count * $footer-link-height + 3 * $footer-padding-h
         font-size: rem-calc(14.5);
 
         a {
-          color: rgba(255,255,255,0.85) !important;
+          color: $primary-color;
 
-          &.active-flat {
+          &.active {
+            text-shadow: $body-text-shadow;
+
             &:after {
               content: "//";
               color: $active-color;
@@ -102,18 +110,8 @@ $footer-height: $footer-link-count * $footer-link-height + 3 * $footer-padding-h
     }
   }
 
-  .category-link.active {
-    color: $active-color !important;
-    text-shadow: 0px 0px 30px $active-color;
-  }
-
   ul {
     @extend .side-nav;
-
-    a.active {
-      color: $active-color !important;
-      text-shadow: 0px 0px 30px $active-color;
-    }
   }
 
   .#{$prefix}-sidenav-footer-position-helper {/* see page-content */}
