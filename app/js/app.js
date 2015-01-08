@@ -18,11 +18,12 @@ require.config({
         'foundation' : 'foundation/foundation',
         'foundation.offcanvas' : 'foundation/foundation.offcanvas',
         'foundation.accordion' : 'foundation/foundation.accordion',
+        'a' : 'hutby/lib/dom/A',
+        'dd' : 'hutby/lib/dom/Dd',
         'dom' : 'hutby/lib/dom/Dom',
         'div' : 'hutby/lib/dom/Div',
-        'ul' : 'hutby/lib/dom/Ul',
         'li' : 'hutby/lib/dom/Li',
-        'a' : 'hutby/lib/dom/A'
+        'ul' : 'hutby/lib/dom/Ul'
     },
 
     shim: {

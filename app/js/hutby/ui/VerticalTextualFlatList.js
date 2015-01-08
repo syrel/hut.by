@@ -3,7 +3,6 @@
  */
 
 define([
-    'jquery',
     'ul',
     'li',
     'a',
@@ -12,7 +11,6 @@ define([
     'hutby/lib/Utils',
     'hutby/lib/Dictionary'
 ],function(
-    $,
     Ul,
     Li,
     A,

@@ -43,6 +43,16 @@ define(['jquery', 'hutby/lib/Utils'], function ($, Utils) {
             return _this;
         };
 
+        _this.textAlignLeft = function () {
+           _this.css('text-align','left');
+            return _this;
+        };
+
+        _this.textAlignCenter = function () {
+            _this.css('text-align','center');
+            return _this;
+        };
+
         // Calling constructor
         _this.initialize();
 

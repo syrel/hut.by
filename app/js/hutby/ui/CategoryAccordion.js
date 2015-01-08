@@ -4,14 +4,22 @@
 
 "use strict";
 define([
-    'jquery',
+    'a',
+    'dd',
     'hutby/ui/VerticalTextualFlatList',
     'hutby/announcements/OnCategoryExpanded',
     'hutby/announcements/OnCategoryCollapsed',
     'hutby/category/CategoryPreview',
     'hutby/common/Strings'
 
-],function($, VerticalTextualFlatList, OnCategoryExpanded, OnCategoryCollapsed, CategoryPreview, Strings){
+],function(
+    A,
+    Dd,
+    VerticalTextualFlatList,
+    OnCategoryExpanded,
+    OnCategoryCollapsed,
+    CategoryPreview,
+    Strings){
 
     /**
      * @param catalog - catalog holding all flats
@@ -20,10 +28,10 @@ define([
      * @constructor
      */
     function CategoryAccordion(catalog, rooms) {
-        var _this = $('<dd class="accordion-navigation"></dd>');
+        var _this = new Dd().class('accordion-navigation');
         var flats = catalog.flats(rooms);
         var flatList = new VerticalTextualFlatList(flats);
-        var headerLink = $('<a class="side-nav-link category-link" href="/index.html"></a>');
+        var headerLink = new A().class('side-nav-link').href('/index.html');
 
         /**
          * Constructor
@@ -40,8 +48,7 @@ define([
          * Configures header link
          */
         _this.initializeHeaderLink = function () {
-            _this.alignLinkCenter();
-            headerLink.text(Strings.categoryName(rooms));
+            headerLink.textAlignCenter().text(Strings.categoryName(rooms));
             _this.initializeHeaderLinkEvents();
             _this.append(headerLink);
         };
@@ -76,14 +83,14 @@ define([
          * Styles header link to look like active
          */
         _this.makeLinkActive = function () {
-            headerLink.addClass('active');
+            headerLink.active(true);
         };
 
         /**
          * Style header link to look like inactive
          */
         _this.makeLinkInactive = function () {
-            headerLink.removeClass('active');
+            headerLink.active(false);
         };
 
         /**
@@ -109,7 +116,7 @@ define([
 		 * collapsed
          */
         _this.onCategoryExpanded = function(ann) {
-            _this.alignLinkLeft();
+            headerLink.textAlignLeft();
             if (ann.rooms() === rooms)
                 _this.expand();
             else
@@ -122,22 +129,8 @@ define([
 		 * will be collapsed
          */
         _this.onCategoryCollapsed = function(){
-            _this.alignLinkCenter();
+            headerLink.textAlignCenter();
             _this.collapse();
-        };
-
-		/**
-         * Aligns category header's link text to the center
-         */
-        _this.alignLinkCenter = function() {
-           headerLink.css('text-align','center');
-        };
-		
-		/**
-         * Aligns category header's link text to the left
-         */
-        _this.alignLinkLeft = function() {
-            headerLink.css('text-align','left');
         };
 
         _this.initialize();
