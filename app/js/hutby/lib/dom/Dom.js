@@ -2,7 +2,7 @@
  * Created by aliaksei on 08/01/15.
  */
 
-define(['jquery', 'hutby/lib/Utils'], function ($, Utils) {
+define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
 
     function Dom (html) {
         var _this = $(html);
@@ -61,11 +61,18 @@ define(['jquery', 'hutby/lib/Utils'], function ($, Utils) {
         };
 
         _this.visible = function(bool) {
-            if (Utils.isUndefined(bool)) return _this.is(':visible');
-            if (bool) _this.class(_this.css('visibility','visible'));
-            else _this.removeClass(_this.css('visibility','hidden'));
-            return _this;
+            if (Utils.isUndefined(bool)) return !_this.hidden();
+            return _this.hidden(!bool);
         };
+
+        /**
+         * Overrides jquery's width() function allowing to set width value
+         */
+        _this.width = override(_this.width, function(newWidth) {
+            if (Utils.isUndefined(newWidth)) return this.super();
+            _this.css('width',newWidth.toString());
+            return _this;
+        });
 
         // Calling constructor
         _this.initialize();

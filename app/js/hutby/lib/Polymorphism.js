@@ -14,6 +14,6 @@ override = function (oldImp, newImp) {
     newImp.super = oldImp;
 
     return function (arguments) {
-        newImp.call(newImp, arguments);
+        return newImp.call(newImp, arguments);
     };
 };

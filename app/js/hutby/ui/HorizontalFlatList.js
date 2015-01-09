@@ -90,7 +90,6 @@ define([
             flatLinks.get(flat).active(true);
         };
 
-
         /**
          * Makes a corresponding link for a flat look as inactive
          * @param flat
@@ -125,7 +124,7 @@ define([
             var flatLinkWidth = _this.calculateLinkWidth();
 
             $.each(flats, function(index, flat) {
-                _this.addLinkFor(flat).css('width',flatLinkWidth+'%').click(function(e){
+                _this.addLinkFor(flat).width(flatLinkWidth+'%').click(function(e) {
                     e.preventDefault();
                     flat.expand(true);
                 });
@@ -133,7 +132,6 @@ define([
 
             _this.setOnLoadListener(animate ,_callback);
         };
-
 
         /**
          * Sets a callback that will be fired when all images are loaded.
