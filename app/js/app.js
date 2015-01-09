@@ -22,7 +22,9 @@ require.config({
         'dd' : 'hutby/lib/dom/Dd',
         'dom' : 'hutby/lib/dom/Dom',
         'div' : 'hutby/lib/dom/Div',
+        'img' : 'hutby/lib/dom/Img',
         'li' : 'hutby/lib/dom/Li',
+        'p' : 'hutby/lib/dom/P',
         'ul' : 'hutby/lib/dom/Ul'
     },
 

@@ -3,6 +3,7 @@
  */
 
 define([
+    'jquery',
     'ul',
     'li',
     'a',
@@ -11,6 +12,7 @@ define([
     'hutby/lib/Utils',
     'hutby/lib/Dictionary'
 ],function(
+    $,
     Ul,
     Li,
     A,
@@ -70,7 +72,7 @@ define([
          * @returns {*|HTMLElement}
          */
         _this.addLinkFor = function (_flat) {
-            var link = $(_this.buildLinkFor(_flat));
+            var link = _this.buildLinkFor(_flat);
             flatLinks.put(_flat,link);
             if (_flat.isExpanded()) _this.setLinkActive(_flat);
             _this.append(link);

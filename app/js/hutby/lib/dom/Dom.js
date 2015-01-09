@@ -53,6 +53,20 @@ define(['jquery', 'hutby/lib/Utils'], function ($, Utils) {
             return _this;
         };
 
+        _this.hidden = function(bool) {
+            if (Utils.isUndefined(bool)) return !_this.is(':visible');
+            if (bool) _this.class(_this.css('visibility','hidden'));
+            else _this.removeClass(_this.css('visibility','visible'));
+            return _this;
+        };
+
+        _this.visible = function(bool) {
+            if (Utils.isUndefined(bool)) return _this.is(':visible');
+            if (bool) _this.class(_this.css('visibility','visible'));
+            else _this.removeClass(_this.css('visibility','hidden'));
+            return _this;
+        };
+
         // Calling constructor
         _this.initialize();
 

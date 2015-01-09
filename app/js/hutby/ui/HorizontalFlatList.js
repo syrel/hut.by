@@ -4,11 +4,24 @@
 
 define([
     'jquery',
+    'a',
+    'div',
+    'img',
+    'p',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
     'hutby/lib/Utils',
     'hutby/lib/Dictionary'
-    ],function($, OnFlatExpanded, OnFlatCollapsed, Utils, Dictionary){
+    ],function(
+    $,
+    A,
+    Div,
+    Img,
+    P,
+    OnFlatExpanded,
+    OnFlatCollapsed,
+    Utils,
+    Dictionary){
 
     /**
      * I'm a presentation of a flat links positioned horizontally.
@@ -16,14 +29,10 @@ define([
      * @constructor
      */
     function HorizontalFlatList(flats){
-        var _this = $('<div class="hutby-category-flat-list"></div>');
-        var flatList = $('<div></div>');
+        var _this = new Div().class('hutby-category-flat-list');
+        var flatList = new Div();
 
         var flatLinkMaxWidth = 19;
-        var activeLinkID = '.active';
-        var listShowEffect = 'moveInLeft';
-        var listShowSpeed = 0.4;
-
 
         var flatLinks = new Dictionary();
 
@@ -32,7 +41,7 @@ define([
          */
         _this.initialize = function () {
             _this.append(flatList);
-            _this.cssHidden();
+            _this.hidden(true);
 
             $.each(flats, function(index, each){
                 each.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
@@ -42,11 +51,14 @@ define([
 
         /**
          * Build a html dom element for specified flat
-         * @param _flat
+         * @param flat
          * @returns {*|HTMLElement}
          */
-        _this.buildLinkFor = function (_flat) {
-            return $('<a href="'+_flat.getLink()+'"><img src="'+_flat.getPhoto(0)+'"><p>'+_flat.getAddress()+'</p></a>');
+        _this.buildLinkFor = function (flat) {
+            return new A()
+                .href(flat.getLink)
+                .add(new Img().src(flat.getPhoto(0)))
+                .add(new P().text(flat.getAddress()));
         };
 
         /**
@@ -55,7 +67,7 @@ define([
          * @returns {*|HTMLElement}
          */
         _this.addLinkFor = function (_flat) {
-            var link = $(_this.buildLinkFor(_flat));
+            var link = _this.buildLinkFor(_flat);
             flatLinks.put(_flat,link);
             if (_flat.isExpanded()) _this.setLinkActive(_flat);
             flatList.append(link);
@@ -71,18 +83,11 @@ define([
         };
 
         /**
-         * Hides me using css option
-         */
-        _this.cssHidden = function () {
-            _this.css('visibility','hidden');
-        };
-
-        /**
          * Makes a corresponding link for a flat look as active
          * @param flat
          */
         _this.setLinkActive = function(flat) {
-            flatLinks.get(flat).addClass(activeLinkID.slice(1));
+            flatLinks.get(flat).active(true);
         };
 
 
@@ -91,7 +96,7 @@ define([
          * @param flat
          */
         _this.setLinkInactive = function (flat) {
-            flatLinks.get(flat).removeClass(activeLinkID.slice(1));
+            flatLinks.get(flat).active(false);
         };
 
         /**
@@ -139,11 +144,11 @@ define([
             /*
              Only after all images are loaded
              */
-            Utils.attachOnLoadListener(flatList.find('img'), function() {
-                flatList.css('visibility','visible');
+            Utils.attachOnLoadListener(flatList.findMe('img'), function() {
+                flatList.visible(true);
 
                 if (animate) {
-                    flatList.animo({ animation: listShowEffect, duration: listShowSpeed }, function() {
+                    flatList.animo({ animation: 'moveInLeft', duration: 0.4 }, function() {
                         Utils.call(_callback);
                     });
                 }
