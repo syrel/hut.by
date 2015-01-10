@@ -4,7 +4,7 @@
 define ([
     'hutby/common/Flat',
     'hutby/lib/Utils',
-    'hutby/lib/Dictionary',
+    'dictionary',
     'hutby/lib/WindowEvents',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
@@ -13,7 +13,7 @@ define ([
     'hutby/announcements/OnCategoryPreviewShow',
     'hutby/announcements/OnCategoryPreviewHide',
     'hutby/announcements/OnMediaSizeChanged',
-    'hutby/lib/Announcer'
+    'announcer'
 
 ], function(
     Flat,

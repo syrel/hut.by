@@ -7,7 +7,7 @@ define([
     'hutby/category/CategoryViewHolder',
     'hutby/category/FlatDescription',
     'hutby/ui/HorizontalFlatList',
-    'hutby/lib/Dictionary',
+    'dictionary',
     'hutby/lib/Utils',
     'hutby/common/Global',
     'hutby/announcements/OnFlatExpanded',

@@ -2,8 +2,8 @@
  * Created by aliaksei on 03/08/14.
  */
 define([
-    'hutby/lib/Dictionary',
-    'hutby/lib/Announcer',
+    'dictionary',
+    'announcer',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
     'hutby/lib/Utils'

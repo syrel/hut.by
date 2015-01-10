@@ -1,0 +1,3 @@
+[submodule "app/js/hutby/lib/AnnouncerJS"]
+	path = app/js/hutby/lib/AnnouncerJS
+	url = https://github.com/syrel/AnnouncerJS.git

@@ -12,7 +12,7 @@ define([
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
     'hutby/lib/Utils',
-    'hutby/lib/Dictionary'
+    'dictionary'
     ],function(
     $,
     A,

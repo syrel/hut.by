@@ -6,6 +6,8 @@ require.config({
     baseUrl: 'js/',
 
     paths: {
+        'dictionary' : 'hutby/lib/AnnouncerJS/src/Dictionary',
+        'announcer' : 'hutby/lib/AnnouncerJS/src/Announcer',
         'polymorphism' : 'hutby/lib/Polymorphism',
         'modernizr' : 'vendor/modernizr',
         'jquery' : 'vendor/jquery',

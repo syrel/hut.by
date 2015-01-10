@@ -4,7 +4,7 @@
 
 define([
     'hutby/common/Global',
-    'hutby/lib/Announcer',
+    'announcer',
     'hutby/announcements/OnMediaSizeChanged'
 ], function(
     Global,
