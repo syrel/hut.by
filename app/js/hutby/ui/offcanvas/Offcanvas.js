@@ -4,29 +4,28 @@
 
 define([
     'jquery',
-    'a',
     'div',
     'hutby/lib/WindowEvents',
     'hutby/announcements/OnMediaSizeChanged',
     'hutby/announcements/OnFlatExpanded',
     'hutby/ui/offcanvas/OffcanvasAside',
+    'hutby/ui/offcanvas/OffcanvasFade',
     'hutby/ui/PageContent',
     'hutby/common/Global'
 
 ],function(
     $,
-    A,
     Div,
     WindowEvents,
     OnMediaSizeChanged,
     OnFlatExpanded,
     OffcanvasAside,
+    OffcanvasFade,
     PageContent,
     Global){
     function Offcanvas(catalog) {
         var _this = new Div();
         var innerWrap = new Div();
-        var offcanvasExit = new A().class('exit-off-canvas');
 
         var visibilityClass = 'offcanvas-overlap';
 
@@ -35,7 +34,7 @@ define([
                 .class('inner-wrap')
                 .add(new OffcanvasAside(catalog))
                 .add(new PageContent(catalog))
-                .add(offcanvasExit);
+                .add(new OffcanvasFade());
 
             _this
                 .class('row')

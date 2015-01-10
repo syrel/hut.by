@@ -2,13 +2,13 @@
  * Created by aliaksei on 02.01.2015.
  */
 
-define(['jquery'], function ($) {
+define(['jquery', 'a'], function ($, A) {
 
-    function OffcanvasFade(catalog) {
-        var _this = $('<a class="exit-off-canvas"></a>');
+    function OffcanvasFade() {
+        var _this = new A();
 
         _this.initialize = function () {
-
+            _this.class('exit-off-canvas');
         };
 
         _this.initialize();
@@ -17,5 +17,4 @@ define(['jquery'], function ($) {
     }
 
     return OffcanvasFade;
-
 });
