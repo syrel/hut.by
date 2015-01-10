@@ -25,12 +25,28 @@ define(['jquery'], function ($) {
     };
 
     Utils.dynamicCss = function () {
-        var cssID = 'dynamicCss';
+        var cssID = 'dynamic-css';
         if (Utils.isUndefined(Utils._dynamicCssElement)) {
             $('<style type="text/css" id="'+cssID+'" />').appendTo('head');
             Utils._dynamicCssElement = $('#'+cssID);
         }
         return Utils._dynamicCssElement;
+    };
+
+    Utils.randomGenerator = function () {
+        var r = Math.floor(Math.random() * 100) + 1;
+        return Date.now() + '' + r;
+    };
+
+    Utils.lastGeneratedValue = Utils.randomGenerator();
+
+    Utils.generateDynamicCssClassName = function () {
+        var random = Utils.randomGenerator();
+        while (Utils.lastGeneratedValue === random) {
+            random = Utils.randomGenerator();
+        };
+        Utils.lastGeneratedValue = random;
+        return random;
     };
 
     Utils.$ = function(selector) {

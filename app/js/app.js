@@ -19,6 +19,7 @@ require.config({
         'foundation.offcanvas' : 'foundation/foundation.offcanvas',
         'foundation.accordion' : 'foundation/foundation.accordion',
         'a' : 'hutby/lib/dom/A',
+        'aside' : 'hutby/lib/dom/Aside',
         'dd' : 'hutby/lib/dom/Dd',
         'dom' : 'hutby/lib/dom/Dom',
         'div' : 'hutby/lib/dom/Div',

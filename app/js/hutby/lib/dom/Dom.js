@@ -8,6 +8,7 @@ define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
     function Dom (html) {
         var _this = $(html);
         var activeClass = 'active';
+        var dynamicClassPrefix = 'd-';
 
         /**
          * Constructor, is called during object instantiation
@@ -18,6 +19,10 @@ define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
             if (Utils.isUndefined(className)) return _this.attr('class');
             _this.addClass(className);
             return _this;
+        };
+
+        _this.dynamicClass = function (className) {
+
         };
 
         _this.active = function (bool) {
@@ -75,6 +80,24 @@ define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
             _this.css('width',newWidth.toString());
             return _this;
         });
+
+        /**
+         * Adds new dynamic css class with specified class name and
+         * object as properties
+         * @param classObject
+         * @return {string} - generated class name
+         */
+        _this.createClass = function (classObject) {
+            var array=[];
+            for (var p in classObject) {
+                if (classObject.hasOwnProperty(p)) {
+                    array.push(p + ':' + classObject[p]);
+                }
+            } array.push();
+            var className = dynamicClassPrefix + Utils.generateDynamicCssClassName();
+            Utils.dynamicCss().text('.'+className + '{'+array.join(';')+'}');
+            return className;
+        };
 
         // Calling constructor
         _this.initialize();

@@ -4,6 +4,7 @@
 
 define([
     'jquery',
+    'aside',
     'hutby/lib/WindowEvents',
     'hutby/announcements/OnMediaSizeChanged',
     'hutby/announcements/OnFlatExpanded',
@@ -11,6 +12,7 @@ define([
     'hutby/ui/offcanvas/OffcanvasMenuFooter'
 ], function (
     $,
+    Aside,
     WindowEvents,
     OnMediaSizeChanged,
     OnFlatExpanded,
@@ -19,12 +21,19 @@ define([
     ){
 
     function OffcanvasAside(catalog) {
-        var _this = $('<aside class="columns text-left hutby-sidenav left-off-canvas-menu"></aside>');
+        var _this = new Aside();
+        var fullWidthClass;
 
         _this.initialize = function () {
-            _this.append(new OffcanvasMenu(catalog));
-            _this.append(new OffcanvasMenuFooter());
-            _this.updateOffcanvasWidth();
+            _this
+                .class('columns')
+                .class('text-left')
+                .class('hutby-sidenav')
+                .class('left-off-canvas-menu')
+                .add(new OffcanvasMenu(catalog))
+                .add(new OffcanvasMenuFooter())
+                .updateOffcanvasWidth();
+
             WindowEvents.announcer.onSendTo(OnMediaSizeChanged, _this.onMediaSizeChanged, _this);
             catalog.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
         };
@@ -39,8 +48,24 @@ define([
 
         _this.updateOffcanvasWidth = function () {
             if (WindowEvents.isSmall && !catalog.isCategoryExpanded()) {
-                _this.addClass('left-off-canvas-menu-full-width');
-            } else _this.removeClass('left-off-canvas-menu-full-width');
+                _this.class(_this.fullWidthClass());
+            } else _this.removeClass(_this.fullWidthClass());
+        };
+
+        /**
+         * Returns class name for full width. If class name is undefined
+         * creates such class with defined properties.
+         * @return {*}
+         */
+        _this.fullWidthClass = function () {
+            if (!fullWidthClass) {
+                fullWidthClass = _this.createClass({
+                    'width': "100% !important",
+                    'max-width': "100% !important"
+                });
+                console.log(fullWidthClass);
+            }
+            return fullWidthClass;
         };
 
         _this.initialize();
