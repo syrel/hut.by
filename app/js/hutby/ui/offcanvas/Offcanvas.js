@@ -4,6 +4,8 @@
 
 define([
     'jquery',
+    'a',
+    'div',
     'hutby/lib/WindowEvents',
     'hutby/announcements/OnMediaSizeChanged',
     'hutby/announcements/OnFlatExpanded',
@@ -13,6 +15,8 @@ define([
 
 ],function(
     $,
+    A,
+    Div,
     WindowEvents,
     OnMediaSizeChanged,
     OnFlatExpanded,
@@ -20,46 +24,72 @@ define([
     PageContent,
     Global){
     function Offcanvas(catalog) {
-        var _this = $('<div class="row hutby-page off-canvas-wrap" data-offcanvas></div>');
-        var innerWrap = $('<div class="inner-wrap"></div>');
-        var offcanvasExit = $('<a id="exit-off-canvas" class="exit-off-canvas"></a>');
+        var _this = new Div();
+        var innerWrap = new Div();
+        var offcanvasExit = new A().class('exit-off-canvas');
 
         var visibilityClass = 'offcanvas-overlap';
 
         _this.initialize = function () {
-            innerWrap.append(new OffcanvasAside(catalog));
-            innerWrap.append(new PageContent(catalog));
-            innerWrap.append(offcanvasExit);
-            _this.append(innerWrap);
-            _this.updateOffcanvas();
+            innerWrap
+                .class('inner-wrap')
+                .add(new OffcanvasAside(catalog))
+                .add(new PageContent(catalog))
+                .add(offcanvasExit);
+
+            _this
+                .class('row')
+                .class('hutby-page')
+                .class('off-canvas-wrap')
+                .attr('data-offcanvas','')
+                .add(innerWrap)
+                .showOffcanvas();
+
             WindowEvents.announcer.onSendTo(OnMediaSizeChanged, _this.onMediaSizeChanged, _this);
             catalog.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
         };
 
+        /**
+         * And action to be executed when window media size
+         * is changed. If webpage switches from mobile mode
+         * offcanvas should be visible
+         */
         _this.onMediaSizeChanged = function () {
             if (!WindowEvents.isSmall) {
                 _this.showOffcanvas();
             }
         };
 
+        /**
+         * An action be executed after any flat is expanded.
+         * In current particular case it hides offcanvas.
+         */
         _this.onFlatExpanded = function () {
             _this.hideOffcanvas();
         };
 
-        _this.updateOffcanvas = function () {
-            _this.showOffcanvas();
-        };
-
+        /**
+         * Opens hidden offcanvas. In most use cases
+         * I'm used in mobile mode
+         */
         _this.showOffcanvas = function () {
-            _this.addClass(visibilityClass);
+            _this.class(visibilityClass);
         };
 
+        /**
+         * Hides offcanvas if and only if opened in mobile mode
+         */
         _this.hideOffcanvas = function () {
             if (Global.isDisplayOnlySmall()) setTimeout(function(){
                 _this.removeClass(visibilityClass);
             }, 0);
         };
 
+        /**
+         * Checks if offcanvas is visible.
+         * @returns {boolean} - true if offcanvas visible,
+         *                    - false otherwise
+         */
         _this.isOffCanvasVisible = function () {
             return _this.hasClass(visibilityClass);
         };
