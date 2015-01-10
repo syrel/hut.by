@@ -4356,10 +4356,10 @@ th.hide-for-touch {
     /* line 95, ../sass/foundation/hutby/_side-nav.scss */
     .hutby-sidenav-footer-position-wrapper dl dd ul li a {
       color: whitesmoke !important; }
-      /* line 100, ../sass/foundation/hutby/_side-nav.scss */
+      /* line 99, ../sass/foundation/hutby/_side-nav.scss */
       .hutby-sidenav-footer-position-wrapper dl dd ul li a.active {
         text-shadow: 2px 2px 2px #252525; }
-        /* line 103, ../sass/foundation/hutby/_side-nav.scss */
+        /* line 102, ../sass/foundation/hutby/_side-nav.scss */
         .hutby-sidenav-footer-position-wrapper dl dd ul li a.active:after {
           content: "//";
           color: #00e2e2;
@@ -4368,33 +4368,33 @@ th.hide-for-touch {
           text-align: right;
           display: inline-block;
           float: right; }
-  /* line 123, ../sass/foundation/hutby/_side-nav.scss */
+  /* line 122, ../sass/foundation/hutby/_side-nav.scss */
   .hutby-sidenav-footer-position-wrapper .hutby-sidenav-footer-position-helper {
     /* see page-content */ }
 
-/* line 130, ../sass/foundation/hutby/_side-nav.scss */
+/* line 129, ../sass/foundation/hutby/_side-nav.scss */
 .hutby-sidenav-footer {
   height: 10.125rem;
   padding-top: 1.5rem; }
-  /* line 137, ../sass/foundation/hutby/_side-nav.scss */
+  /* line 136, ../sass/foundation/hutby/_side-nav.scss */
   .hutby-sidenav-footer ul li {
     padding: 0;
     margin: 0; }
-    /* line 141, ../sass/foundation/hutby/_side-nav.scss */
+    /* line 140, ../sass/foundation/hutby/_side-nav.scss */
     .hutby-sidenav-footer ul li:hover {
       background-color: transparent !important; }
-    /* line 145, ../sass/foundation/hutby/_side-nav.scss */
+    /* line 144, ../sass/foundation/hutby/_side-nav.scss */
     .hutby-sidenav-footer ul li a {
       text-align: center;
       padding: 0 !important;
       margin: 0 !important;
       line-height: 2.8125rem !important;
       height: 2.8125rem !important; }
-      /* line 152, ../sass/foundation/hutby/_side-nav.scss */
+      /* line 151, ../sass/foundation/hutby/_side-nav.scss */
       .hutby-sidenav-footer ul li a:hover {
         text-shadow: 0px 0px 27px #1cd9ff;
         background-color: transparent  !important; }
-  /* line 161, ../sass/foundation/hutby/_side-nav.scss */
+  /* line 160, ../sass/foundation/hutby/_side-nav.scss */
   .hutby-sidenav-footer hr {
     margin: 0 auto;
     padding-bottom: 1.15385rem !important;

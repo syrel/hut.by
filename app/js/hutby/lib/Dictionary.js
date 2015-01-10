@@ -1,112 +1,155 @@
 /**
- * Created by aliaksei on 06/08/14.
+ * Created by Aliaksei Syrel on 06/08/14.
  */
 
+"use strict";
 define([], function() {
 
     function Dictionary() {
-        var _this = this;
+        this._keyObjects = [];
+        this._valueObjects = [];
+        this._count = 0;
+    }
 
-        var keyObjects = [];
-        var valueObjects = [];
+    Dictionary.prototype = (function() {
+        /**
+         * Returns first occurrence index of an element. Returns
+         * -1 if element is not found
+         * @param array - to find index in
+         * @param element - to be find
+         * @returns {number} - an index of an element in array
+         * @private
+         */
 
-        var count = 0;
+        function indexInArray(array, element) {
+            for (var i = 0, length = array.length; i < length; i++) {
+                if (array[i] === element) return i;
+            } return -1;
+        }
 
         /**
-         *
-         * @param array
-         * @param element
-         * @returns {number} - 1 if there is no element in array
+         * Checks if an element exists in array
+         * @param array - to check element in
+         * @param element - to be checked
+         * @return {boolean} - true if element exists in array,
+         *                   - false otherwise
+         * @private
          */
-        Dictionary._indexInArray = function(array, element) {
-            for (var i = 0, length = array.length; i < length; i++) {
-                if (array[i] === element) {
-                    return i;
-                }
-            }
-            return -1;
-        };
+        function isExistsInArray(array, element) {
+            return indexInArray(array, element) >= 0;
+        }
 
-        Dictionary._isExistsInArray = function(array, element) {
-            return Dictionary._indexInArray(array, element) >= 0;
-        };
-
-        Dictionary._putInArray = function (array, element) {
+        /**
+         * Puts an element in the end of an array and returns
+         * its index
+         * @param array - to put in
+         * @param element - to be put
+         * @return {number} - an index where element was placed
+         * @private
+         */
+        function putInArray(array, element) {
             array[array.length] = element;
             return array.length - 1;
-        };
+        }
 
-        Dictionary._putInArrayAt = function(array, element, index) {
+        /**
+         * Puts an element in array at specified index
+         * @param array - to put in
+         * @param element - to be put
+         * @param index - index where to put
+         * @private
+         */
+        function putInArrayAt(array, element, index) {
             array[index] = element;
-        };
+        }
 
-        Dictionary._removeFromArrayAt = function(array, index) {
+        function removeFromArrayAt(array, index) {
             array.splice(index, 1);
-        };
+        }
 
-        Dictionary._getFromArrayAt = function(array, index) {
+        function getFromArrayAt(array, index) {
             return array[index];
-        };
+        }
 
+        /**
+         * Static API
+         */
+        Dictionary.removeFromArrayAt = removeFromArrayAt;
+        Dictionary.indexInArray = indexInArray;
 
-        _this.size = function() {
-            return count;
-        };
+        /**
+         * Public API
+         */
+        return {
+            constructor: Dictionary,
 
-        _this.isEmpty = function() {
-            return count === 0;
-        };
+            size : function() {
+                return this._count;
+            },
 
-        _this.keys = function() {
-            return keyObjects.slice(0);
-        };
+            isEmpty : function() {
+                return this.size() === 0;
+            },
 
-        _this.elements = function(){
-            return valueObjects.slice(0);
-        };
+            keys : function() {
+                return this._keyObjects.slice(0);
+            },
 
-        _this.get = function(key){
-            var value;
-            var index = Dictionary._indexInArray(keyObjects, key);
-            if (index >= 0) value = valueObjects[index];
-            return value;
-        };
+            elements : function(){
+                return this._valueObjects.slice(0);
+            },
 
-        _this.put = function(key, value){
-            var keyIndex = Dictionary._indexInArray(keyObjects, key);
-            var oldValue;
-            if (keyIndex >= 0) {
-                oldValue = Dictionary._getFromArrayAt(valueObjects, keyIndex);
-                Dictionary._putInArrayAt(valueObjects, value, keyIndex);
+            get : function(key){
+                var value;
+                var index = indexInArray(this._keyObjects, key);
+                if (index >= 0) value = this._valueObjects[index];
+                return value;
+            },
+
+            put : function(key, value){
+                var keyIndex = this._(indexInArray)(this._keyObjects, key);
+                var oldValue;
+                if (keyIndex >= 0) {
+                    oldValue = this._(getFromArrayAt)(this._valueObjects, keyIndex);
+                    this._(putInArrayAt)(this._valueObjects, value, keyIndex);
+                    return oldValue;
+                }
+
+                keyIndex = this._(putInArray)(this._keyObjects, key);
+                putInArrayAt(this._valueObjects, value, keyIndex);
+                this._count++;
                 return oldValue;
-            };
+            },
 
-            keyIndex = Dictionary._putInArray(keyObjects, key);
-            Dictionary._putInArrayAt(valueObjects, value, keyIndex);
-            count++;
-            return oldValue;
-        };
+            remove : function (key) {
+                var keyIndex = this._(indexInArray)(this._keyObjects, key);
+                if (keyIndex < 0) return false;
+                this._(removeFromArrayAt)(this._keyObjects, keyIndex);
+                this._(removeFromArrayAt)(this._valueObjects, keyIndex);
+                this._count--;
+                return true;
+            },
 
-        _this.remove = function (key) {
-            var keyIndex = Dictionary._indexInArray(keyObjects, key);
-            if (keyIndex < 0) return false;
+            each : function(_callback) {
+                for (var i = 0; i < this.size(); i++) {
+                    _callback(
+                        this._(getFromArrayAt)(this._keyObjects, i),
+                        this._(getFromArrayAt)(this._valueObjects, i));
+                }
+            },
 
-            Dictionary._removeFromArrayAt(keyObjects, keyIndex);
-            Dictionary._removeFromArrayAt(valueObjects, keyIndex);
-            count--;
-            return true;
-        };
+            isKeyExists : function (key) {
+                return this._(isExistsInArray)(this._keyObjects, key);
+            },
 
-        _this.each = function(_callback) {
-            for (var i = 0; i < count; i++) {
-                _callback(Dictionary._getFromArrayAt(keyObjects, i), Dictionary._getFromArrayAt(valueObjects, i));
+            _:function(callback){
+                var self = this;
+                return function(){
+                    return callback.apply(self, arguments);
+                };
             }
         };
-
-        _this.isKeyExists = function (key) {
-            return Dictionary._isExistsInArray(keyObjects, key);
-        };
-    }
+    })();
 
     return Dictionary;
 });

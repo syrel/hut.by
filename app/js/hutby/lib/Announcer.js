@@ -1,99 +1,106 @@
 /**
- * Created by aliaksei on 07/08/14.
+ * Created by Aliaksei Syrel on 07/08/14.
  */
 
 "use strict";
 define(['hutby/lib/Dictionary'], function(Dictionary){
-    function Announcer (){
-        var _this = this;
 
-        var triggers = new Dictionary();
-        var receivers = new Dictionary();
-
-        function Notification(_on, _send, _to) {
-            var _this = this;
-
-            var on = _on;
-            var send = _send;
-            var to = _to;
-
-            _this.notify = function(_ann){
-                //console.log(''+_this.toString());
-                return send(_ann);
-            };
-
-            _this.trigger = function () {
-                return on;
-            };
-
-            _this.receiver = function () {
-                return to;
-            };
-
-            _this.destroy = function () {
-                on = null;
-                send = null;
-                to = null;
-                _on = null;
-                _send = null;
-                _to = null;
-                _this = null;
-            };
-
-            _this.toString = function () {
-                return 'on: '+_on.name + ' to: '+_to.constructor.name;
-            };
-        }
-
-        _this.announce = function(_ann){
-            if (!_this.isTriggerExists(_ann.constructor)) {
-                return;
-            }
-
-            triggers.get(_ann.constructor).forEach(function(entry) {
-                entry.notify(_ann);
-            });
-        };
-
-        _this.onSendTo = function(_on, _send, _to){
-            if (!_this.isTriggerExists(_on)) {
-                triggers.put(_on, []);
-            }
-
-            if (!_this.isReceiverExists(_to)){
-                receivers.put(_to, []);
-            }
-
-            var notification = new Notification(_on, _send, _to);
-            triggers.get(_on).push(notification);
-            receivers.get(_to).push(notification);
-        };
-
-        _this.isTriggerExists = function(trigger) {
-            return triggers.isKeyExists(trigger);
-        };
-
-        _this.isReceiverExists = function (receiver) {
-            return receivers.isKeyExists(receiver);
-        };
-
-        _this.notificationsOf = function(receiver) {
-            return receivers.get(receiver);
-        };
-
-        _this.unsubscribe = function (_to) {
-            _this.notificationsOf(_to).forEach(function(notification){
-                var array = triggers.get(notification.trigger());
-                var index = Dictionary._indexInArray(array, notification);
-                Dictionary._removeFromArrayAt(array, index);
-                notification.destroy();
-            });
-
-            receivers.remove(_to);
-        };
+    function Notification(on, send, to) {
+        this._on = on;
+        this._send = send;
+        this._to = to;
     }
 
+    Notification.prototype = (function(){
+        return {
+            notify : function(ann) {
+                return this._send(ann);
+            },
+
+            trigger : function () {
+                return this._on;
+            },
+
+            receiver : function () {
+                return this._to;
+            },
+
+            destroy : function () {
+                this._on = null;
+                this._send = null;
+                this._to = null;
+            },
+
+            toString : function () {
+                return 'on: '+this._on.name + ' to: '+this._to.constructor.name;
+            }
+        }
+    })();
+
+    function Announcer() {
+        this._triggers = new Dictionary();
+        this._receivers = new Dictionary();
+    }
+
+    Announcer.prototype = (function(){
+
+        function isTriggerExists(trigger) {
+            return this._triggers.isKeyExists(trigger);
+        }
+
+        function isReceiverExists(receiver) {
+            return this._receivers.isKeyExists(receiver);
+        }
+
+        function notificationsOf(receiver) {
+            return this._receivers.get(receiver);
+        }
+
+        return {
+            announce : function(ann){
+                if (!this._(isTriggerExists)(ann.constructor)) {
+                    return;
+                }
+
+                this._triggers.get(ann.constructor).forEach(function(entry) {
+                    entry.notify(ann);
+                });
+            },
+
+            onSendTo : function(on, send, to){
+                if (!this._(isTriggerExists)(on)) {
+                    this._triggers.put(on, []);
+                }
+
+                if (!this._(isReceiverExists)(to)){
+                    this._receivers.put(to, []);
+                }
+
+                var notification = new Notification(on, send, to);
+                this._triggers.get(on).push(notification);
+                this._receivers.get(to).push(notification);
+            },
+
+            unsubscribe : function (to) {
+                var me = this;
+                this._(notificationsOf)(to).forEach(function(notification){
+                    var array = me._triggers.get(notification.trigger());
+                    var index = Dictionary.indexInArray(array, notification);
+                    Dictionary.removeFromArrayAt(array, index);
+                    notification.destroy();
+                });
+
+                this._receivers.remove(to);
+            },
+
+            _:function(callback){
+                var self = this;
+                return function(){
+                    return callback.apply(self, arguments);
+                };
+            }
+        };
+    })();
+
     return Announcer;
-
-
 });
