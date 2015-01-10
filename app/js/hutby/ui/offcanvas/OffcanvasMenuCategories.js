@@ -4,7 +4,7 @@
 
 define(['jquery', 'hutby/ui/CategoryAccordion'], function ($, CategoryAccordion) {
     function OffcanvasMenuCategories (catalog) {
-        var _this = $('<dl class="accordion" data-accordion></dl>');
+        var _this = $('<dl data-accordion></dl>');
         /**
          * Initializes corresponding accordions for each category
          */

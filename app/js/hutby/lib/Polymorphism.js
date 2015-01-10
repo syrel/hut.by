@@ -2,6 +2,7 @@
  * Created by aliaksei on 08/01/15.
  */
 
+
 /**
  * Overrides oldImp function with newImp and allows
  * to access "super class" function using this.super(arguments)

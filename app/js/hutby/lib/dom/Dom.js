@@ -2,6 +2,7 @@
  * Created by aliaksei on 08/01/15.
  */
 
+"use strict";
 define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
 
     function Dom (html) {

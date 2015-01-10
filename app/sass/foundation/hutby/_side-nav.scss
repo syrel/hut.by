@@ -71,38 +71,44 @@ $footer-height: $footer-link-count * $footer-link-height + 3 * $footer-padding-h
     border-color: $horizontal-line-color;
   }
 
+  dl {
+    @extend .accordion;
 
+    dd {
+      @extend .accordion-navigation;
 
-  dd {
-
-    a {
-      &.active {
-        color: $active-color;
-        text-shadow: 0px 0px 30px $active-color;
+      a {
+        &.active {
+          color: $active-color;
+          text-shadow: 0px 0px 30px $active-color;
+        }
       }
-    }
 
-    ul {
+      ul {
+        @extend .content;
 
-      li {
-        text-align: left;
-        padding-left: 0em;
-        font-size: rem-calc(14.5);
+        li {
+          text-align: left;
+          padding-left: 0em;
+          font-size: rem-calc(14.5);
 
-        a {
-          color: $primary-color;
+          a {
+            @extend .side-nav-link;
 
-          &.active {
-            text-shadow: $body-text-shadow;
+            color: $primary-color !important;
 
-            &:after {
-              content: "//";
-              color: $active-color;
-              text-shadow: 0px 0px 30px $active-color;
-              font-size: rem-calc(18);
-              text-align: right;
-              display: inline-block;
-              float: right;
+            &.active {
+              text-shadow: $body-text-shadow;
+
+              &:after {
+                content: "//";
+                color: $active-color;
+                text-shadow: 0px 0px 30px $active-color;
+                font-size: rem-calc(18);
+                text-align: right;
+                display: inline-block;
+                float: right;
+              }
             }
           }
         }

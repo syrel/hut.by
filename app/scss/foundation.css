@@ -2059,24 +2059,24 @@ select {
   .xxlarge-position-static {
     position: static; } }
 /* line 130, ../sass/foundation/components/_accordion.scss */
-.accordion {
+.accordion, .hutby-sidenav-footer-position-wrapper dl {
   margin-bottom: 0; }
   /* line 168, ../sass/foundation/components/_global.scss */
-  .accordion:before, .accordion:after {
+  .accordion:before, .hutby-sidenav-footer-position-wrapper dl:before, .accordion:after, .hutby-sidenav-footer-position-wrapper dl:after {
     content: " ";
     display: table; }
   /* line 169, ../sass/foundation/components/_global.scss */
-  .accordion:after {
+  .accordion:after, .hutby-sidenav-footer-position-wrapper dl:after {
     clear: both; }
   /* line 132, ../sass/foundation/components/_accordion.scss */
-  .accordion .accordion-navigation, .accordion dd {
+  .accordion .accordion-navigation, .hutby-sidenav-footer-position-wrapper dl .accordion-navigation, .accordion .hutby-sidenav-footer-position-wrapper dl dd, .hutby-sidenav-footer-position-wrapper dl .accordion dd, .hutby-sidenav-footer-position-wrapper dl dd, .accordion dd, .hutby-sidenav-footer-position-wrapper dl dd {
     display: block;
     margin-bottom: 0 !important; }
     /* line 135, ../sass/foundation/components/_accordion.scss */
-    .accordion .accordion-navigation.active > a, .accordion dd.active > a {
+    .accordion .accordion-navigation.active > a, .hutby-sidenav-footer-position-wrapper dl .accordion-navigation.active > a, .accordion .hutby-sidenav-footer-position-wrapper dl dd.active > a, .hutby-sidenav-footer-position-wrapper dl .accordion dd.active > a, .hutby-sidenav-footer-position-wrapper dl dd.active > a, .accordion dd.active > a, .hutby-sidenav-footer-position-wrapper dl dd.active > a {
       background: rgba(0, 0, 0, 0); }
     /* line 136, ../sass/foundation/components/_accordion.scss */
-    .accordion .accordion-navigation > a, .accordion dd > a {
+    .accordion .accordion-navigation > a, .hutby-sidenav-footer-position-wrapper dl .accordion-navigation > a, .accordion .hutby-sidenav-footer-position-wrapper dl dd > a, .hutby-sidenav-footer-position-wrapper dl .accordion dd > a, .hutby-sidenav-footer-position-wrapper dl dd > a, .accordion dd > a, .hutby-sidenav-footer-position-wrapper dl dd > a {
       background: rgba(0, 0, 0, 0);
       color: whitesmoke;
       padding: 0.4375rem 2.5rem;
@@ -2084,14 +2084,14 @@ select {
       font-family: "Roboto Light", "Helvetica", Helvetica, Arial, sans-serif;
       font-size: 1.125rem; }
       /* line 143, ../sass/foundation/components/_accordion.scss */
-      .accordion .accordion-navigation > a:hover, .accordion dd > a:hover {
+      .accordion .accordion-navigation > a:hover, .hutby-sidenav-footer-position-wrapper dl .accordion-navigation > a:hover, .accordion .hutby-sidenav-footer-position-wrapper dl dd > a:hover, .hutby-sidenav-footer-position-wrapper dl .accordion dd > a:hover, .hutby-sidenav-footer-position-wrapper dl dd > a:hover, .accordion dd > a:hover, .hutby-sidenav-footer-position-wrapper dl dd > a:hover {
         background: rgba(255, 255, 255, 0.085); }
     /* line 146, ../sass/foundation/components/_accordion.scss */
-    .accordion .accordion-navigation > .content, .accordion dd > .content {
+    .accordion .accordion-navigation > .content, .hutby-sidenav-footer-position-wrapper dl .accordion-navigation > .content, .accordion .hutby-sidenav-footer-position-wrapper dl dd > .content, .hutby-sidenav-footer-position-wrapper dl .accordion dd > .content, .hutby-sidenav-footer-position-wrapper dl dd > .content, .accordion .hutby-sidenav-footer-position-wrapper dl dd .accordion-navigation > ul, .hutby-sidenav-footer-position-wrapper dl dd .accordion .accordion-navigation > ul, .hutby-sidenav-footer-position-wrapper dl dd .accordion-navigation > ul, .accordion .hutby-sidenav-footer-position-wrapper dl dd > ul, .hutby-sidenav-footer-position-wrapper dl .accordion dd > ul, .hutby-sidenav-footer-position-wrapper dl dd > ul, .accordion dd > .content, .hutby-sidenav-footer-position-wrapper dl dd > .content, .accordion .hutby-sidenav-footer-position-wrapper dl dd > ul, .hutby-sidenav-footer-position-wrapper dl .accordion dd > ul, .hutby-sidenav-footer-position-wrapper dl dd > ul {
       display: none;
       padding: 0 0 0 2em; }
       /* line 149, ../sass/foundation/components/_accordion.scss */
-      .accordion .accordion-navigation > .content.active, .accordion dd > .content.active {
+      .accordion .accordion-navigation > .content.active, .hutby-sidenav-footer-position-wrapper dl .accordion-navigation > .content.active, .accordion .hutby-sidenav-footer-position-wrapper dl dd > .content.active, .hutby-sidenav-footer-position-wrapper dl .accordion dd > .content.active, .hutby-sidenav-footer-position-wrapper dl dd > .content.active, .accordion .hutby-sidenav-footer-position-wrapper dl dd .accordion-navigation > ul.active, .hutby-sidenav-footer-position-wrapper dl dd .accordion .accordion-navigation > ul.active, .hutby-sidenav-footer-position-wrapper dl dd .accordion-navigation > ul.active, .accordion .hutby-sidenav-footer-position-wrapper dl dd > ul.active, .hutby-sidenav-footer-position-wrapper dl .accordion dd > ul.active, .hutby-sidenav-footer-position-wrapper dl dd > ul.active, .accordion dd > .content.active, .hutby-sidenav-footer-position-wrapper dl dd > .content.active, .accordion .hutby-sidenav-footer-position-wrapper dl dd > ul.active, .hutby-sidenav-footer-position-wrapper dl .accordion dd > ul.active, .hutby-sidenav-footer-position-wrapper dl dd > ul.active {
         display: block;
         background: rgba(0, 0, 0, 0); }
 
@@ -4344,23 +4344,23 @@ th.hide-for-touch {
     margin-bottom: 0.9375rem;
     width: 90%;
     border-color: #555555; }
-  /* line 79, ../sass/foundation/hutby/_side-nav.scss */
-  .hutby-sidenav-footer-position-wrapper dd a.active {
+  /* line 81, ../sass/foundation/hutby/_side-nav.scss */
+  .hutby-sidenav-footer-position-wrapper dl dd a.active {
     color: #00e2e2;
     text-shadow: 0px 0px 30px #00e2e2; }
-  /* line 87, ../sass/foundation/hutby/_side-nav.scss */
-  .hutby-sidenav-footer-position-wrapper dd ul li {
+  /* line 90, ../sass/foundation/hutby/_side-nav.scss */
+  .hutby-sidenav-footer-position-wrapper dl dd ul li {
     text-align: left;
     padding-left: 0em;
     font-size: 0.90625rem; }
-    /* line 92, ../sass/foundation/hutby/_side-nav.scss */
-    .hutby-sidenav-footer-position-wrapper dd ul li a {
-      color: whitesmoke; }
-      /* line 95, ../sass/foundation/hutby/_side-nav.scss */
-      .hutby-sidenav-footer-position-wrapper dd ul li a.active {
+    /* line 95, ../sass/foundation/hutby/_side-nav.scss */
+    .hutby-sidenav-footer-position-wrapper dl dd ul li a {
+      color: whitesmoke !important; }
+      /* line 100, ../sass/foundation/hutby/_side-nav.scss */
+      .hutby-sidenav-footer-position-wrapper dl dd ul li a.active {
         text-shadow: 2px 2px 2px #252525; }
-        /* line 98, ../sass/foundation/hutby/_side-nav.scss */
-        .hutby-sidenav-footer-position-wrapper dd ul li a.active:after {
+        /* line 103, ../sass/foundation/hutby/_side-nav.scss */
+        .hutby-sidenav-footer-position-wrapper dl dd ul li a.active:after {
           content: "//";
           color: #00e2e2;
           text-shadow: 0px 0px 30px #00e2e2;
@@ -4368,33 +4368,33 @@ th.hide-for-touch {
           text-align: right;
           display: inline-block;
           float: right; }
-  /* line 117, ../sass/foundation/hutby/_side-nav.scss */
+  /* line 123, ../sass/foundation/hutby/_side-nav.scss */
   .hutby-sidenav-footer-position-wrapper .hutby-sidenav-footer-position-helper {
     /* see page-content */ }
 
-/* line 124, ../sass/foundation/hutby/_side-nav.scss */
+/* line 130, ../sass/foundation/hutby/_side-nav.scss */
 .hutby-sidenav-footer {
   height: 10.125rem;
   padding-top: 1.5rem; }
-  /* line 131, ../sass/foundation/hutby/_side-nav.scss */
+  /* line 137, ../sass/foundation/hutby/_side-nav.scss */
   .hutby-sidenav-footer ul li {
     padding: 0;
     margin: 0; }
-    /* line 135, ../sass/foundation/hutby/_side-nav.scss */
+    /* line 141, ../sass/foundation/hutby/_side-nav.scss */
     .hutby-sidenav-footer ul li:hover {
       background-color: transparent !important; }
-    /* line 139, ../sass/foundation/hutby/_side-nav.scss */
+    /* line 145, ../sass/foundation/hutby/_side-nav.scss */
     .hutby-sidenav-footer ul li a {
       text-align: center;
       padding: 0 !important;
       margin: 0 !important;
       line-height: 2.8125rem !important;
       height: 2.8125rem !important; }
-      /* line 146, ../sass/foundation/hutby/_side-nav.scss */
+      /* line 152, ../sass/foundation/hutby/_side-nav.scss */
       .hutby-sidenav-footer ul li a:hover {
         text-shadow: 0px 0px 27px #1cd9ff;
         background-color: transparent  !important; }
-  /* line 155, ../sass/foundation/hutby/_side-nav.scss */
+  /* line 161, ../sass/foundation/hutby/_side-nav.scss */
   .hutby-sidenav-footer hr {
     margin: 0 auto;
     padding-bottom: 1.15385rem !important;

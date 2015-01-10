@@ -29,7 +29,7 @@ define([
      */
     function VerticalTextualFlatList(flats) {
 
-        var _this = new Ul().class('content');
+        var _this = new Ul();
 
         var flatLinks = new Dictionary();
 

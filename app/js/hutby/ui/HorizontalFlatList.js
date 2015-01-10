@@ -2,6 +2,7 @@
  * Created by aliaksei on 17/11/14.
  */
 
+"use strict";
 define([
     'jquery',
     'a',

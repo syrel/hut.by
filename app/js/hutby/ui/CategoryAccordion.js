@@ -28,10 +28,10 @@ define([
      * @constructor
      */
     function CategoryAccordion(catalog, rooms) {
-        var _this = new Dd().class('accordion-navigation');
+        var _this = new Dd();
         var flats = catalog.flats(rooms);
         var flatList = new VerticalTextualFlatList(flats);
-        var headerLink = new A().class('side-nav-link').href('/index.html');
+        var headerLink = new A().href('/index.html');
 
         /**
          * Constructor
