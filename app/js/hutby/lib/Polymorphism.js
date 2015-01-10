@@ -10,10 +10,13 @@
  * @param newImp
  * @returns {Function}
  */
-override = function (oldImp, newImp) {
-    newImp.super = oldImp;
+override = function (scope, oldImp, newImp) {
 
-    return function (arguments) {
-        return newImp.call(newImp, arguments);
+    newImp.super = function() {
+        return oldImp.apply(scope, arguments);
+    };
+
+    return function () {
+        return newImp.apply(newImp, arguments);
     };
 };

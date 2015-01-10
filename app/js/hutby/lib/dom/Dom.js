@@ -68,7 +68,8 @@ define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
         /**
          * Overrides jquery's width() function allowing to set width value
          */
-        _this.width = override(_this.width, function(newWidth) {
+
+        _this.width = override(_this, _this.width, function(newWidth) {
             if (Utils.isUndefined(newWidth)) return this.super();
             _this.css('width',newWidth.toString());
             return _this;
