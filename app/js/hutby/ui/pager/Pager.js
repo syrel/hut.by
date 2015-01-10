@@ -4,6 +4,9 @@
 
 "use strict";
 define([
+    'a',
+    'div',
+    'p',
     'hutby/lib/Utils',
     'hutby/lib/WindowEvents',
     'hutby/announcements/OnFlatExpanded',
@@ -17,6 +20,9 @@ define([
     'jquery',
     'jquery.animo'
 ], function(
+    A,
+    Div,
+    P,
     Utils,
     WindowEvents,
     OnFlatExpanded,
@@ -41,15 +47,30 @@ define([
                 '</div>');
     }
 
+    /**
+     * Defines pager opening animation
+     * @param animated - true to show animation,
+     *                 - false otherwise
+     * @constructor
+     */
+    function OpenAnimation(animated) {
+        this.animation = 'zoomInLeft';
+        this.duration = animated ? 0.75 : 0;
+    }
+
+    /**
+     * Defines pager hiding animation
+     * @constructor
+     */
+    function HideAnimation() {
+        this.animation = 'zoomOutLeft';
+        this.duration = 0.75;
+    }
+
     function Pager (catalog) {
-        var _this = $('<div class="hutby-flat-pager-container"></div>');
+        var _this = new Div();
 
-        var pagerHideEffect = 'zoomOutLeft';
-        var pagerShowEffect = 'zoomInLeft';
         var pagerSwapEffect = 'fadeIn';
-
-        var pagerHideSpeed = 0.75;
-        var pagerShowSpeed = 0.75;
 
         var timeout = 5000;
         var defaultSpeed = 0.5;
@@ -61,7 +82,6 @@ define([
         var rightArrow = new PagerRightArrow();
         var photo = new PagerPhoto();
         var address = new PagerAddress();
-        var initialized = false;
 
         var flats = catalog.allFlats();
         var timer;
@@ -69,25 +89,37 @@ define([
         var block = false;
 
         _this.initialize = function () {
+            _this.class('hutby-flat-pager-container');
+
             catalog.announcer().onSendTo(OnCategoryExpanded, _this.onCategoryExpanded, _this);
             catalog.announcer().onSendTo(OnCategoryCollapsed, _this.onCategoryCollapsed, _this);
             photo.setPhoto(_this.currentFlat().getPhoto(0));
             address.setFlat(_this.currentFlat());
+
             if (!catalog.isCategoryExpanded()) _this.showPager(false);
         };
 
+        /**
+         * An action to be executed when a category
+         * is expanded. In our case we are hiding pager
+         */
         _this.onCategoryExpanded = function () {
-            _this.hidePager();
+            _this.hidePager(true);
         };
 
+        /**
+         * An action to be executed when a category
+         * is collapsed. In our case we are trying
+         * to show pager
+         */
         _this.onCategoryCollapsed = function () {
-            _this.showPager();
+            _this.showPager(true);
         };
 
-        _this.setFlats = function (_flats) {
-            flats = _flats;
-        };
-
+        /**
+         * Sets swap animation speed
+         * @param _speed
+         */
         _this.setSpeed = function(_speed) {
             currentSpeed = _speed;
         };
@@ -136,27 +168,34 @@ define([
             });
         };
 
+        /**
+         *
+         */
         _this.hidePager = function () {
-            _this.stopSwapping();
-            var duration = Global.isDisplaySmall() ? 0 : pagerHideSpeed;
-
-            _this.animoStop();
-            _this.animo( { animation: pagerHideEffect, duration: duration }, function() {
-                _this.hide(0);
-                _this.updateVisibility();
+            _this
+                .stopSwapping()
+                .animoStop()
+                .animo( new HideAnimation(), function() {
+                    _this.hide(0);
+                    _this.updateVisibility();
             });
         };
 
+        /**
+         * Shows pager with animation or without, specified
+         * by passed parameter. Shows pager if and only if
+         * webpage is not in mobile mode.
+         * @param animated - true to use opening animation,
+         *                 - otherwise false
+         */
         _this.showPager = function (animated) {
-            if (Global.isDisplaySmall()) return;
-            animated = Utils.isUndefined(animated) ? true : animated;
-
-            _this.createPager();
-
-            _this.animoStop();
-            _this.show(0).animo({ animation: pagerShowEffect, duration: animated ? pagerShowSpeed : 0}, function(){
-                _this.updateVisibility();
-                _this.swap();
+            if (!Global.isDisplayMedium()) return;
+            _this
+                .createPager()
+                .animoStop()
+                .show(0).animo(new OpenAnimation(animated), function(){
+                    _this.updateVisibility();
+                    _this.swap();
             });
         };
 
@@ -174,6 +213,7 @@ define([
 
         _this.stopSwapping = function(){
             clearTimeout(timer);
+            return _this;
         };
 
         _this.leftArrowClick = function () {
@@ -226,7 +266,7 @@ define([
         };
 
         _this.createPager = function () {
-            if (!initialized) {
+            if (!_this.isInDom()) {
                 _this.append(photo);
                 var shortInfo = new ShortInfo();
                 shortInfo.append(address);
@@ -235,9 +275,9 @@ define([
                 _this.append(leftArrow);
                 _this.append(rightArrow);
                 _this.initializeEvents();
-                initialized = true;
                 Global.pageContent.append(_this);
             }
+            return _this;
         };
 
         /////////////////////////////////////////////////////////////////////////////

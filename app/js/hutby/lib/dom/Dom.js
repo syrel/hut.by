@@ -99,6 +99,10 @@ define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
             return className;
         };
 
+        _this.isInDom = function () {
+            return _this.closest('html') === 0;
+        };
+
         // Calling constructor
         _this.initialize();
 
