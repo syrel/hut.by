@@ -74,7 +74,7 @@ define ([
             }
             expandedFlat = ann.flat();
             if (!_this.isCategoryExpanded() || _this.expandedCategory() !== ann.flat().getRooms()) {
-                _this.expandCategory(ann.flat().getRooms(), true, false);
+                _this.expandCategory(ann.flat().getRooms(), _this.isCategoryExpanded(), false);
             }
             if (!theSame) _this.announcer().announce(ann);
         };
