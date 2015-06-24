@@ -20,6 +20,7 @@ require.config({
         'foundation' : 'foundation/foundation',
         'foundation.offcanvas' : 'foundation/foundation.offcanvas',
         'foundation.accordion' : 'foundation/foundation.accordion',
+        'underscore' : 'vendor/underscore-min',
         'a' : 'hutby/lib/dom/A',
         'aside' : 'hutby/lib/dom/Aside',
         'dd' : 'hutby/lib/dom/Dd',
@@ -45,6 +46,9 @@ require.config({
     }
 });
 
-requirejs(['modernizr','jquery','jquery.me','foundation','foundation.offcanvas', 'foundation.accordion'], function(){
+var _;
+
+requirejs(['underscore','modernizr','jquery','jquery.me','foundation','foundation.offcanvas', 'foundation.accordion'], function(underscore){
+    _ = underscore;
     requirejs(['main']);
 });

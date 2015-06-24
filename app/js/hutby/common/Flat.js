@@ -9,12 +9,13 @@ define([
     'hutby/lib/Utils'
 ], function(Dictionary,Announcer, OnFlatExpanded, OnFlatCollapsed, Utils) {
 
-    function Flat() {
+    function Flat(_config) {
 
         var _this = this;
 
         var photos = [];
-        var cost;
+        var price;
+        var currency = '$';
         var costDescription = 'от  10 суток, $60';
         var address;
         var rooms;
@@ -60,6 +61,28 @@ define([
         var specifications = new Dictionary();
 
         /**
+         *
+         * @param {Object} config
+         * @param {int} config.rooms
+         * @param {String} config.title
+         * @param {Array} config.photos
+         * @param {String} config.address
+         * @param {int} config.price
+         * @param {String} config.currency
+         */
+        _this.initialize = function (config) {
+            if (_.isUndefined(config)) return;
+            _this.setRooms(config.rooms);
+            _this.setAddress(config.address);
+            _this.price(config.price);
+            _this.currency(config.currency);
+
+            if (!_.isUndefined(config.photos))
+                _.each(config.photos, _this.addPhoto);
+
+        };
+
+        /**
          * Adds new image to existing ones
          * @param _imagePath path to the image
          */
@@ -67,17 +90,52 @@ define([
             photos.push(_imagePath);
         };
 
-        _this.getPhoto = function(_index) {
+        /**
+         * Returns photo at index
+         * @param _index
+         * @returns {String}
+         */
+        _this.photoAt = function(_index) {
             if (_index >= photos.length) return null;
             return photos[_index];
         };
 
-        _this.getCost = function() {
-            return cost;
+        /**
+         * Photo that should be used as title
+         * @returns {String}
+         */
+        _this.titlePhoto = function () {
+            return _this.photoAt(0);
         };
 
-        _this.setCost = function(_cost) {
-            cost = _cost;
+        /**
+         * Setter/getter for price value
+         * @param {int} [aNumber]
+         * @returns {Flat|int}
+         */
+        _this.price = function(aNumber) {
+            if (_.isUndefined(aNumber)) return price;
+            price = aNumber;
+            return _this;
+        };
+
+        /**
+         * Setter/getter for price currency
+         * @param {String} [aString]
+         * @returns {Flat|String}
+         */
+        _this.currency = function(aString) {
+            if (_.isUndefined(aString)) return currency;
+            currency = aString;
+            return _this;
+        };
+
+        /**
+         * Prints price in human readable format
+         * @returns {String}
+         */
+        _this.printPrice = function () {
+            return _this.price() + _this.currency();
         };
 
         _this.getCostDescription = function () {
@@ -175,6 +233,8 @@ define([
             _this.catalog().onFlatExpanded(ann);
             if (!wasExpanded)_this.announcer().announce(ann);
         };
+
+        _this.initialize(_config);
     }
 
     Flat.Specification = function(_key, _value){

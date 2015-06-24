@@ -93,7 +93,7 @@ define([
 
             catalog.announcer().onSendTo(OnCategoryExpanded, _this.onCategoryExpanded, _this);
             catalog.announcer().onSendTo(OnCategoryCollapsed, _this.onCategoryCollapsed, _this);
-            photo.setPhoto(_this.currentFlat().getPhoto(0));
+            photo.setPhoto(_this.currentFlat().titlePhoto());
             address.setFlat(_this.currentFlat());
 
             if (!catalog.isCategoryExpanded()) _this.showPager(false);
@@ -157,9 +157,9 @@ define([
             if (_index >= flats.length) _index = 0;
             if (_index < 0) _index = flats.length - 1;
 
-            Utils.imagePreload(flats[_index].getPhoto(0), function() {
+            Utils.imagePreload(flats[_index].titlePhoto(), function() {
 
-                _this.swapImage(flats[_index].getPhoto(0), function() {
+                _this.swapImage(flats[_index].titlePhoto(), function() {
                     currentIndex = _index;
                     address.setFlat(_this.currentFlat());
                     block = false;

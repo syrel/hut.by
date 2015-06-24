@@ -42,7 +42,7 @@ define (['hutby/lib/KDSplitter', 'hutby/lib/Rectangle','hutby/lib/Point', 'hutby
 
         _this.setPhotos = function () {
             $.each(canvas.find(elementID), function(index, element){
-                var photo = flat.getPhoto(index);
+                var photo = flat.photoAt(index);
                 $(element).find('a').css('background-image', 'url('+photo+')');
             });
         };
