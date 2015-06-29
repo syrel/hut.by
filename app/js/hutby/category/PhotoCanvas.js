@@ -2,7 +2,23 @@
  * Created by aliaksei on 06/08/14.
  */
 
-define (['hutby/lib/KDSplitter', 'hutby/lib/Rectangle','hutby/lib/Point', 'hutby/lib/Utils','jquery'], function(KDSplitter, Rectangle, Point, Utils, $){
+define ([
+    'hutby/lib/KDSplitter',
+    'hutby/lib/Rectangle',
+    'hutby/lib/Point',
+    'hutby/lib/Utils',
+    'jquery',
+    'vendor/photoswipe',
+    'vendor/photoswipe-ui-default'
+], function(
+    KDSplitter,
+    Rectangle,
+    Point,
+    Utils,
+    $,
+    PhotoSwipe,
+    PhotoSwipeUI_Default
+    ) {
     function PhotoCanvas(canvasID, flat) {
         var _this = this;
 
@@ -43,7 +59,21 @@ define (['hutby/lib/KDSplitter', 'hutby/lib/Rectangle','hutby/lib/Point', 'hutby
         _this.setPhotos = function () {
             $.each(canvas.find(elementID), function(index, element){
                 var photo = flat.photoAt(index);
-                $(element).find('a').css('background-image', 'url('+photo+')');
+                $(element).find('a').css('background-image', 'url('+photo+')').click(function(e){
+                    e.preventDefault();
+                    var pswpElement = document.querySelectorAll('.pswp')[0];
+                    var items = _.map(flat.photos(), function(each){
+                        return { src: each, w: 2880, h: 1920 }
+                    });
+
+                    var options = {
+                        // optionName: 'option value'
+                        // for example:
+                        index: 0 // start at first slide
+                    };
+                    var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+                    gallery.init();
+                });
             });
         };
     }

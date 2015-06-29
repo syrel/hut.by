@@ -63,7 +63,7 @@ define([
          * @returns {*|HTMLElement}
          */
         _this.buildLinkFor = function (_flat) {
-            return new Li().add(new A().href(_flat.getLink()).text(_flat.getAddress()));
+            return new Li().add(new A().href(_flat.getLink()).text(_flat.address()));
         };
 
         /**

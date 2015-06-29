@@ -59,7 +59,7 @@ define([
             return new A()
                 .href(flat.getLink)
                 .add(new Img().src(flat.titlePhoto()))
-                .add(new P().text(flat.getAddress()));
+                .add(new P().text(flat.address()));
         };
 
         /**

@@ -33,7 +33,7 @@ define([
 
             var description = ['Интернет (Wi-Fi)', 'Отчетные документы'];
 
-            _this.getTitle = function() {
+            _this.printTitle = function() {
                 return title;
             };
 
@@ -73,13 +73,20 @@ define([
         _this.initialize = function (config) {
             if (_.isUndefined(config)) return;
             _this.setRooms(config.rooms);
-            _this.setAddress(config.address);
+            _this.address(config.address);
             _this.price(config.price);
             _this.currency(config.currency);
 
             if (!_.isUndefined(config.photos))
                 _.each(config.photos, _this.addPhoto);
 
+        };
+
+        /**
+         * @returns {Array}
+         */
+        _this.photos = function () {
+            return photos;
         };
 
         /**
@@ -138,6 +145,18 @@ define([
             return _this.price() + _this.currency();
         };
 
+        /**
+         * Setter/getter for address
+         * @param {String} [aString]
+         * @returns {Flat|String}
+         */
+        _this.address = function (aString) {
+            if (_.isUndefined(aString)) return address;
+            address = aString;
+            return _this;
+        };
+
+
         _this.getCostDescription = function () {
             return costDescription;
         };
@@ -146,20 +165,12 @@ define([
             costDescription = _costDescription;
         };
 
-        _this.getAddress = function() {
-            return address;
-        };
-
-        _this.setAddress = function(_address) {
-            address = _address;
-        };
-
         _this.getLink = function() {
             return '#';
         };
 
-        _this.getTitle = function () {
-            return Utils.capitalizeFirstLetter(_this.roomsString()) + ' по ' + _this.getAddress();
+        _this.printTitle = function () {
+            return Utils.capitalizeFirstLetter(_this.roomsString()) + ' по ' + _this.address();
         };
 
         _this.setRooms = function (_rooms) {
