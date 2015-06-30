@@ -3,6 +3,7 @@
  */
 
 var _;
+var $;
 
 define([
     'hutby/ui/offcanvas/Offcanvas',
@@ -12,6 +13,7 @@ define([
     'hutby/ui/PhotoSwipe',
 	'underscore',
     'jquery',
+	'jquery.me',
     'foundation',
     'foundation.offcanvas',
     'foundation.accordion',
@@ -23,9 +25,10 @@ define([
     Catalog,
     PhotoSwipe,
 	underscore,
-    $) {
+	jquery) {
 		
     _ = underscore;
+	$ = jquery;
 		
     var catalog = new Catalog();
 
