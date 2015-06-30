@@ -2,12 +2,15 @@
  * Created by aliaksei on 02/08/14.
  */
 
+var _;
+
 define([
     'hutby/ui/offcanvas/Offcanvas',
     'hutby/common/Navigation',
     'hutby/common/Flat',
     'hutby/common/Catalog',
     'hutby/ui/PhotoSwipe',
+	'underscore',
     'jquery',
     'foundation',
     'foundation.offcanvas',
@@ -19,8 +22,11 @@ define([
     Flat,
     Catalog,
     PhotoSwipe,
+	underscore,
     $) {
-
+		
+    _ = underscore;
+		
     var catalog = new Catalog();
 
     var flat = new Flat({

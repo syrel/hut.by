@@ -9,7 +9,7 @@ define ([
     'hutby/lib/Utils',
     'jquery',
     'div',
-    'a'
+    'a',
     'vendor/photoswipe',
     'vendor/photoswipe-ui-default'
 ], function(

@@ -46,9 +46,6 @@ require.config({
     }
 });
 
-var _;
-
-requirejs(['underscore','modernizr','jquery','jquery.me','foundation','foundation.offcanvas', 'foundation.accordion'], function(underscore){
-    _ = underscore;
+requirejs(['modernizr','jquery','jquery.me','foundation','foundation.offcanvas', 'foundation.accordion'], function(){
     requirejs(['main']);
 });
