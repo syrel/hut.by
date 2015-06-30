@@ -82,6 +82,33 @@ define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
         });
 
         /**
+         * Overrides jquery's height() function allowing to set height value
+         */
+        _this.height = override(_this, _this.height, function(newHeight) {
+            if (Utils.isUndefined(newHeight)) return this.super();
+            _this.css('height',newHeight.toString());
+            return _this;
+        });
+
+        /**
+         * Overrides jquery's top() function allowing to set top value
+         */
+        _this.top = override(_this, _this.top, function(newTop) {
+            if (Utils.isUndefined(newTop)) return this.super();
+            _this.css('top',newTop.toString());
+            return _this;
+        });
+
+        /**
+         * Overrides jquery's left() function allowing to set left value
+         */
+        _this.left = override(_this, _this.left, function(newLeft) {
+            if (Utils.isUndefined(newLeft)) return this.super();
+            _this.css('left',newLeft.toString());
+            return _this;
+        });
+
+        /**
          * Adds new dynamic css class with specified class name and
          * object as properties
          * @param classObject

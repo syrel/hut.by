@@ -2,7 +2,23 @@
  * Created by aliaksei on 06/08/14.
  */
 
-define (['hutby/lib/KDSplitter', 'hutby/lib/Rectangle','hutby/lib/Point', 'hutby/lib/Utils','jquery'], function(KDSplitter, Rectangle, Point, Utils, $){
+define ([
+    'hutby/lib/KDSplitter',
+    'hutby/lib/Rectangle',
+    'hutby/lib/Point',
+    'hutby/lib/Utils',
+    'jquery',
+    'div',
+    'a'
+], function(
+    KDSplitter,
+    Rectangle,
+    Point,
+    Utils,
+    $,
+    Div,
+    A
+){
     function PhotoCanvas(canvasID, flat) {
         var _this = this;
 
@@ -32,12 +48,24 @@ define (['hutby/lib/KDSplitter', 'hutby/lib/Rectangle','hutby/lib/Point', 'hutby
             rectangles = kdSplitter.rectangles();
 
             $.each(rectangles, function(index, rectangle) {
-                canvas.append($(_this.buildCanvasElement(rectangle)));
+                canvas.append(_this.buildCanvasElement(rectangle));
             });
         };
 
         _this.buildCanvasElement = function (rectangle) {
-            return '<div class="'+elementID.slice(1)+'" style="left: ' + rectangle.origin().x() + 'px; top: ' + rectangle.origin().y() + 'px; width: ' + rectangle.width() + 'px; height: ' + rectangle.height() + 'px;"><a href="#"></a></div>';
+            var div = new Div()
+                .class(elementID.slice(1))
+                .width(rectangle.width()+'px')
+                .height(rectangle.height()+'px')
+                .left(rectangle.origin().x()+'px')
+                .top(rectangle.origin().y()+'px');
+
+            var link = new A('#');
+            return div.add(link);
+        };
+
+        _this.buildPhotoContainer = function(rectangle) {
+
         };
 
         _this.setPhotos = function () {
