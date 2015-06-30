@@ -5,14 +5,14 @@ $ms : 3;
 $o : 4;
 $default : 5;
 
-$__variable: null;
-
-@mixin setArgument($variable){
-  $__variable : $variable;
-}
+$__variable: null !global;
 
 @function getArgument(){
   @return $__variable;
+}
+
+@mixin setArgument($variable: $__variable){
+  $__variable: $variable !global;
 }
 
 @function prefix($browser){
