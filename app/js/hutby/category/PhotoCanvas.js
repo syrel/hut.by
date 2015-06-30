@@ -10,6 +10,8 @@ define ([
     'jquery',
     'div',
     'a'
+    'vendor/photoswipe',
+    'vendor/photoswipe-ui-default'
 ], function(
     KDSplitter,
     Rectangle,
@@ -17,8 +19,10 @@ define ([
     Utils,
     $,
     Div,
-    A
-){
+    A,
+    PhotoSwipe,
+    PhotoSwipeUI_Default
+) {
     function PhotoCanvas(canvasID, flat) {
         var _this = this;
 
@@ -70,8 +74,22 @@ define ([
 
         _this.setPhotos = function () {
             $.each(canvas.find(elementID), function(index, element){
-                var photo = flat.getPhoto(index);
-                $(element).find('a').css('background-image', 'url('+photo+')');
+                var photo = flat.photoAt(index);
+                $(element).find('a').css('background-image', 'url('+photo+')').click(function(e){
+                    e.preventDefault();
+                    var pswpElement = document.querySelectorAll('.pswp')[0];
+                    var items = _.map(flat.photos(), function(each){
+                        return { src: each, w: 2880, h: 1920 }
+                    });
+
+                    var options = {
+                        // optionName: 'option value'
+                        // for example:
+                        index: 0 // start at first slide
+                    };
+                    var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+                    gallery.init();
+                });
             });
         };
     }

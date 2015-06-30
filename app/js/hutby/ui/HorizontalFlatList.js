@@ -58,8 +58,8 @@ define([
         _this.buildLinkFor = function (flat) {
             return new A()
                 .href(flat.getLink)
-                .add(new Img().src(flat.getPhoto(0)))
-                .add(new P().text(flat.getAddress()));
+                .add(new Img().src(flat.titlePhoto()))
+                .add(new P().text(flat.address()));
         };
 
         /**

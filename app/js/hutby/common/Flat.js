@@ -9,12 +9,13 @@ define([
     'hutby/lib/Utils'
 ], function(Dictionary,Announcer, OnFlatExpanded, OnFlatCollapsed, Utils) {
 
-    function Flat() {
+    function Flat(_config) {
 
         var _this = this;
 
         var photos = [];
-        var cost;
+        var price;
+        var currency = '$';
         var costDescription = 'от  10 суток, $60';
         var address;
         var rooms;
@@ -32,7 +33,7 @@ define([
 
             var description = ['Интернет (Wi-Fi)', 'Отчетные документы'];
 
-            _this.getTitle = function() {
+            _this.printTitle = function() {
                 return title;
             };
 
@@ -60,6 +61,35 @@ define([
         var specifications = new Dictionary();
 
         /**
+         *
+         * @param {Object} config
+         * @param {int} config.rooms
+         * @param {String} config.title
+         * @param {Array} config.photos
+         * @param {String} config.address
+         * @param {int} config.price
+         * @param {String} config.currency
+         */
+        _this.initialize = function (config) {
+            if (_.isUndefined(config)) return;
+            _this.setRooms(config.rooms);
+            _this.address(config.address);
+            _this.price(config.price);
+            _this.currency(config.currency);
+
+            if (!_.isUndefined(config.photos))
+                _.each(config.photos, _this.addPhoto);
+
+        };
+
+        /**
+         * @returns {Array}
+         */
+        _this.photos = function () {
+            return photos;
+        };
+
+        /**
          * Adds new image to existing ones
          * @param _imagePath path to the image
          */
@@ -67,18 +97,65 @@ define([
             photos.push(_imagePath);
         };
 
-        _this.getPhoto = function(_index) {
+        /**
+         * Returns photo at index
+         * @param _index
+         * @returns {String}
+         */
+        _this.photoAt = function(_index) {
             if (_index >= photos.length) return null;
             return photos[_index];
         };
 
-        _this.getCost = function() {
-            return cost;
+        /**
+         * Photo that should be used as title
+         * @returns {String}
+         */
+        _this.titlePhoto = function () {
+            return _this.photoAt(0);
         };
 
-        _this.setCost = function(_cost) {
-            cost = _cost;
+        /**
+         * Setter/getter for price value
+         * @param {int} [aNumber]
+         * @returns {Flat|int}
+         */
+        _this.price = function(aNumber) {
+            if (_.isUndefined(aNumber)) return price;
+            price = aNumber;
+            return _this;
         };
+
+        /**
+         * Setter/getter for price currency
+         * @param {String} [aString]
+         * @returns {Flat|String}
+         */
+        _this.currency = function(aString) {
+            if (_.isUndefined(aString)) return currency;
+            currency = aString;
+            return _this;
+        };
+
+        /**
+         * Prints price in human readable format
+         * @returns {String}
+         */
+        _this.printPrice = function () {
+            return _this.price() + _this.currency();
+        };
+
+        /**
+         * Setter/getter for address
+         * @param {String} [aString]
+         * @returns {Flat|String}
+         */
+        _this.address = function (aString) {
+            if (_.isUndefined(aString)) return address;
+            address = aString;
+            return _this;
+        };
+
 
         _this.getCostDescription = function () {
             return costDescription;
@@ -88,20 +165,12 @@ define([
             costDescription = _costDescription;
         };
 
-        _this.getAddress = function() {
-            return address;
-        };
-
-        _this.setAddress = function(_address) {
-            address = _address;
-        };
-
         _this.getLink = function() {
             return '#';
         };
 
-        _this.getTitle = function () {
-            return Utils.capitalizeFirstLetter(_this.roomsString()) + ' по ' + _this.getAddress();
+        _this.printTitle = function () {
+            return Utils.capitalizeFirstLetter(_this.roomsString()) + ' по ' + _this.address();
         };
 
         _this.setRooms = function (_rooms) {
@@ -175,6 +244,8 @@ define([
             _this.catalog().onFlatExpanded(ann);
             if (!wasExpanded)_this.announcer().announce(ann);
         };
+
+        _this.initialize(_config);
     }
 
     Flat.Specification = function(_key, _value){

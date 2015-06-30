@@ -103,10 +103,10 @@ define(['hutby/category/FlatDescriptionViewHolder','hutby/category/PhotoCanvas',
         _this.buildOverviewSection = function () {
             return  '<section>'+
                         '<article>'+
-                            '<h2>'+flat.getAddress()+'</h2>'+
+                            '<h2>'+flat.address()+'</h2>'+
                             '<p>'+flat.getOverview().getArticle()+'</p>'+
                         '</article>'+
-                        '<div class="photo-canvas photo-canvas-big" style="margin-top:1em; background-image: url('+flat.getPhoto(0)+');"></div>'+
+                        '<div class="photo-canvas photo-canvas-big" style="margin-top:1em; background-image: url('+flat.titlePhoto()+');"></div>'+
                     '</section>'+
                     '<section>'+
                         '<div id="'+holder.photoCanvasID().slice(1)+'" class="photo-canvas"></div>'+
@@ -118,11 +118,11 @@ define(['hutby/category/FlatDescriptionViewHolder','hutby/category/PhotoCanvas',
 
 
         _this.buildPricingTable = function () {
-            return '<ul class="pricing-table"><li class="price">$65</li><li class="description">от  10 суток, $60</li><li class="bullet-item">'+flat.getTitle()+'</li><li class="bullet-item">Интернет (Wi-Fi)</li><li class="bullet-item">Отчетные документы</li><li class="cta-button"><a href="tel:+375293990021">+375 29 399 00 21</a></li> </ul>';
+            return '<ul class="pricing-table"><li class="price">$65</li><li class="description">от  10 суток, $60</li><li class="bullet-item">'+flat.printTitle()+'</li><li class="bullet-item">Интернет (Wi-Fi)</li><li class="bullet-item">Отчетные документы</li><li class="cta-button"><a href="tel:+375293990021">+375 29 399 00 21</a></li> </ul>';
         };
 
         _this.buildTitle = function () {
-            return '<h2>'+flat.getAddress()+'</h2>';
+            return '<h2>'+flat.address()+'</h2>';
         };
 
         _this.buildContainer = function () {

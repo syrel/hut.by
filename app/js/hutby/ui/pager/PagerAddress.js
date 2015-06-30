@@ -26,7 +26,7 @@ define(['jquery'], function ($) {
         };
 
         _this.updateLink = function () {
-            _this.text(_this.getFlat().getAddress());
+            _this.text(_this.getFlat().address());
         };
 
         _this.initialize();

@@ -7,6 +7,7 @@ define([
     'hutby/common/Navigation',
     'hutby/common/Flat',
     'hutby/common/Catalog',
+    'hutby/ui/PhotoSwipe',
     'jquery',
     'foundation',
     'foundation.offcanvas',
@@ -17,11 +18,37 @@ define([
     Navigation,
     Flat,
     Catalog,
+    PhotoSwipe,
     $) {
 
     var catalog = new Catalog();
 
-    var flat = new Flat();
+    var flat = new Flat({
+        rooms: 1,
+        address: 'Сурганова 90',
+        price: 60,
+        currency: '$',
+        photos: [
+            'img/DSC02331_9x6.jpg',
+            'img/deluxe_room.jpeg',
+            'img/image4.jpg',
+            'img/zgrada_zaton47.jpg',
+            'img/img3.jpg',
+            'img/deluxe_room.jpeg',
+            'img/image4.jpg'
+        ]
+    });
+    catalog.addFlat(flat);
+
+    flat = new Flat();
+    flat.setRooms(1);
+    flat.addPhoto("img/zgrada_zaton47.jpg");
+    flat.address('пр. Независимости 75');
+    flat.price(50);
+    flat.currency('$');
+    catalog.addFlat(flat);
+
+    flat = new Flat();
     flat.setRooms(1);
     flat.addPhoto("img/deluxe_room.jpeg");
     flat.addPhoto("img/image4.jpg");
@@ -29,36 +56,19 @@ define([
     flat.addPhoto("img/img3.jpg");
     flat.addPhoto("img/deluxe_room.jpeg");
     flat.addPhoto("img/image4.jpg");
-    flat.setAddress('Сурганова 90');
-    flat.setCost('60$');
-    catalog.addFlat(flat);
-
-    flat = new Flat();
-    flat.setRooms(1);
-    flat.addPhoto("img/zgrada_zaton47.jpg");
-    flat.setAddress('пр. Независимости 75');
-    flat.setCost('50$');
-    catalog.addFlat(flat);
-
-    flat = new Flat();
-    flat.setRooms(1);
-    flat.addPhoto("img/deluxe_room.jpeg");
-    flat.addPhoto("img/image4.jpg");
     flat.addPhoto("img/zgrada_zaton47.jpg");
     flat.addPhoto("img/img3.jpg");
-    flat.addPhoto("img/deluxe_room.jpeg");
-    flat.addPhoto("img/image4.jpg");
-    flat.addPhoto("img/zgrada_zaton47.jpg");
-    flat.addPhoto("img/img3.jpg");
-    flat.setAddress('пр. Ботаническая 12');
-    flat.setCost('70$');
+    flat.address('пр. Ботаническая 12');
+    flat.price(70);
+    flat.currency('$');
     catalog.addFlat(flat);
 
     flat = new Flat();
     flat.setRooms(1);
     flat.addPhoto("img/image4.jpg");
-    flat.setAddress('Кирова 77');
-    flat.setCost('60$');
+    flat.address('Кирова 77');
+    flat.price(60);
+    flat.currency('$');
     catalog.addFlat(flat);
 
     flat = new Flat();
@@ -72,8 +82,9 @@ define([
     flat.addPhoto("http://img.hut.by/pictures/383c40b80c69520d81cd137ffdf7b26612.jpg");
     flat.addPhoto("http://img.hut.by/pictures/961a20e94eb5a9a141117de5a88d59a357.jpg");
 
-    flat.setAddress('пр. Независимости, 75');
-    flat.setCost('60-65$');
+    flat.address('пр. Независимости, 75');
+    flat.price(60);
+    flat.currency('$');
 
     flat.addSpecification('locations', new Flat.Specification('Расположение','Центр города'));
     flat.addSpecification('metro-stations', new Flat.Specification('Рядом метро','Ст. метро Октябрьская (2 мин. пешком)'));
@@ -97,12 +108,13 @@ define([
     flat = new Flat();
     flat.setRooms(2);
     flat.addPhoto("img/img3.jpg");
-    flat.setAddress('пр. Независимости 15');
-    flat.setCost('90$');
+    flat.address('пр. Независимости 15');
+    flat.price(90);
+    flat.currency('$');
 
     catalog.addFlat(flat);
 
-    $('body').append(new Offcanvas(catalog));
+    $('body').append(new Offcanvas(catalog)).append(new PhotoSwipe());
 
     $(document).foundation({
         offcanvas : {
