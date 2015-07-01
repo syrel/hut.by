@@ -106,7 +106,7 @@ define(['hutby/category/FlatDescriptionViewHolder','hutby/category/PhotoCanvas',
                             '<h2>'+flat.address()+'</h2>'+
                             '<p>'+flat.getOverview().getArticle()+'</p>'+
                         '</article>'+
-                        '<div class="photo-canvas photo-canvas-big" style="margin-top:1em; background-image: url('+flat.titlePhoto()+');"></div>'+
+                        '<div class="photo-canvas photo-canvas-big" style="margin-top:1em; background-image: url('+flat.titlePhoto().thumbnail()+');"></div>'+
                     '</section>'+
                     '<section>'+
                         '<div id="'+holder.photoCanvasID().slice(1)+'" class="photo-canvas"></div>'+

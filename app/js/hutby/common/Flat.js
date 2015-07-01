@@ -6,8 +6,15 @@ define([
     'announcer',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
-    'hutby/lib/Utils'
-], function(Dictionary,Announcer, OnFlatExpanded, OnFlatCollapsed, Utils) {
+    'hutby/lib/Utils',
+    'hutby/common/Photo'
+], function(
+    Dictionary,
+    Announcer,
+    OnFlatExpanded,
+    OnFlatCollapsed,
+    Utils,
+    Photo) {
 
     function Flat(_config) {
 
@@ -90,17 +97,17 @@ define([
         };
 
         /**
-         * Adds new image to existing ones
-         * @param _imagePath path to the image
+         * Adds new photo to existing ones
+         * @param {Object} photo
          */
-        _this.addPhoto = function (_imagePath) {
-            photos.push(_imagePath);
+        _this.addPhoto = function (photo) {
+            photos.push(new Photo(photo));
         };
 
         /**
          * Returns photo at index
          * @param _index
-         * @returns {String}
+         * @returns {Photo}
          */
         _this.photoAt = function(_index) {
             if (_index >= photos.length) return null;
@@ -109,7 +116,7 @@ define([
 
         /**
          * Photo that should be used as title
-         * @returns {String}
+         * @returns {Photo}
          */
         _this.titlePhoto = function () {
             return _this.photoAt(0);

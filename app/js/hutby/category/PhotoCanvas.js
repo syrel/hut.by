@@ -75,17 +75,16 @@ define ([
         _this.setPhotos = function () {
             $.each(canvas.find(elementID), function(index, element){
                 var photo = flat.photoAt(index);
-                $(element).find('a').css('background-image', 'url('+photo+')').click(function(e){
+                $(element).find('a').css('background-image', 'url('+photo.path()+')').click(function(e){
                     e.preventDefault();
                     var pswpElement = document.querySelectorAll('.pswp')[0];
                     var items = _.map(flat.photos(), function(each){
-                        return { src: each, w: 2880, h: 1920 }
+                        var image = each.image();
+                        return { src: image.path(), w: image.width(), h: image.height() }
                     });
 
                     var options = {
-                        // optionName: 'option value'
-                        // for example:
-                        index: 0 // start at first slide
+                        index: index
                     };
                     var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
                     gallery.init();
