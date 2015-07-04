@@ -16,57 +16,119 @@ define([
     Utils,
     Photo) {
 
-    function Flat(_config) {
 
+    /**
+     *
+     * @param _config
+     * @constructor
+     * @class Price
+     */
+    function Price(_config) {
         var _this = this;
 
-        var photos = [];
-        var price;
+        var amount;
         var currency = '$';
-        var costDescription = 'от  10 суток, $60';
-        var address;
-        var rooms;
-        var catalog;
+        var special;
 
-        var isExpanded = false;
-
-        var announcer = new Announcer();
-
-        var overview = new function() {
-            var _this = this;
-
-            var title = 'Студия в центре';
-            var article = 'Квартира-студия — тип жилого помещения, основным отличием которого является отсутствие капитальных стен или перегородок между комнатой и кухнейТакой тип жилья пришел в Россию в начале 1990-х годов с Запада. Архитектурно-планировочное решение жилья как квартиры-студии было создано Людвигом Мис ван дер Роэ в США в 1920-х годах. Пространство, полностью свободное от внутренних стен, стало очень популярно в Америке и Европе, особенно, в среде творческой молодёжи.';
-
-            var description = ['Интернет (Wi-Fi)', 'Отчетные документы'];
-
-            _this.printTitle = function() {
-                return title;
-            };
-
-            _this.getArticle = function() {
-                return article;
-            };
-
-            _this.setTitle = function(_title) {
-                title = _title;
-            };
-
-            _this.setArticle = function(_article) {
-                article = _article;
-            };
-
-            _this.getDescription = function () {
-                return description;
-            };
-
-            _this.setDescription = function (_description) {
-                description = _description;
-            };
+        /**
+         * @param {Object} config
+         * @param {int|String} config.amount
+         * @param {String} config.currency
+         * @param {String} config.special
+         */
+        _this.initialize = function(config) {
+            amount = config.amount;
+            currency = config.currency;
+            special = config.special;
         };
 
-        var specifications = new Dictionary();
+        _this.amount = function () {
+            return amount;
+        };
 
+        _this.currency = function () {
+            return currency;
+        };
+
+        _this.special = function () {
+            return special;
+        };
+
+        /**
+         * Prints price in human readable format
+         * @returns {String}
+         */
+        _this.printString = function () {
+            return _this.amount() + _this.currency();
+        };
+
+        _this.initialize(_config);
+    }
+
+    /**
+     * @param _config
+     * @constructor
+     * @class Overview
+     */
+    function Overview(_config) {
+        var _this = this;
+
+        var description = "";
+        var features  = [];
+
+        /**
+         * @param {Object} config
+         * @param {String} config.description
+         * @param {Array} config.features
+         */
+        _this.initialize = function (config) {
+            description = config.description;
+            features = config.features;
+        };
+
+        /**
+         * @returns {string}
+         */
+        _this.description = function () {
+            return description;
+        };
+
+        /**
+         * @returns {Array}
+         */
+        _this.features = function () {
+            return features;
+        };
+
+        _this.initialize(_config);
+    }
+
+    function Specification() {
+        var _this = this;
+
+        var name;
+        var description;
+    }
+
+    /**
+     *
+     * @param _config
+     * @constructor
+     * @class Flat
+     */
+    function Flat(_config) {
+        var _this = this;
+
+        var rooms;
+        var address;
+        var price;
+        var overview;
+        var specifications = new Dictionary();
+        var photos = [];
+
+        var catalog;
+        var isExpanded = false;
+        var announcer = new Announcer();
         /**
          *
          * @param {Object} config
@@ -74,19 +136,16 @@ define([
          * @param {String} config.title
          * @param {Array} config.photos
          * @param {String} config.address
-         * @param {int} config.price
-         * @param {String} config.currency
+         * @param {Object} config.price
+         * @param {Object} config.overview
          */
         _this.initialize = function (config) {
             if (_.isUndefined(config)) return;
-            _this.setRooms(config.rooms);
-            _this.address(config.address);
-            _this.price(config.price);
-            _this.currency(config.currency);
-
-            if (!_.isUndefined(config.photos))
-                _.each(config.photos, _this.addPhoto);
-
+            rooms = config.rooms;
+            address = config.address;
+            price = new Price(config.price);
+            overview = new Overview(config.overview);
+            _.each(config.photos, _this.addPhoto);
         };
 
         /**
@@ -124,32 +183,10 @@ define([
 
         /**
          * Setter/getter for price value
-         * @param {int} [aNumber]
-         * @returns {Flat|int}
+         * @returns {Price}
          */
-        _this.price = function(aNumber) {
-            if (_.isUndefined(aNumber)) return price;
-            price = aNumber;
-            return _this;
-        };
-
-        /**
-         * Setter/getter for price currency
-         * @param {String} [aString]
-         * @returns {Flat|String}
-         */
-        _this.currency = function(aString) {
-            if (_.isUndefined(aString)) return currency;
-            currency = aString;
-            return _this;
-        };
-
-        /**
-         * Prints price in human readable format
-         * @returns {String}
-         */
-        _this.printPrice = function () {
-            return _this.price() + _this.currency();
+        _this.price = function() {
+            return price;
         };
 
         /**
@@ -161,15 +198,6 @@ define([
             if (_.isUndefined(aString)) return address;
             address = aString;
             return _this;
-        };
-
-
-        _this.getCostDescription = function () {
-            return costDescription;
-        };
-
-        _this.setCostDescription = function (_costDescription) {
-            costDescription = _costDescription;
         };
 
         _this.getLink = function() {
@@ -201,7 +229,10 @@ define([
             return photos.length;
         };
 
-        _this.getOverview = function () {
+        /**
+         * @returns {Overview}
+         */
+        _this.overview = function () {
             return overview;
         };
 

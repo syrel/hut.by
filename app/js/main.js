@@ -34,9 +34,21 @@ define([
 
     var flat = new Flat({
         rooms: 1,
-        address: 'Сурганова 90',
-        price: 60,
-        currency: '$',
+        address: 'пр.Независимости 75',
+        price: {
+            amount: 50,
+            currency: '$',
+            special: "от 4 суток 45$"
+        },
+        overview: {
+            description: "Расположена у пр.Независимости в шаговой доступности от метро Академия наук," +
+                "с 2-ух спальной кроватью, ЖК ТВ, безлимитным интернетом. В наличии стиральная машина," +
+                "холодильник, современная посуда. Предоставляем отчетные финансовые документы.",
+            features: [
+                "Безлимитный интернет (Wi-Fi)",
+                "Отчетные документы"
+            ]
+        },
         photos: [
             {
                 thumbnail: {
@@ -47,10 +59,16 @@ define([
                 },
                 images: [
                     {
+                        path: "img/red_kitchen_medium_1440x960.jpg",
+                        width: 1440,
+                        height: 960,
+                        media: "medium_down"
+                    },
+                    {
                         path: "img/red_kitchen_large_2880x1920.jpg",
                         width: 2880,
                         height: 1920,
-                        media: "small_up"
+                        media: "large_up"
                     }
                 ]
             }

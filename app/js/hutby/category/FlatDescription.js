@@ -2,7 +2,17 @@
  * Created by aliaksei on 06/08/14.
  */
 
-define(['hutby/category/FlatDescriptionViewHolder','hutby/category/PhotoCanvas', 'hutby/lib/Utils', 'hutby/common/Global', 'jquery'], function(FlatDescriptionViewHolder, PhotoCanvas, Utils, Global, $) {
+define([
+    'hutby/category/FlatDescriptionViewHolder',
+    'hutby/category/PhotoCanvas',
+    'hutby/category/FlatOverview',
+    'hutby/lib/Utils',
+    'hutby/common/Global'], function(
+    FlatDescriptionViewHolder,
+    PhotoCanvas,
+    FlatOverview,
+    Utils,
+    Global) {
 
     function FlatDescription(category, flat, prefix) {
         var _this = this;
@@ -104,7 +114,7 @@ define(['hutby/category/FlatDescriptionViewHolder','hutby/category/PhotoCanvas',
             return  '<section>'+
                         '<article>'+
                             '<h2>'+flat.address()+'</h2>'+
-                            '<p>'+flat.getOverview().getArticle()+'</p>'+
+                            '<p>'+flat.overview().description()+'</p>'+
                         '</article>'+
                         '<div class="photo-canvas photo-canvas-big" style="margin-top:1em; background-image: url('+flat.titlePhoto().thumbnail()+');"></div>'+
                     '</section>'+
@@ -118,7 +128,7 @@ define(['hutby/category/FlatDescriptionViewHolder','hutby/category/PhotoCanvas',
 
 
         _this.buildPricingTable = function () {
-            return '<ul class="pricing-table"><li class="price">$65</li><li class="description">от  10 суток, $60</li><li class="bullet-item">'+flat.printTitle()+'</li><li class="bullet-item">Интернет (Wi-Fi)</li><li class="bullet-item">Отчетные документы</li><li class="cta-button"><a href="tel:+375293990021">+375 29 399 00 21</a></li> </ul>';
+            return new FlatOverview().flat(flat)[0].outerHTML;
         };
 
         _this.buildTitle = function () {

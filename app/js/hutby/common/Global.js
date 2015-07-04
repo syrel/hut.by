@@ -2,10 +2,12 @@
  * Created by aliaksei on 03/08/14.
  */
 
-define(['jquery'], function($){
-    function Global(){};
+define([], function(){
+    function Global(){}
 
     Global.pageContentID = '.hutby-page-content';
+
+    Global.phone = "+375 29 399 00 21";
 
     Global.registerPageContent = function(content) {
         Global.pageContent = content;

@@ -272,7 +272,7 @@ define([
             return '<a class="hutby-flat-category-preview-box-link">' +
                 '<img src="'+_flat.titlePhoto().thumbnail()+'">'+
                 '<div class="hutby-flat-category-preview-box-link-info-container">'+
-                '<div class="hutby-flat-category-preview-box-link-info-cost">'+_flat.printPrice()+'</div>'+
+                '<div class="hutby-flat-category-preview-box-link-info-cost">'+_flat.price().printString()+'</div>'+
                 '<div class="text-center hutby-flat-category-preview-box-link-info-address">'+_flat.address()+'</div>'+
                 '</div>'+
                 '</a>';

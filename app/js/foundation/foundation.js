@@ -645,12 +645,24 @@
                 return this.is_medium_up() && !this.is_large_up() && !this.is_xlarge_up() && !this.is_xxlarge_up();
             },
 
+            is_medium_down : function () {
+                return !this.is_large_up();
+            },
+
             is_large_only : function () {
                 return this.is_medium_up() && this.is_large_up() && !this.is_xlarge_up() && !this.is_xxlarge_up();
             },
 
+            is_large_down : function () {
+                return !this.is_xlarge_up();
+            },
+
             is_xlarge_only : function () {
                 return this.is_medium_up() && this.is_large_up() && this.is_xlarge_up() && !this.is_xxlarge_up();
+            },
+
+            is_xlarge_down : function () {
+                return !this.is_xxlarge_up();
             },
 
             is_xxlarge_only : function () {
