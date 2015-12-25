@@ -3526,6 +3526,7 @@ th.hide-for-touch {
 .hutby-sidenav-footer-position-wrapper {
   min-height: 100%;
   height: auto !important;
+  height: 100%;
   margin: 0 auto -10.125rem; }
   .hutby-sidenav-footer-position-wrapper h1 {
     text-align: center; }
@@ -3659,7 +3660,7 @@ th.hide-for-touch {
     padding-top: 0; }
 
   .hutby-sidenav-footer-position-helper {
-    height: 2.8125rem; }
+    height: 10.125rem; }
 
   .hutby-sidenav-footer {
     margin-bottom: 0; }

@@ -38,6 +38,7 @@ $footer-height: $footer-link-count * $footer-link-height + 3 * $footer-padding-h
 .#{$prefix}-sidenav-footer-position-wrapper {
   min-height: 100%;
   height: auto !important;
+  height: 100%;
   margin: 0 auto (-$footer-height);  // the bottom margin is the negative value of the footer's height
 
   h1 {
@@ -164,8 +165,3 @@ $footer-height: $footer-link-count * $footer-link-height + 3 * $footer-padding-h
     width: $horizontal-line-width;
   }
 }
-
-
-
-
-
