@@ -11,6 +11,7 @@ mkdir -p js
 
 mv ../scss/style.min.css css/
 mv ../js/app.min.js js/
+cp ../js/config.js js/
 cp -r ../assets/ ./
 cp -rf ../img .
 cd ../scss

@@ -203,7 +203,7 @@ $category-images-border-radius-size: 3px;
   }
 
   table {
-    margin: 0;
+    margin: 0 auto;
   }
 }
 
@@ -251,7 +251,7 @@ $category-images-border-radius-size: 3px;
 
     table {
       width: 100%;
-      margin: 0 auto;
+      clear: right;
     }
   }
 }
@@ -298,7 +298,6 @@ $category-images-border-radius-size: 3px;
 
     table {
       width: 95%;
-      clear: right;
     }
   }
 }
@@ -346,8 +345,7 @@ $category-images-border-radius-size: 3px;
     }
 
     table {
-      width: 97.5%;
-      float: right;
+      width: 90%;
     }
   }
 }
@@ -390,8 +388,7 @@ $category-images-border-radius-size: 3px;
     }
 
     table {
-      width: 95%;
-      float: right;
+      width: 80%;
     }
   }
 }

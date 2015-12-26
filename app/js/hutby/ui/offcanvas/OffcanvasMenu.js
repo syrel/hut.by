@@ -18,7 +18,7 @@ define([
         var _this = $('<div class="hutby-sidenav-footer-position-wrapper"></div>');
 
         var homeLink = $('<a class="hutby-sidenav-header-link" href="index.html">hut.by</a>');
-        var header = $('<h1>сеть квартир<span><small>гостиничного типа</small></span>без посредников</h1>');
+        var header = $('<h1>сеть квартир<span><small>гостиничного типа</small></span>без посредников<span><small>В Центре Минска</small></span></h1>');
         var footerHelper = $('<div class="hutby-sidenav-footer-position-helper"></div>');
         var otherLinks = $('<ul>'+
         '<li><a class="side-nav-link" href="#">Связаться с нами</a></li>'+

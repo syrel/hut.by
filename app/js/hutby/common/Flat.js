@@ -75,15 +75,18 @@ define([
 
         var description = "";
         var features  = [];
+        var specs = [];
 
         /**
          * @param {Object} config
          * @param {String} config.description
          * @param {Array} config.features
+         * @param {Array} config.specs
          */
         _this.initialize = function (config) {
             description = config.description;
             features = config.features;
+            specs = config.specs;
         };
 
         /**
@@ -100,14 +103,14 @@ define([
             return features;
         };
 
+        /**
+         * @returns {Array}
+         */
+        _this.specs = function() {
+            return specs;
+        };
+
         _this.initialize(_config);
-    }
-
-    function Specification() {
-        var _this = this;
-
-        var name;
-        var description;
     }
 
     /**
@@ -123,7 +126,6 @@ define([
         var address;
         var price;
         var overview;
-        var specifications = new Dictionary();
         var photos = [];
 
         var catalog;
@@ -234,14 +236,6 @@ define([
          */
         _this.overview = function () {
             return overview;
-        };
-
-        _this.addSpecification = function(name, specification){
-            specifications.put(name, specification);
-        };
-
-        _this.getSpecifications = function(){
-            return specifications;
         };
 
         _this.announcer = function () {

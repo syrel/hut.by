@@ -114,14 +114,14 @@ $table-margin-bottom: rem-calc(20) !default;
       }
     }
 
-    &.even,
+    &.odd,
     &.alt,
-    &:nth-of-type(even) {
+    &:nth-of-type(odd) {
       background: $table-even-row-bg;
     }
 
     &.odd,
-    &:nth-of-type(odd){
+    &:nth-of-type(even){
       th, td {
         &:not(:last-child) {
           //border-right: $table-border-style $table-border-size rgba(255,255,255, 0.045);

@@ -48,8 +48,6 @@ define([
 
                 _this.initializePhotoCanvas();
 
-                _this.createSpecifications();
-
                 _this.initializeEvents();
 
                 _this.fadeIn(_callback);
@@ -120,9 +118,10 @@ define([
                     '</section>'+
                     '<section>'+
                         '<div id="'+holder.photoCanvasID().slice(1)+'" class="photo-canvas"></div>'+
-                        '<article>'+
-                            '<p>'+flat.overview().description()+'</p>'+
-                        '</article>'+
+                            '<article>'+
+                                '<h3>Комплектация и инфраструктура</h3>'+
+                                _this.buildInformationTable(flat.overview().specs())+
+                            '</article>'
                     '</section>';
         };
 
@@ -139,12 +138,13 @@ define([
             return '<div id="'+ holder.containerID().slice(1)+'" class="hutby-category-description-container"></div>';
         };
 
-        _this.buildInformationTable = function (dictionary) {
-            var html = '<section><table><tbody>';
-            dictionary.each(function (name, specification) {
-                html += '<tr><td>' + specification.key + '</td><td>' + specification.value + '</td></tr>';
+        _this.buildInformationTable = function (specs) {
+            var html = '<table><tbody>';
+
+            _.each(specs, function(spec){
+                html += '<tr><td>' + spec + '</td></tr>';
             });
-            html += '</tbody></table></section>';
+            html += '</tbody></table>';
             return html;
         };
 
