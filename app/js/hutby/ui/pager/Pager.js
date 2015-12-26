@@ -12,6 +12,7 @@ define([
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnCategoryExpanded',
     'hutby/announcements/OnCategoryCollapsed',
+    'hutby/announcements/OnMediaSizeChanged',
     'hutby/common/Global',
     'hutby/ui/pager/PagerLeftArrow',
     'hutby/ui/pager/PagerRightArrow',
@@ -28,6 +29,7 @@ define([
     OnFlatExpanded,
     OnCategoryExpanded,
     OnCategoryCollapsed,
+    OnMediaSizeChanged,
     Global,
     PagerLeftArrow,
     PagerRightArrow,
@@ -93,10 +95,11 @@ define([
 
             catalog.announcer().onSendTo(OnCategoryExpanded, _this.onCategoryExpanded, _this);
             catalog.announcer().onSendTo(OnCategoryCollapsed, _this.onCategoryCollapsed, _this);
+            WindowEvents.announcer.onSendTo(OnMediaSizeChanged, _this.onMediaSizeChanged, _this);
             photo.setPhoto(_this.currentFlat().titlePhoto().path());
             address.setFlat(_this.currentFlat());
 
-            if (!catalog.isCategoryExpanded()) _this.showPager(false);
+            _this.showPager(false);
         };
 
         /**
@@ -190,6 +193,7 @@ define([
          */
         _this.showPager = function (animated) {
             if (!Global.isDisplayMedium()) return;
+            if (catalog.isCategoryExpanded()) return;
             _this
                 .createPager()
                 .animoStop()
@@ -239,6 +243,17 @@ define([
                 if (isVisible) _this.swap();
                 else _this.stopSwapping();
                 isWasVisible = isVisible;
+            }
+        };
+
+        /**
+         * An action to be executed when window media size
+         * is changed. If webpage switches from mobile mode
+         * pager should be visible
+         */
+        _this.onMediaSizeChanged = function () {
+            if (!WindowEvents.isSmall) {
+                _this.showPager(true);
             }
         };
 

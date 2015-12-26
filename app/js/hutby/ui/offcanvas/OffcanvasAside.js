@@ -47,7 +47,6 @@ define([
         };
 
         _this.updateOffcanvasWidth = function () {
-            console.log('updateOffcanvasWidth '+ WindowEvents.isSmall + ' '+!catalog.isCategoryExpanded());
             if (WindowEvents.isSmall && !catalog.isCategoryExpanded()) {
                 _this.class(_this.fullWidthClass());
             } else _this.removeClass(_this.fullWidthClass());
