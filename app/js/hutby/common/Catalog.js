@@ -110,6 +110,12 @@ define ([
             _this.announcer().announce(new OnCategoryCollapsed(category, animated));
         };
 
+        _this.collapseFlat = function (animated) {
+            animated = Utils.isUndefined(animated) ? false : animated;
+            if (Utils.isUndefined(_this.expandedFlat())) return;
+            _this.expandedFlat().collapse(animated);
+        };
+
         _this.expandCategory = function (rooms, animated, expandFlat) {
             expandFlat = Utils.isUndefined(expandFlat) ? true : expandFlat;
             if (_this.expandedCategory() !== rooms) {

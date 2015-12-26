@@ -195,6 +195,7 @@ define([
                 .animoStop()
                 .show(0).animo(new OpenAnimation(animated), function(){
                     _this.updateVisibility();
+                    catalog.collapseFlat();
                     _this.swap();
             });
         };
