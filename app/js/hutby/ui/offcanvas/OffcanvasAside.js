@@ -47,6 +47,7 @@ define([
         };
 
         _this.updateOffcanvasWidth = function () {
+            console.log('updateOffcanvasWidth '+ WindowEvents.isSmall + ' '+!catalog.isCategoryExpanded());
             if (WindowEvents.isSmall && !catalog.isCategoryExpanded()) {
                 _this.class(_this.fullWidthClass());
             } else _this.removeClass(_this.fullWidthClass());
@@ -63,7 +64,6 @@ define([
                     'width': "100% !important",
                     'max-width': "100% !important"
                 });
-                console.log(fullWidthClass);
             }
             return fullWidthClass;
         };

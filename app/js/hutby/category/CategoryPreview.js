@@ -259,7 +259,7 @@ define([
         };
 
         _this.setTriangleTop = function (top) {
-            Utils.dynamicCss().text("." + prefix + "container:after{top:" + top + "px;}");
+            Utils.addDynamicCss("." + prefix + "container:after{top:" + top + "px;}");
         };
 
         _this.buildBox = function() {

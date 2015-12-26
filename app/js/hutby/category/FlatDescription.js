@@ -114,14 +114,14 @@ define([
             return  '<section>'+
                         '<article>'+
                             '<h2>'+flat.address()+'</h2>'+
-                            '<p>'+flat.overview().description()+'</p>'+
+                            _this.buildPricingTable()+
                         '</article>'+
                         '<div class="photo-canvas photo-canvas-big" style="margin-top:1em; background-image: url('+flat.titlePhoto().thumbnail()+');"></div>'+
                     '</section>'+
                     '<section>'+
                         '<div id="'+holder.photoCanvasID().slice(1)+'" class="photo-canvas"></div>'+
                         '<article>'+
-                            _this.buildPricingTable()+
+                            '<p>'+flat.overview().description()+'</p>'+
                         '</article>'+
                     '</section>';
         };

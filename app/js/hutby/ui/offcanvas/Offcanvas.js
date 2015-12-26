@@ -49,7 +49,7 @@ define([
         };
 
         /**
-         * And action to be executed when window media size
+         * An action to be executed when window media size
          * is changed. If webpage switches from mobile mode
          * offcanvas should be visible
          */

@@ -33,6 +33,10 @@ define(['jquery'], function ($) {
         return Utils._dynamicCssElement;
     };
 
+    Utils.addDynamicCss = function (style) {
+        Utils.dynamicCss().append('\n'+style);
+    };
+
     Utils.randomGenerator = function () {
         var r = Math.floor(Math.random() * 100) + 1;
         return Date.now() + '' + r;

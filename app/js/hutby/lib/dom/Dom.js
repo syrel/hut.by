@@ -122,7 +122,7 @@ define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
                 }
             } array.push();
             var className = dynamicClassPrefix + Utils.generateDynamicCssClassName();
-            Utils.dynamicCss().text('.'+className + '{'+array.join(';')+'}');
+            Utils.addDynamicCss('.'+className + '{'+array.join(';')+'}');
             return className;
         };
 
