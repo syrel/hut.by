@@ -9,6 +9,7 @@ define([
     'hutby/ui/VerticalTextualFlatList',
     'hutby/announcements/OnCategoryExpanded',
     'hutby/announcements/OnCategoryCollapsed',
+    'hutby/lib/WindowEvents',
     'hutby/category/CategoryPreview',
     'hutby/common/Strings'
 
@@ -18,6 +19,7 @@ define([
     VerticalTextualFlatList,
     OnCategoryExpanded,
     OnCategoryCollapsed,
+    WindowEvents,
     CategoryPreview,
     Strings){
 
@@ -59,7 +61,7 @@ define([
         _this.initializeHeaderLinkEvents = function () {
             headerLink.click(function(e){
                 e.preventDefault();
-                catalog.expandCategory(rooms, catalog.isCategoryExpanded());
+                catalog.expandCategory(rooms, catalog.isCategoryExpanded(), !WindowEvents.isSmall);
                 return false;
             });
             headerLink.hover(

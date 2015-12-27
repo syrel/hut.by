@@ -2,9 +2,6 @@
  * Created by aliaksei on 02/08/14.
  */
 
-var _;
-var $;
-
 define([
     'hutby/ui/offcanvas/Offcanvas',
     'hutby/common/Navigation',
@@ -23,18 +20,14 @@ define([
     Navigation,
     Flat,
     Catalog,
-    PhotoSwipe,
-	underscore,
-	jquery) {
-		
-    _ = underscore;
-	$ = jquery;
+    PhotoSwipe) {
 
     var init = function(flats) {
         var catalog = new Catalog();
         _.each(flats, function(flat){
             catalog.addFlat(new Flat(flat));
         });
+
         $('body').append(new Offcanvas(catalog)).append(new PhotoSwipe());
 
         $(document).foundation({

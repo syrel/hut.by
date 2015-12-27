@@ -33,6 +33,12 @@ require.config({
     },
 
     shim: {
+        'jquery': {
+            exports: '$'
+        },
+        'underscore': {
+            exports: '_'
+        },
         'polymorphism' : {},
         'jquery.me' : ['jquery'],
         'jquery.animo' : ['jquery'],
@@ -47,5 +53,5 @@ require.config({
 });
 
 requirejs(['modernizr','jquery','jquery.me','foundation','foundation.offcanvas', 'foundation.accordion'], function(){
-    requirejs(['main']);
+    requirejs(['index.main']);
 });

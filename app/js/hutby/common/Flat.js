@@ -6,14 +6,12 @@ define([
     'announcer',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
-    'hutby/lib/Utils',
     'hutby/common/Photo'
 ], function(
     Dictionary,
     Announcer,
     OnFlatExpanded,
     OnFlatCollapsed,
-    Utils,
     Photo) {
 
 
@@ -52,6 +50,18 @@ define([
 
         _this.special = function () {
             return special;
+        };
+
+        _this.accept = function(visitor) {
+            visitor.visitPrice(_this);
+        };
+
+        _this.toJSON = function(){
+            return {
+                amount: amount,
+                currency: currency,
+                special: special
+            }
         };
 
         /**
@@ -108,6 +118,17 @@ define([
          */
         _this.specs = function() {
             return specs;
+        };
+
+        _this.accept = function(visitor) {
+            visitor.visitOverview(_this);
+        };
+
+        _this.toJSON = function () {
+            return {
+                features: features,
+                specs: specs
+            }
         };
 
         _this.initialize(_config);
@@ -206,8 +227,12 @@ define([
             return '#';
         };
 
+        _this.capitalizeFirstLetter = function (string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        };
+
         _this.printTitle = function () {
-            return Utils.capitalizeFirstLetter(_this.roomsString()) + ' по ' + _this.address();
+            return _this.capitalizeFirstLetter(_this.roomsString()) + ' по ' + _this.address();
         };
 
         _this.setRooms = function (_rooms) {
@@ -269,7 +294,7 @@ define([
 
         _this.expand = function (isAnimated, force) {
             var wasExpanded = _this.isExpanded();
-            force = Utils.isUndefined(force) ? false : force;
+            force = _.isUndefined(force) ? false : force;
             if (_this.isExpanded() && !force) return;
             isExpanded = true;
             var ann = new OnFlatExpanded(_this, isAnimated, true);
@@ -277,13 +302,25 @@ define([
             if (!wasExpanded)_this.announcer().announce(ann);
         };
 
+        _this.accept = function (visitor) {
+            visitor.visitFlat(_this);
+            price.accept(visitor);
+            overview.accept(visitor);
+            _.each(photos, function(photo) { photo.accept(visitor)});
+        };
+
+        _this.toJSON = function(){
+            return {
+                rooms: rooms,
+                address: address,
+                price: price.toJSON(),
+                overview: overview.toJSON(),
+                photos: _.map(photos, function(photo){ return photo.toJSON()})
+            }
+        };
+
         _this.initialize(_config);
     }
-
-    Flat.Specification = function(_key, _value){
-        this.key = _key;
-        this.value = _value;
-    };
 
     return Flat;
 });

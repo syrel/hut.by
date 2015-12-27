@@ -270,7 +270,7 @@ define([
 
         _this.buildLink = function(_index, _flat) {
             return '<a class="hutby-flat-category-preview-box-link">' +
-                '<img src="'+_flat.titlePhoto().thumbnail()+'">'+
+                '<img src="'+_flat.titlePhoto().thumbnail().path()+'">'+
                 '<div class="hutby-flat-category-preview-box-link-info-container">'+
                 '<div class="hutby-flat-category-preview-box-link-info-cost">'+_flat.price().printString()+'</div>'+
                 '<div class="text-center hutby-flat-category-preview-box-link-info-address">'+_flat.address()+'</div>'+

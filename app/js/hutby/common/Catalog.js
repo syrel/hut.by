@@ -3,9 +3,7 @@
  */
 define ([
     'hutby/common/Flat',
-    'hutby/lib/Utils',
     'dictionary',
-    'hutby/lib/WindowEvents',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
     'hutby/announcements/OnCategoryExpanded',
@@ -17,9 +15,7 @@ define ([
 
 ], function(
     Flat,
-    Utils,
     Dictionary,
-    WindowEvents,
     OnFlatExpanded,
     OnFlatCollapsed,
     OnCategoryExpanded,
@@ -97,11 +93,11 @@ define ([
          * @returns {boolean} - true if flat is expanded. Otherwise false
          */
         _this.isFlatExpanded = function () {
-            return !Utils.isUndefined(_this.expandedFlat());
+            return !_.isNull(_this.expandedFlat());
         };
 
         _this.isCategoryExpanded = function () {
-            return !Utils.isUndefined(_this.expandedCategory());
+            return !_.isNull(_this.expandedCategory());
         };
 
         _this.collapseCategory = function (animated) {
@@ -111,16 +107,16 @@ define ([
         };
 
         _this.collapseFlat = function (animated) {
-            animated = Utils.isUndefined(animated) ? false : animated;
-            if (Utils.isUndefined(_this.expandedFlat())) return;
+            animated = _.isUndefined(animated) ? false : animated;
+            if (!_this.isFlatExpanded()) return;
             _this.expandedFlat().collapse(animated);
         };
 
         _this.expandCategory = function (rooms, animated, expandFlat) {
-            expandFlat = Utils.isUndefined(expandFlat) ? true : expandFlat;
+            expandFlat = _.isUndefined(expandFlat) ? true : expandFlat;
             if (_this.expandedCategory() !== rooms) {
                 expandedCategory = rooms;
-                if (expandFlat && !WindowEvents.isSmall)
+                if (expandFlat)
                     _this.flats(_this.expandedCategory())[0].expand(animated);
                 _this.announcer().announce(new OnCategoryExpanded(rooms, animated));
             }
@@ -141,6 +137,17 @@ define ([
 
         _this.announcer = function(){
             return announcer;
+        };
+
+        _this.accept = function(visitor) {
+            visitor.visitCatalog(_this);
+            _.each(_.flatten(flats.elements()),  function(flat){flat.accept(visitor)});
+        };
+
+        _this.toJSON = function() {
+            return _.map(_.flatten(flats.elements()), function(flat){
+                return flat.toJSON();
+            });
         };
     }
     return Catalog;

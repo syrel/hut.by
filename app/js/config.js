@@ -21,6 +21,7 @@ var _config = [
         },
         photos: [
             {
+                alt: "Кухня",
                 thumbnail: {
                     path: "img/red_kitchen_small_512x341.jpg",
                     width: 512,
@@ -43,6 +44,7 @@ var _config = [
                 ]
             },
             {
+                alt: "Спальня",
                 thumbnail: {
                     path: "img/red_bedroom_small_512x341.jpg",
                     width: 512,

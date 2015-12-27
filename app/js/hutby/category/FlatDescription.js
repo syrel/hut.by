@@ -114,7 +114,7 @@ define([
                             '<h2>'+flat.address()+'</h2>'+
                             _this.buildPricingTable()+
                         '</article>'+
-                        '<div class="photo-canvas photo-canvas-big" style="margin-top:1em; background-image: url('+flat.titlePhoto().thumbnail()+');"></div>'+
+                        '<div class="photo-canvas photo-canvas-big" style="margin-top:1em; background-image: url('+flat.titlePhoto().thumbnail().path()+');"></div>'+
                     '</section>'+
                     '<section>'+
                         '<div id="'+holder.photoCanvasID().slice(1)+'" class="photo-canvas"></div>'+

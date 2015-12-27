@@ -1,5 +1,11 @@
 define([], function(){
 
+    /**
+     *
+     * @param _config
+     * @constructor
+     * @class Image
+     */
     function Image(_config) {
         var _this = this;
 
@@ -43,6 +49,19 @@ define([], function(){
             return media;
         };
 
+        _this.accept = function(visitor) {
+            visitor.visitImage(_this);
+        };
+
+        _this.toJSON = function () {
+            return {
+                path: path,
+                width: width,
+                height: height,
+                media: media
+            }
+        };
+
         _this.initialize(_config);
     }
 
@@ -57,6 +76,7 @@ define([], function(){
 
         var images = [];
         var thumbnail;
+        var alt;
 
         /**
          * @param {Object} config
@@ -67,7 +87,8 @@ define([], function(){
             thumbnail = new Image(config.thumbnail);
             images = _.map(config.images, function(each){
                 return new Image(each);
-            })
+            });
+            alt = config.alt;
         };
 
         /**
@@ -82,7 +103,7 @@ define([], function(){
         };
 
         _this.thumbnail = function() {
-            return thumbnail.path();
+            return thumbnail;
         };
 
         _this.image = function () {
@@ -97,6 +118,27 @@ define([], function(){
 
         _this.images = function() {
             return images;
+        };
+
+        _this.accept = function(visitor) {
+            visitor.visitPhoto(_this);
+            thumbnail.accept(visitor);
+            _.each(images, function(image) {
+                image.accept(visitor);
+            })
+        };
+
+        _this.alt = function (_alt) {
+            if (_.isUndefined(_alt)) return alt;
+            alt = _alt;
+        };
+
+        _this.toJSON = function(){
+            return {
+                thumbnail: thumbnail.toJSON(),
+                images: _.map(images, function(image){return image.toJSON()}),
+                alt: alt
+            }
         };
 
         _this.initialize(_config);
