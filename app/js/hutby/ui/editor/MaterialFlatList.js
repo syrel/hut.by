@@ -95,7 +95,8 @@ define([
         _this.initializeSortable = function(){
             _this.sortable({
                 revert: 100,
-                distance: 5
+                distance: 5,
+                axis: "y"
             });
         };
 
