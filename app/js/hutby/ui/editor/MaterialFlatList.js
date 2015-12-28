@@ -20,13 +20,10 @@ define([
 
         var flatLinks = new Dictionary();
 
-        _this.initialize = function() {
-            _this.createLinks();
-            catalog.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
-            catalog.announcer().onSendTo(OnFlatCollapsed, _this.onFlatCollapsed, _this);
-        };
+        _this.initialize = function() {};
 
         _this.createLinks = function () {
+            flatLinks = new Dictionary();
             _.each(catalog.allFlats(), function(flat) {
                 var link = _this.buildLink(flat);
                 flatLinks.put(flat, link);
@@ -35,10 +32,6 @@ define([
 
         _this.buildLink = function(flat) {
             var link = new A().class('mdl-navigation__link').href('#');
-            link.click(function(e){
-                e.preventDefault();
-                flat.expand();
-            });
             if(flat.isExpanded())
                 link.active(true);
 
@@ -68,10 +61,14 @@ define([
 
         _this.show = function() {
             _this.hide();
+            catalog.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
+            catalog.announcer().onSendTo(OnFlatCollapsed, _this.onFlatCollapsed, _this);
+            _this.createLinks();
             _this.addLinks();
         };
 
         _this.hide = function(){
+            catalog.announcer().unsubscribe(_this);
             _this.empty();
         };
 
