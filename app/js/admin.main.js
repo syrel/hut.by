@@ -3,6 +3,7 @@ define([
     'hutby/common/User',
     'hutby/common/Catalog',
     'hutby/ui/editor/MaterialUser',
+    'hutby/ui/editor/MaterialHeader',
     'hutby/ui/editor/MaterialFlatList',
     'hutby/ui/editor/MaterialFlatEditor',
     'hutby/announcements/OnUserSignedIn',
@@ -16,6 +17,7 @@ define([
     User,
     Catalog,
     MaterialUser,
+    MaterialHeader,
     MaterialFlatList,
     MaterialFlatEditor,
     OnUserSignedIn,
@@ -28,6 +30,9 @@ define([
         var userView = new MaterialUser(user);
         $('.drawer').append(userView);
 
+        var header = new MaterialHeader(catalog);
+        $('.demo-header').prepend(header);
+
         var flatList = new MaterialFlatList(catalog);
         $('.drawer').append(flatList);
 
@@ -36,11 +41,13 @@ define([
 
         user.announcer().onSendTo(OnUserSignedIn, function(){
             flatList.show();
+            header.show();
             flatEditor.show();
         }, this);
 
         user.announcer().onSendTo(OnUserSignedOut, function(){
             flatList.hide();
+            header.hide();
             flatEditor.hide();
         }, this);
 
