@@ -5,6 +5,7 @@ require.config({
     paths: {
         'dictionary' : 'hutby/lib/AnnouncerJS/src/Dictionary',
         'announcer' : 'hutby/lib/AnnouncerJS/src/Announcer',
+        'polymorphism' : 'hutby/lib/Polymorphism',
         'jquery' : 'vendor/jquery',
         'jquery.me' : 'hutby/lib/jquery.me',
         'underscore' : 'vendor/underscore-min',
@@ -17,7 +18,12 @@ require.config({
         'img' : 'hutby/lib/dom/Img',
         'li' : 'hutby/lib/dom/Li',
         'p' : 'hutby/lib/dom/P',
-        'ul' : 'hutby/lib/dom/Ul'
+        'ul' : 'hutby/lib/dom/Ul',
+        'nav' : 'hutby/lib/dom/Nav',
+        'main' : 'hutby/lib/dom/Main',
+        'h3' : 'hutby/lib/dom/H3',
+        'input' : 'hutby/lib/dom/Input',
+        'label' : 'hutby/lib/dom/Label'
     },
 
     shim: {

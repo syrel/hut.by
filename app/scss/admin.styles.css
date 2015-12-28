@@ -117,6 +117,12 @@ html, body {
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
+
+.demo-navigation .active {
+    background-color: rgba(0, 188, 212, 0.21);
+}
+
+
 .demo-layout .demo-navigation .mdl-navigation__link {
   display: -webkit-box !important;
   display: -webkit-flex !important;

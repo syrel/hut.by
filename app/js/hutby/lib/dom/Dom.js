@@ -49,6 +49,14 @@ define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
             return _this;
         };
 
+        _this.bindText = function(aValueHolder, optTransformation) {
+            var transformation = _.isUndefined(optTransformation) ? function(obj) {return obj.toString()} : optTransformation;
+            aValueHolder.subscribe(function(value){
+                _this.text(transformation(value));
+            });
+            _this.text(transformation(aValueHolder.value()));
+        };
+
         _this.textAlignLeft = function () {
            _this.css('text-align','left');
             return _this;

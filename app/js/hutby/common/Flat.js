@@ -6,13 +6,15 @@ define([
     'announcer',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
-    'hutby/common/Photo'
+    'hutby/common/Photo',
+    'hutby/common/ValueHolder'
 ], function(
     Dictionary,
     Announcer,
     OnFlatExpanded,
     OnFlatCollapsed,
-    Photo) {
+    Photo,
+    ValueHolder) {
 
 
     /**
@@ -24,9 +26,9 @@ define([
     function Price(_config) {
         var _this = this;
 
-        var amount;
-        var currency = '$';
-        var special;
+        var amount = new ValueHolder();
+        var currency = new ValueHolder('$');
+        var special = new ValueHolder();
 
         /**
          * @param {Object} config
@@ -35,20 +37,32 @@ define([
          * @param {String} config.special
          */
         _this.initialize = function(config) {
-            amount = config.amount;
-            currency = config.currency;
-            special = config.special;
+            amount.value(config.amount);
+            currency.value(config.currency);
+            special.value(config.special);
         };
 
         _this.amount = function () {
+            return amount.value();
+        };
+
+        _this.amountHolder = function() {
             return amount;
         };
 
         _this.currency = function () {
+            return currency.value();
+        };
+
+        _this.currencyHolder = function(){
             return currency;
         };
 
         _this.special = function () {
+            return special.value();
+        };
+
+        _this.specialHolder = function() {
             return special;
         };
 
@@ -95,8 +109,8 @@ define([
          */
         _this.initialize = function (config) {
             description = config.description;
-            features = config.features;
-            specs = config.specs;
+            features = _.map(config.features, function(each) {return new ValueHolder(each)});
+            specs = _.map(config.specs, function(each) {return new ValueHolder(each)});
         };
 
         /**
@@ -110,6 +124,10 @@ define([
          * @returns {Array}
          */
         _this.features = function () {
+            return _.map(features, function(each){ return each.value()});
+        };
+
+        _this.featureHolders = function() {
             return features;
         };
 
@@ -117,6 +135,10 @@ define([
          * @returns {Array}
          */
         _this.specs = function() {
+            return _.map(specs, function(each){ return each.value()});
+        };
+
+        _this.specHolders = function() {
             return specs;
         };
 
@@ -144,7 +166,7 @@ define([
         var _this = this;
 
         var rooms;
-        var address;
+        var address = new ValueHolder();
         var price;
         var overview;
         var photos = [];
@@ -165,7 +187,7 @@ define([
         _this.initialize = function (config) {
             if (_.isUndefined(config)) return;
             rooms = config.rooms;
-            address = config.address;
+            address.value(config.address);
             price = new Price(config.price);
             overview = new Overview(config.overview);
             _.each(config.photos, _this.addPhoto);
@@ -218,9 +240,13 @@ define([
          * @returns {Flat|String}
          */
         _this.address = function (aString) {
-            if (_.isUndefined(aString)) return address;
-            address = aString;
+            if (_.isUndefined(aString)) return address.value();
+            address.value(aString);
             return _this;
+        };
+
+         _this.addressHolder = function() {
+            return address;
         };
 
         _this.getLink = function() {

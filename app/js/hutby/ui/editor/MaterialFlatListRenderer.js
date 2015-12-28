@@ -20,7 +20,8 @@ define([
          * @param flat {Flat}
          */
         _this.visitFlat = function(flat) {
-            var link = $('<a class="mdl-navigation__link" href="">'+flat.address()+'</a>');
+            var link = $('<a class="mdl-navigation__link">'+flat.address()+'</a>');
+            if(flat.isExpanded()) link.addClass('selected');
             html.append(link);
         };
 
