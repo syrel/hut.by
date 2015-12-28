@@ -11,7 +11,7 @@ define([
         var _this = new CatalogVisitor();
 
         var html = $('<div class="demo-charts mdl-cell mdl-cell--12-col mdl-grid"></div>');
-        var wrapper = $('<div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--white mdl-shadow--2dp "></div>');
+        var wrapper = $('<div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--white mdl-shadow--2dp"></div>');
 
         html.append(wrapper);
 

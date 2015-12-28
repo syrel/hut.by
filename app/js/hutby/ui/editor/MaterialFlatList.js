@@ -72,8 +72,8 @@ define([
             _this.add(_this.buildAddButton());
             flatLinks.each(function(flat, link){
                 _this.add(link);
-
             });
+            _this.initializeSortable();
             componentHandler.upgradeDom();
         };
 
@@ -87,8 +87,16 @@ define([
 
         _this.onFlatAdded = function (ann) {
             _this.add(_this.createLink(ann.flat()));
+            _this.initializeSortable();
             ann.flat().expand();
             componentHandler.upgradeDom();
+        };
+
+        _this.initializeSortable = function(){
+            _this.sortable({
+                revert: 100,
+                distance: 5
+            });
         };
 
         _this.show = function() {

@@ -9,7 +9,8 @@ define([
     'a',
     'input',
     'label',
-    'li'
+    'li',
+    'i'
 ], function(
     Div,
     H3,
@@ -17,7 +18,8 @@ define([
     A,
     Input,
     Label,
-    Li
+    Li,
+    I
     ){
 
     function TextField () {
@@ -139,8 +141,17 @@ define([
             var textField = new TextField();
             textField.bind(optBinding);
             element.add(textField);
-            list.add(element);
+            _this.addParameter(element);
             return textField;
+        };
+
+        _this.addParameter = function (element) {
+            list.add(element);
+            _this.initializeSortable();
+        };
+
+        _this.initializeSortable = function() {
+
         };
 
         _this.buildActionButton = function (label) {

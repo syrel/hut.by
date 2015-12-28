@@ -5,11 +5,13 @@
 define([
     'div',
     'hutby/ui/editor/MaterialFlatParametersCard',
+    'hutby/ui/editor/MaterialFlatPhotoList',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed'
 ], function(
     Div,
     MaterialFlatParametersCard,
+    MaterialFlatPhotoList,
     OnFlatExpanded,
     OnFlatCollapsed
 ){
@@ -34,6 +36,7 @@ define([
             paramCards.add(_this.buildBasicInfoFor(flat));
             paramCards.add(_this.buildFeaturesFor(flat));
             paramCards.add(_this.buildSpecsFor(flat));
+            _this.add(_this.buildPhotoList(flat));
             componentHandler.upgradeDom();
         };
 
@@ -82,6 +85,10 @@ define([
                 field.focus();
             });
             return card;
+        };
+
+        _this.buildPhotoList = function(flat){
+            return new MaterialFlatPhotoList(flat);
         };
 
         _this.show = function() {

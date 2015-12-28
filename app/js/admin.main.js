@@ -54,6 +54,12 @@ define([
         catalog.allFlats()[0].expand();
 
         componentHandler.upgradeDom();
+
+        var notification = document.querySelector('.mdl-js-snackbar');
+        var data = {
+            message: 'Message Sent'
+        };
+        //notification.MaterialSnackbar.showSnackbar(data);
     };
 
     $.getScript( "js/config.js", function(){init(_config)}).error(function() {
