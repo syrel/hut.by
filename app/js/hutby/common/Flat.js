@@ -19,7 +19,7 @@ define([
 
     /**
      *
-     * @param _config
+     * @param [_config]
      * @constructor
      * @class Price
      */
@@ -37,6 +37,7 @@ define([
          * @param {String} config.special
          */
         _this.initialize = function(config) {
+            if (_.isUndefined(config)) return;
             amount.value(config.amount);
             currency.value(config.currency);
             special.value(config.special);
@@ -90,7 +91,7 @@ define([
     }
 
     /**
-     * @param _config
+     * @param [_config]
      * @constructor
      * @class Overview
      */
@@ -108,6 +109,7 @@ define([
          * @param {Array} config.specs
          */
         _this.initialize = function (config) {
+            if (_.isUndefined(config)) return;
             description = config.description;
             features = _.map(config.features, function(each) {return new ValueHolder(each)});
             specs = _.map(config.specs, function(each) {return new ValueHolder(each)});
@@ -153,22 +155,34 @@ define([
             }
         };
 
+        _this.newFeature = function() {
+            var feature = new ValueHolder('новая особенность');
+            features.push(feature);
+            return feature;
+        };
+
+        _this.newSpec = function() {
+            var spec = new ValueHolder('новая опция');
+            specs.push(spec);
+            return spec;
+        };
+
         _this.initialize(_config);
     }
 
     /**
      *
-     * @param _config
+     * @param [_config]
      * @constructor
      * @class Flat
      */
     function Flat(_config) {
         var _this = this;
 
-        var rooms;
+        var rooms = 1;
         var address = new ValueHolder();
-        var price;
-        var overview;
+        var price = new Price();
+        var overview = new Overview();
         var photos = [];
 
         var catalog;

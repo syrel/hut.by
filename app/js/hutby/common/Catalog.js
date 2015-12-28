@@ -6,6 +6,7 @@ define ([
     'dictionary',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
+    'hutby/announcements/OnFlatAdded',
     'hutby/announcements/OnCategoryExpanded',
     'hutby/announcements/OnCategoryCollapsed',
     'hutby/announcements/OnCategoryPreviewShow',
@@ -18,6 +19,7 @@ define ([
     Dictionary,
     OnFlatExpanded,
     OnFlatCollapsed,
+    OnFlatAdded,
     OnCategoryExpanded,
     OnCategoryCollapsed,
     OnCategoryPreviewShow,
@@ -130,6 +132,13 @@ define ([
             }
         };
 
+        _this.newFlat = function(){
+            var flat = new Flat();
+            flat.address('Новая квартира');
+            _this.addFlat(flat);
+            _this.notifyFlatAdded(flat);
+        };
+
         /**
          * Notifies all listeners that it is necessary to show category preview
          * @param rooms - category preview to show
@@ -141,6 +150,10 @@ define ([
 
         _this.hideCategoryPreview = function (rooms, anchor) {
             _this.announcer().announce(new OnCategoryPreviewHide(rooms, anchor));
+        };
+
+        _this.notifyFlatAdded = function(flat) {
+            _this.announcer().announce(new OnFlatAdded(flat));
         };
 
         _this.announcer = function(){

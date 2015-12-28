@@ -67,6 +67,11 @@ define([
             _this.value(aValueHolder.value());
         };
 
+        _this.focus = function() {
+            input.focus();
+            return _this;
+        };
+
         _this.initialize();
 
         return _this;
@@ -120,8 +125,12 @@ define([
             actionWrapper.remove();
             actionWrapper.empty();
             actionButton = _this.buildActionButton(label);
-            actionButton.click(callback);
+            actionButton.click(function(e){
+                e.preventDefault();
+                callback();
+            });
             actionButton.class(_this.accentColor());
+            actionWrapper.add(actionButton);
             _this.add(actionWrapper);
         };
 

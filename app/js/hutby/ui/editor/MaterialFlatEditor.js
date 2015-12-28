@@ -59,6 +59,12 @@ define([
             _.each(flat.overview().featureHolders(), function(feature){
                 card.textField(feature).hint('Текст...');
             });
+            card.addAction('Добавить', function(){
+                var feature = flat.overview().newFeature();
+                var field = card.textField(feature).hint('Текст...');
+                componentHandler.upgradeDom();
+                field.focus();
+            });
             return card;
         };
 
@@ -68,6 +74,12 @@ define([
             card.accentColor('mdl-color-text--purple-500');
             _.each(flat.overview().specHolders(), function(spec){
                 card.textField(spec).hint('Текст...');
+            });
+            card.addAction('Добавить', function(){
+                var spec = flat.overview().newSpec();
+                var field = card.textField(spec).hint('Текст...');
+                componentHandler.upgradeDom();
+                field.focus();
             });
             return card;
         };
