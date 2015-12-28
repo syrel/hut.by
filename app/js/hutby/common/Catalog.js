@@ -26,7 +26,7 @@ define ([
     Announcer
 ){
 
-    function Catalog() {
+    function Catalog(optConfig) {
         var _this = this;
 
         var flats = new Dictionary();
@@ -35,6 +35,14 @@ define ([
 
         var expandedCategory = null;
         var expandedFlat = null;
+
+        _this.initialize = function() {
+            if (!_.isUndefined(optConfig)) {
+                _.each(optConfig, function(flatConfig){
+                    _this.addFlat(new Flat(flatConfig));
+                });
+            }
+        };
 
         _this.addFlat = function (flat) {
             if (!flats.isKeyExists(flat.getRooms())) {
@@ -149,6 +157,8 @@ define ([
                 return flat.toJSON();
             });
         };
+
+        _this.initialize();
     }
     return Catalog;
 });

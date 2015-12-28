@@ -1,37 +1,48 @@
 
 define([
-    'hutby/common/Flat',
+    'hutby/common/User',
     'hutby/common/Catalog',
+    'hutby/ui/editor/MaterialUser',
     'hutby/ui/editor/MaterialFlatList',
     'hutby/ui/editor/MaterialFlatEditor',
-    'hutby/ui/editor/MaterialFlatListRenderer',
-    'hutby/ui/editor/MaterialFlatPhotoListRenderer',
-    'hutby/ui/editor/MaterialFlatFeaturesListRenderer',
-    'hutby/ui/editor/MaterialFlatSpecsListRenderer',
-    'hutby/ui/editor/MaterialFlatInfoRenderer',
-    'hutby/ui/editor/MaterialFlatParametersCard',
+    'hutby/announcements/OnUserSignedIn',
+    'hutby/announcements/OnUserSignedOut',
     'underscore',
     'jquery',
     'jquery.me',
+    'jquery.ui',
     'material'
 ], function(
-    Flat,
+    User,
     Catalog,
+    MaterialUser,
     MaterialFlatList,
-    MaterialFlatEditor) {
+    MaterialFlatEditor,
+    OnUserSignedIn,
+    OnUserSignedOut) {
 
-    var init = function(flats) {
-        var catalog = new Catalog();
+    var init = function(config) {
+        var catalog = new Catalog(config);
+        var user = new User();
 
-        _.each(flats, function(flat){
-            catalog.addFlat(new Flat(flat));
-        });
+        var userView = new MaterialUser(user);
+        $('.drawer').append(userView);
 
         var flatList = new MaterialFlatList(catalog);
-        $('.demo-drawer').append(flatList);
+        $('.drawer').append(flatList);
 
         var flatEditor = new MaterialFlatEditor(catalog);
         $('main.mdl-layout__content').append(flatEditor);
+
+        user.announcer().onSendTo(OnUserSignedIn, function(){
+            flatList.show();
+            flatEditor.show();
+        }, this);
+
+        user.announcer().onSendTo(OnUserSignedOut, function(){
+            flatList.hide();
+            flatEditor.hide();
+        }, this);
 
         catalog.allFlats()[0].expand();
 

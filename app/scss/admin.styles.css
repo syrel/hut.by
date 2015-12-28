@@ -34,15 +34,91 @@ html, body {
     font-weight: 500;
 }
 
-.demo-avatar {
+/* Drawer */
+.drawer {
+    background-image: url('images/admin-header-bg.jpg');
+    background-repeat: no-repeat;
+}
+
+.drawer header {
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: 16px;
+    height: 151px;
+}
+.drawer header .line {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+}
+
+.drawer header .avatar {
   width: 48px;
   height: 48px;
   border-radius: 24px;
 }
 
-.demo-drawer {
-    background-image: url('images/admin-header-bg.jpg');
-    background-repeat: no-repeat;
+.drawer header .username {
+    padding-left: 16px;
+}
+
+.drawer header .sign-in {
+    display: inline-block;
+    background: #4285f4;
+    color: white;
+    width: 190px;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+.drawer header .sign-in:hover {
+    cursor: pointer;
+}
+
+.drawer header .sign-in span {
+    font-weight: bold;
+}
+
+.drawer header .sign-in span.icon{
+    background: url('images/g-normal.png') transparent 5px 50% no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    width: 42px;
+    height: 42px;
+    border-right: #2265d4 1px solid;
+}
+
+.drawer header .sign-in span.label{
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 42px;
+    padding-right: 42px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
 }
 
 .demo-layout .demo-header .mdl-textfield {
@@ -54,18 +130,18 @@ html, body {
 .mdl-layout__drawer .avatar {
   margin-bottom: 16px;
 }
-.demo-drawer {
+.drawer {
   border: none;
 }
 /* iOS Safari specific workaround */
-.demo-drawer .mdl-menu__container {
+.drawer .mdl-menu__container {
   z-index: -1;
 }
-.demo-drawer .demo-navigation {
+.drawer .demo-navigation {
   z-index: -2;
 }
 /* END iOS Safari specific workaround */
-.demo-drawer .mdl-menu .mdl-menu__item {
+.drawer .mdl-menu .mdl-menu__item {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -75,41 +151,7 @@ html, body {
       -ms-flex-align: center;
           align-items: center;
 }
-.demo-drawer-header {
-  box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  padding: 16px;
-  height: 151px;
-}
-.demo-avatar-dropdown {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 100%;
-}
+
 
 .demo-navigation {
   -webkit-box-flex: 1;

@@ -17,13 +17,7 @@ define([
     function MaterialFlatEditor(catalog) {
         var _this = new Div().class('mdl-grid').class('demo-content');
 
-        _this.initialize = function () {
-            catalog.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
-            catalog.announcer().onSendTo(OnFlatCollapsed, _this.onFlatCollapsed, _this);
-
-            if(catalog.isFlatExpanded())
-                _this.initializeFor(catalog.expandedFlat());
-        };
+        _this.initialize = function () {};
 
         _this.onFlatExpanded = function (ann) {
             _this.initializeFor(ann.flat());
@@ -34,6 +28,7 @@ define([
         };
 
         _this.initializeFor = function (flat) {
+            if (_.isNull(flat)) return;
             var paramCards = _this.buildParametersContainer();
             _this.add(paramCards);
             paramCards.add(_this.buildBasicInfoFor(flat));
@@ -76,6 +71,19 @@ define([
             });
             return card;
         };
+
+        _this.show = function() {
+            _this.hide();
+            catalog.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
+            catalog.announcer().onSendTo(OnFlatCollapsed, _this.onFlatCollapsed, _this);
+            _this.initializeFor(catalog.expandedFlat());
+        };
+
+        _this.hide = function() {
+            catalog.announcer().unsubscribe(_this);
+            _this.empty();
+        };
+
 
         _this.initialize();
 

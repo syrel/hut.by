@@ -51,10 +51,17 @@ define([
 
         _this.bind = function (aValueHolder) {
             if (_.isUndefined(aValueHolder)) return;
-            aValueHolder.subscribe(function(value){
-                _this.value(value);
+
+            var binding = _this.value;
+            // First we subscribe
+            aValueHolder.subscribe(binding);
+            // Then as soon as element is removed - unsubscribe
+            _this.on('remove', function () {
+                aValueHolder.unsubscribe(binding);
             });
-            _this.keyup(function(){
+
+            // synchronize on keyup
+            input.keyup(function(){
                aValueHolder.value(_this.value());
             });
             _this.value(aValueHolder.value());

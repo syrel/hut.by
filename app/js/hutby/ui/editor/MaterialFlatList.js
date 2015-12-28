@@ -30,7 +30,6 @@ define([
             _.each(catalog.allFlats(), function(flat) {
                 var link = _this.buildLink(flat);
                 flatLinks.put(flat, link);
-                _this.add(link);
             });
         };
 
@@ -44,7 +43,19 @@ define([
                 link.active(true);
 
             link.bindText(flat.addressHolder());
+
             return link;
+        };
+
+        _this.addLinks = function() {
+            flatLinks.each(function(flat, link){
+                _this.add(link);
+                link.click(function(e){
+                    e.preventDefault();
+                    flat.expand();
+                });
+            });
+            componentHandler.upgradeDom();
         };
 
         _this.onFlatExpanded = function (ann) {
@@ -53,6 +64,15 @@ define([
 
         _this.onFlatCollapsed = function (ann) {
             flatLinks.get(ann.flat()).active(false);
+        };
+
+        _this.show = function() {
+            _this.hide();
+            _this.addLinks();
+        };
+
+        _this.hide = function(){
+            _this.empty();
         };
 
         _this.initialize();

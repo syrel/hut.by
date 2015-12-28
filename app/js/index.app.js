@@ -34,7 +34,9 @@ require.config({
         'main' : 'hutby/lib/dom/Main',
         'h3' : 'hutby/lib/dom/H3',
         'input' : 'hutby/lib/dom/Input',
-        'label' : 'hutby/lib/dom/Label'
+        'label' : 'hutby/lib/dom/Label',
+        'header' : 'hutby/lib/dom/Header',
+        'span' : 'hutby/lib/dom/Span'
     },
 
     shim: {

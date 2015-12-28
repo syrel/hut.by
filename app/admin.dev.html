@@ -32,6 +32,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="scss/material.css">
     <link rel="stylesheet" href="scss/admin.styles.css">
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -39,6 +41,7 @@
     <header class="demo-header mdl-layout__header mdl-color--grey-50 mdl-color-text--grey-600">
         <div class="mdl-layout__header-row">
             <span class="mdl-layout-title">пр. Независимости 75</span>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
             <div class="mdl-layout-spacer"></div>
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
                 <i class="material-icons">more_vert</i>
@@ -51,26 +54,13 @@
         </div>
     </header>
 
-    <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-
-        <header class="demo-drawer-header">
-            <img src="./img/admin-avatar.jpg" class="demo-avatar">
-            <div class="demo-avatar-dropdown">
-                <span>hutminsk@google.com</span>
-                <div class="mdl-layout-spacer"></div>
-                <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                    <i class="material-icons" role="presentation">arrow_drop_down</i>
-                    <span class="visuallyhidden">Accounts</span>
-                </button>
-                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-                    <li class="mdl-menu__item"><i class="material-icons">power_settings_new</i>Выйти...</li>
-                </ul>
-            </div>
-        </header>
-
+    <div class="drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+        <!-- User profile -->
         <!-- Flat list -->
     </div>
-    <main class="mdl-layout__content mdl-color--grey-100"></main>
+    <main class="mdl-layout__content mdl-color--grey-100">
+        <!-- Flat editor -->
+    </main>
 </div>
 <a id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">Сохранить<span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></a>
 <script data-main="js/admin.app.js" src="js/require.js" type="application/javascript"></script>

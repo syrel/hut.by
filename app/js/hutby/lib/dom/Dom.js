@@ -49,12 +49,27 @@ define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
             return _this;
         };
 
+        /**
+         * Don't forget to unsubscribe binding or include jquery.ui!
+         * @param aValueHolder
+         * @param optTransformation
+         */
         _this.bindText = function(aValueHolder, optTransformation) {
             var transformation = _.isUndefined(optTransformation) ? function(obj) {return obj.toString()} : optTransformation;
-            aValueHolder.subscribe(function(value){
+            var binding = function(value){
                 _this.text(transformation(value));
-            });
+            };
+            aValueHolder.subscribe(binding);
             _this.text(transformation(aValueHolder.value()));
+            _this.removed(function(){
+                aValueHolder.unsubscribe(binding);
+            });
+            return binding;
+        };
+
+        _this.removed = function(callback){
+            _this.on('remove', callback);
+            return _this;
         };
 
         _this.textAlignLeft = function () {
@@ -77,6 +92,12 @@ define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
         _this.visible = function(bool) {
             if (Utils.isUndefined(bool)) return !_this.hidden();
             return _this.hidden(!bool);
+        };
+
+        _this.gone = function(bool) {
+            if (bool) _this.css('display','none');
+            else _this.css('display','block');
+            return _this;
         };
 
         /**

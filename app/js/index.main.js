@@ -22,11 +22,8 @@ define([
     Catalog,
     PhotoSwipe) {
 
-    var init = function(flats) {
-        var catalog = new Catalog();
-        _.each(flats, function(flat){
-            catalog.addFlat(new Flat(flat));
-        });
+    var init = function(config) {
+        var catalog = new Catalog(config);
 
         $('body').append(new Offcanvas(catalog)).append(new PhotoSwipe());
 
