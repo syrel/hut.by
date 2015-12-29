@@ -28,13 +28,21 @@ define([
             _this.sortable({
                 revert: 100,
                 zIndex: 9999,
-                distance: 5
+                distance: 5,
+                update: function( ) {
+                    var photos = _.map($(this).children(), function(each){
+                        return $(each).data('photo');
+                    });
+                    flat.reorderPhotos(photos);
+                }
             });
         };
 
         _this.addPhotos = function() {
             _.each(flat.photos(), function(photo){
-                _this.add(new Photo(photo));
+                var element = new Photo(photo);
+                element.data('photo', photo);
+                _this.add(element);
             })
         };
 

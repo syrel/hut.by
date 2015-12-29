@@ -20,6 +20,7 @@ define(['hutby/lib/PriorityQueue'], function (PriorityQueue) {
                 return a.square() - b.square();
             });
 
+            if (alreadySplitted >= num) return;
             var rootNode = new Node(rectangle);
             nodes.enq(rootNode);
             build();

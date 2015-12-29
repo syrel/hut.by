@@ -25,8 +25,8 @@ define([], function(){
             if (_.isUndefined(config)) return;
             path = config.path;
             media = config.media;
-            width = config.width;
-            height = config.height;
+            width = parseInt(config.width);
+            height = parseInt(config.height);
         };
 
         _this.isApplicable = function () {
@@ -107,9 +107,12 @@ define([], function(){
         };
 
         _this.image = function () {
-            return _.find(_this.images(), function(each) {
+            var image = _.find(_this.images(), function(each) {
                 return each.isApplicable();
             });
+            if (_.isUndefined(image))
+                image = thumbnail;
+            return image;
         };
 
         _this.path = function () {
@@ -128,9 +131,10 @@ define([], function(){
             })
         };
 
-        _this.alt = function (_alt) {
+        _this.alt = function(_alt) {
             if (_.isUndefined(_alt)) return alt;
             alt = _alt;
+            return _this;
         };
 
         _this.toJSON = function(){
@@ -144,5 +148,6 @@ define([], function(){
         _this.initialize(_config);
     }
 
+    Photo.Image = Image;
     return Photo;
 });

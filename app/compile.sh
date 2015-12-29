@@ -18,7 +18,6 @@ mv ../js/index.app.min.js js/
 mv ../scss/admin.style.min.css css/
 mv ../js/admin.app.min.js js/
 
-cp ../js/config.js js/
 cp -r ../assets/ ./
 cp -rf ../img .
 cd ../scss

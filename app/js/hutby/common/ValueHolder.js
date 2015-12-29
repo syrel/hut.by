@@ -38,6 +38,10 @@ define([], function () {
                 }
             }
         };
+
+        _this.toJSON = function(){
+            return value;
+        };
     }
 
     return ValueHolder;

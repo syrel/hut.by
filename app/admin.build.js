@@ -11,5 +11,6 @@
 	},
     wrap: true,
     preserveLicenseComments: false,
+	optimize: "none",
     fileExclusionRegExp: /^(r|build)\.js$/
 })

@@ -40,7 +40,5 @@ define([
         new Navigation(catalog);
     };
 
-    $.getScript( "js/config.js", function(){init(_config)}).error(function() {
-        require(['config'], function(){init(_config)});
-    });
+    $.getJSON( "config/catalog.json", init);
 });

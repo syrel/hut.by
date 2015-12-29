@@ -137,6 +137,18 @@ define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
             return _this;
         });
 
+        _this.for = function (id) {
+            if (_.isUndefined(id)) return _this.attr('for');
+            _this.attr('for',id);
+            return _this;
+        };
+
+        _this.id = function (id) {
+            if (_.isUndefined(id)) return _this.attr('id');
+            _this.attr('id',id);
+            return _this;
+        };
+
         /**
          * Adds new dynamic css class with specified class name and
          * object as properties

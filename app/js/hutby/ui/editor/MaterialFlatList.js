@@ -9,7 +9,8 @@ define([
     'dictionary',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
-    'hutby/announcements/OnFlatAdded'
+    'hutby/announcements/OnFlatAdded',
+    'hutby/announcements/OnFlatRemoved'
 ], function(
     Nav,
     A,
@@ -18,7 +19,8 @@ define([
     Dictionary,
     OnFlatExpanded,
     OnFlatCollapsed,
-    OnFlatAdded
+    OnFlatAdded,
+    OnFlatRemoved
 ){
 
     function MaterialFlatList(catalog) {
@@ -50,7 +52,7 @@ define([
                 .class('mdl-button--colored');
             button.add(new I().class('material-icons').text('add'));
             button.click(function(){
-                catalog.newFlat();
+                catalog.newFlat().expand();
             });
             return button;
         };
@@ -61,11 +63,18 @@ define([
                 link.active(true);
             link.click(function(e){
                 e.preventDefault();
+                _this.hideDrawer();
                 flat.expand();
             });
+            link.data('flat', flat);
             link.bindText(flat.addressHolder());
 
             return link;
+        };
+
+        _this.hideDrawer = function(){
+            if ($('.drawer').hasClass('is-visible'))
+                $('.mdl-layout__drawer-button').click();
         };
 
         _this.addLinks = function() {
@@ -88,7 +97,12 @@ define([
         _this.onFlatAdded = function (ann) {
             _this.add(_this.createLink(ann.flat()));
             _this.initializeSortable();
-            ann.flat().expand();
+            componentHandler.upgradeDom();
+        };
+
+        _this.onFlatRemoved = function (ann) {
+            flatLinks.get(ann.flat()).remove();
+            _this.initializeSortable();
             componentHandler.upgradeDom();
         };
 
@@ -96,7 +110,14 @@ define([
             _this.sortable({
                 revert: 100,
                 distance: 5,
-                axis: "y"
+                axis: "y",
+                items: "> .mdl-navigation__link",
+                update: function( ) {
+                    var flats = _.map($(this).children('.mdl-navigation__link'), function(each){
+                        return $(each).data('flat');
+                    });
+                    catalog.reorder(flats);
+                }
             });
         };
 
@@ -105,6 +126,7 @@ define([
             catalog.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
             catalog.announcer().onSendTo(OnFlatCollapsed, _this.onFlatCollapsed, _this);
             catalog.announcer().onSendTo(OnFlatAdded, _this.onFlatAdded, _this);
+            catalog.announcer().onSendTo(OnFlatRemoved, _this.onFlatRemoved, _this);
             _this.createLinks();
             _this.addLinks();
         };

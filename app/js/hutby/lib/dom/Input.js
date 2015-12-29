@@ -13,12 +13,6 @@ define(['dom'], function (Dom) {
             return _this;
         };
 
-        _this.id = function (id) {
-            if (_.isUndefined(id)) return _this.attr('id');
-            _this.attr('id',id);
-            return _this;
-        };
-
         return _this;
     }
 

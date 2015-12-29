@@ -73,9 +73,9 @@ define([
 
         _this.toJSON = function(){
             return {
-                amount: amount,
-                currency: currency,
-                special: special
+                amount: amount.toJSON(),
+                currency: currency.toJSON(),
+                special: special.toJSON()
             }
         };
 
@@ -150,8 +150,8 @@ define([
 
         _this.toJSON = function () {
             return {
-                features: features,
-                specs: specs
+                features: _.map(features, function(feature){return feature.toJSON()}),
+                specs: _.map(specs, function(spec){return spec.toJSON()})
             }
         };
 
@@ -200,7 +200,7 @@ define([
          */
         _this.initialize = function (config) {
             if (_.isUndefined(config)) return;
-            rooms = config.rooms;
+            rooms = parseInt(config.rooms);
             address.value(config.address);
             price = new Price(config.price);
             overview = new Overview(config.overview);
@@ -236,8 +236,25 @@ define([
          * Photo that should be used as title
          * @returns {Photo}
          */
-        _this.titlePhoto = function () {
+        _this.titlePhoto = function() {
+            if (!_this.hasPhotos())
+                return _this.nullPhoto();
             return _this.photoAt(0);
+        };
+
+        _this.hasPhotos = function () {
+            return !_.isEmpty(photos);
+        };
+
+        _this.nullPhoto = function () {
+            return new Photo({
+                thumbnail: {
+                    path: 'img/no_photo_512x335.jpg',
+                    "width": 512,
+                    "height": 335,
+                    "media": "small_up"
+                }
+            });
         };
 
         /**
@@ -349,10 +366,19 @@ define([
             _.each(photos, function(photo) { photo.accept(visitor)});
         };
 
+        _this.remove = function(){
+            _this.catalog().removeFlat(_this);
+        };
+
+        _this.reorderPhotos = function (_photos) {
+            photos.length = 0;
+            Array.prototype.push.apply(photos, _photos);
+        };
+
         _this.toJSON = function(){
             return {
                 rooms: rooms,
-                address: address,
+                address: address.toJSON(),
                 price: price.toJSON(),
                 overview: overview.toJSON(),
                 photos: _.map(photos, function(photo){ return photo.toJSON()})

@@ -6,19 +6,45 @@ define([
     'hutby/announcements/OnFlatCollapsed',
     'header',
     'div',
-    'span'
+    'span',
+    'ul',
+    'li',
+    'button',
+    'i'
 ], function(
     OnFlatExpanded,
     OnFlatCollapsed,
     Header,
     Div,
-    Span
+    Span,
+    Ul,
+    Li,
+    Button,
+    I
     ){
+
+    function FlatActions () {
+        var _this = new Ul().class('mdl-menu').class('mdl-js-menu').class('mdl-js-ripple-effect').class('mdl-menu--bottom-right');
+
+        _this.action = function (label, callback) {
+            var action = _this.buildAction();
+            action.text(label).click(callback);
+            _this.add(action);
+        };
+
+        _this.buildAction = function () {
+            return new Li().class('mdl-menu__item');
+        };
+
+        return _this;
+    }
 
     function MaterialHeader(catalog){
         var _this = new Div().class('mdl-layout__header-row');
 
         var title;
+        var actionsButton;
+        var actionsList;
 
         _this.initialize = function(){
 
@@ -30,23 +56,38 @@ define([
             flat.announcer().onSendTo(OnFlatCollapsed, function(){
                 flat.addressHolder().unsubscribe(binding);
             }, this);
+            _this.initializeActionsFor(flat);
             componentHandler.upgradeDom();
+        };
+
+        _this.initializeActionsFor = function(flat) {
+            actionsButton.hidden(false);
+            actionsList.action('Удалить', function(){
+                flat.remove();
+            });
         };
 
         _this.buildTitle = function() {
             return new Span().class('mdl-layout-title').text(_this.unsignedTitle());
         };
 
-        _this.buildDropDown = function() {
-            return $(
-                '<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">'+
-                    '<i class="material-icons">more_vert</i>'+
-                '</button>'+
-                '<ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">'+
-                    '<li class="mdl-menu__item">Сохранить</li>'+
-                    '<li class="mdl-menu__item">Сохранить как</li>'+
-                    '<li class="mdl-menu__item">Загрузить</li>'+
-                '</ul>');
+        _this.addActions = function () {
+            actionsButton = _this.buildActionsButton();
+            actionsButton.hidden(true);
+            actionsList = _this.buildActionsList();
+            actionsButton.id('flat-actions');
+            actionsList.for('flat-actions');
+            _this.add(actionsButton).add(actionsList);
+        };
+
+        _this.buildActionsButton = function() {
+            var button = new Button().class('mdl-button').class('mdl-js-button').class('mdl-js-ripple-effect').class('mdl-button--icon');
+            button.add(new I().class('material-icons').text('more_vert'));
+            return button;
+        };
+
+        _this.buildActionsList = function () {
+            return new FlatActions();
         };
 
         _this.buildSpacer = function(){
@@ -59,6 +100,8 @@ define([
 
         _this.onFlatCollapsed = function() {
             title.text('');
+            actionsButton.hidden(true);
+            actionsList.empty();
         };
 
         _this.addTitle = function(){
@@ -71,7 +114,7 @@ define([
             catalog.announcer().onSendTo(OnFlatExpanded, _this.onFlatExpanded, _this);
             catalog.announcer().onSendTo(OnFlatCollapsed, _this.onFlatCollapsed, _this);
             _this.add(_this.buildSpacer());
-            _this.add(_this.buildDropDown());
+            _this.addActions();
             _this.initializeFor(catalog.expandedFlat());
         };
 
@@ -85,7 +128,7 @@ define([
             return 'Пожалуйста, войдите';
         };
 
-        //_this.initialize();
+        _this.initialize();
 
         return _this;
     }

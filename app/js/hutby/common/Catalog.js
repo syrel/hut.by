@@ -7,6 +7,7 @@ define ([
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
     'hutby/announcements/OnFlatAdded',
+    'hutby/announcements/OnFlatRemoved',
     'hutby/announcements/OnCategoryExpanded',
     'hutby/announcements/OnCategoryCollapsed',
     'hutby/announcements/OnCategoryPreviewShow',
@@ -20,6 +21,7 @@ define ([
     OnFlatExpanded,
     OnFlatCollapsed,
     OnFlatAdded,
+    OnFlatRemoved,
     OnCategoryExpanded,
     OnCategoryCollapsed,
     OnCategoryPreviewShow,
@@ -137,6 +139,36 @@ define ([
             flat.address('Новая квартира');
             _this.addFlat(flat);
             _this.notifyFlatAdded(flat);
+            return flat;
+        };
+
+        _this.removeFlat = function(flat) {
+            if (count == 0) return;
+            flat.collapse();
+            var array = [];
+            if (flats.isKeyExists(flat.getRooms())) {
+                array = flats.get(flat.getRooms());
+            }
+            for(var i = array.length - 1; i >= 0; i--) {
+                if(array[i] === flat) {
+                    array.splice(i, 1);
+                }
+            }
+            if (array.length == 0)
+                flats.remove(flat.getRooms());
+            flat.setCatalog(null);
+            count--;
+            _this.notifyFlatRemoved(flat);
+        };
+
+        _this.reorder = function(_flats) {
+            flats = new Dictionary();
+            _.each(_flats, function(flat){
+                if (!flats.isKeyExists(flat.getRooms())) {
+                    flats.put(flat.getRooms(), []);
+                }
+                flats.get(flat.getRooms()).push(flat);
+            });
         };
 
         /**
@@ -154,6 +186,10 @@ define ([
 
         _this.notifyFlatAdded = function(flat) {
             _this.announcer().announce(new OnFlatAdded(flat));
+        };
+
+        _this.notifyFlatRemoved = function(flat) {
+            _this.announcer().announce(new OnFlatRemoved(flat));
         };
 
         _this.announcer = function(){
