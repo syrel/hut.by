@@ -1,5 +1,6 @@
 /**
  * Created by aliaksei on 08/01/15.
+ * v1.0.0
  */
 
 define(['jquery'], function ($) {
