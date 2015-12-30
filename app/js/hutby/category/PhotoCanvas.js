@@ -6,7 +6,7 @@ define ([
     'hutby/lib/KDSplitter',
     'hutby/lib/Rectangle',
     'hutby/lib/Point',
-    'hutby/lib/Utils',
+    'utils',
     'jquery',
     'div',
     'a',

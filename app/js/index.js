@@ -3,10 +3,11 @@
  */
 
 define([
-    'hutby/ui/offcanvas/Offcanvas',
-    'hutby/common/Navigation',
+    'config',
     'hutby/common/Flat',
     'hutby/common/Catalog',
+    'hutby/ui/offcanvas/Offcanvas',
+    'hutby/ui/Navigation',
     'hutby/ui/PhotoSwipe',
 	'underscore',
     'jquery',
@@ -16,16 +17,21 @@ define([
     'foundation.accordion',
     'modernizr'
 ], function(
-    Offcanvas,
-    Navigation,
+    Config,
     Flat,
     Catalog,
+    Offcanvas,
+    Navigation,
     PhotoSwipe) {
 
     var init = function(config) {
         var catalog = new Catalog(config);
 
-        $('body').append(new Offcanvas(catalog)).append(new PhotoSwipe());
+        $('body')
+            .append(new Offcanvas(catalog))
+            .append(new PhotoSwipe());
+
+        new Navigation(catalog);
 
         $(document).foundation({
             offcanvas : {
@@ -36,9 +42,7 @@ define([
                 toggleable: false
             }
         });
-
-        new Navigation(catalog);
     };
 
-    $.getJSON( "config/catalog.json", init);
+    $.getJSON(Config.catalogUrl, init);
 });

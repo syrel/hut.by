@@ -9,7 +9,7 @@ define([
     'a',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnFlatCollapsed',
-    'hutby/lib/Utils',
+    'utils',
     'dictionary'
 ],function(
     $,

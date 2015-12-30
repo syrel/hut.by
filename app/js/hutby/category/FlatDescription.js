@@ -6,7 +6,7 @@ define([
     'hutby/category/FlatDescriptionViewHolder',
     'hutby/category/PhotoCanvas',
     'hutby/category/FlatOverview',
-    'hutby/lib/Utils',
+    'utils',
     'hutby/common/Global'], function(
     FlatDescriptionViewHolder,
     PhotoCanvas,

@@ -1,4 +1,5 @@
 define([
+    'config',
     'hutby/common/User',
     'hutby/common/Catalog',
     'hutby/ui/editor/MaterialUser',
@@ -12,7 +13,7 @@ define([
     'jquery.me',
     'jquery.ui',
     'material'
-], function (User, Catalog, MaterialUser, MaterialHeader, MaterialFlatList, MaterialFlatEditor, OnUserSignedIn, OnUserSignedOut) {
+], function (Config, User, Catalog, MaterialUser, MaterialHeader, MaterialFlatList, MaterialFlatEditor, OnUserSignedIn, OnUserSignedOut) {
 
     var init = function (config) {
         var catalog = new Catalog(config);
@@ -60,7 +61,7 @@ define([
             };
 
             $.ajax({
-                url: "http://hut.by/hut.by/save.php",
+                url: Config.saveUrl,
                 type: "POST",
                 data: { user: user.toJSON(), catalog: catalog.toJSON() },
                 dataType: "json",
@@ -82,5 +83,5 @@ define([
 
         componentHandler.upgradeDom();
     };
-    $.getJSON('config/catalog.json', init);
+    $.getJSON(Config.catalogUrl, init);
 });

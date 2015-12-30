@@ -7,7 +7,7 @@ define([
     'a',
     'div',
     'p',
-    'hutby/lib/Utils',
+    'utils',
     'hutby/lib/WindowEvents',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnCategoryExpanded',

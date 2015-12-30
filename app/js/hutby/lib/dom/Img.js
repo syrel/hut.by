@@ -2,13 +2,13 @@
  * Created by aliaksei on 08/01/15.
  */
 
-define(['dom', 'hutby/lib/Utils'], function (Dom, Utils) {
+define(['dom', 'underscore'], function (Dom, _) {
 
     function Img() {
         var _this = new Dom('<img>');
 
         _this.src = function (url) {
-            if (Utils.isUndefined(url)) return _this.attr('src');
+            if (_.isUndefined(url)) return _this.attr('src');
             _this.attr('src',url);
             return _this;
         };

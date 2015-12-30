@@ -5,8 +5,10 @@
 "use strict";
 define([
     'jquery',
-    'hutby/lib/Utils',
-    'polymorphism'], function ($, Utils) {
+    'underscore',
+    'utils',
+    'jquery.me',
+    'polymorphism'], function ($, _, Utils) {
 
     function Dom (html) {
         var _this = $(html);
@@ -19,7 +21,7 @@ define([
         _this.initialize = function () { _this.data('me', _this); };
 
         _this.class = function (className) {
-            if (Utils.isUndefined(className)) return _this.attr('class');
+            if (_.isUndefined(className)) return _this.attr('class');
             _this.addClass(className);
             return _this;
         };
@@ -29,14 +31,14 @@ define([
         };
 
         _this.active = function (bool) {
-            if (Utils.isUndefined(bool)) return _this.hasClass(_this.activeClass());
+            if (_.isUndefined(bool)) return _this.hasClass(_this.activeClass());
             if (bool) _this.class(_this.activeClass());
             else _this.removeClass(_this.activeClass());
             return _this;
         };
 
         _this.activeClass = function (className) {
-            if (Utils.isUndefined(className)) return activeClass;
+            if (_.isUndefined(className)) return activeClass;
             activeClass = className;
             return _this;
         };
@@ -47,7 +49,7 @@ define([
         };
 
         _this.text = function (string) {
-            if (Utils.isUndefined(string)) return _this.html();
+            if (_.isUndefined(string)) return _this.html();
             _this.html(string);
             return _this;
         };
@@ -86,14 +88,14 @@ define([
         };
 
         _this.hidden = function(bool) {
-            if (Utils.isUndefined(bool)) return !_this.is(':visible');
+            if (_.isUndefined(bool)) return !_this.is(':visible');
             if (bool) _this.class(_this.css('visibility','hidden'));
             else _this.removeClass(_this.css('visibility','visible'));
             return _this;
         };
 
         _this.visible = function(bool) {
-            if (Utils.isUndefined(bool)) return !_this.hidden();
+            if (_.isUndefined(bool)) return !_this.hidden();
             return _this.hidden(!bool);
         };
 
@@ -108,7 +110,7 @@ define([
          */
 
         _this.width = override(_this, _this.width, function(newWidth) {
-            if (Utils.isUndefined(newWidth)) return this.super();
+            if (_.isUndefined(newWidth)) return this.super();
             _this.css('width',newWidth.toString());
             return _this;
         });
@@ -117,7 +119,7 @@ define([
          * Overrides jquery's height() function allowing to set height value
          */
         _this.height = override(_this, _this.height, function(newHeight) {
-            if (Utils.isUndefined(newHeight)) return this.super();
+            if (_.isUndefined(newHeight)) return this.super();
             _this.css('height',newHeight.toString());
             return _this;
         });
@@ -126,7 +128,7 @@ define([
          * Overrides jquery's top() function allowing to set top value
          */
         _this.top = override(_this, _this.top, function(newTop) {
-            if (Utils.isUndefined(newTop)) return this.super();
+            if (_.isUndefined(newTop)) return this.super();
             _this.css('top',newTop.toString());
             return _this;
         });
@@ -135,7 +137,7 @@ define([
          * Overrides jquery's left() function allowing to set left value
          */
         _this.left = override(_this, _this.left, function(newLeft) {
-            if (Utils.isUndefined(newLeft)) return this.super();
+            if (_.isUndefined(newLeft)) return this.super();
             _this.css('left',newLeft.toString());
             return _this;
         });

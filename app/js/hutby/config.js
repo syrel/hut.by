@@ -1,5 +1,7 @@
-define([], function(){
+define([], function () {
     return {
-       showCategoryPreview: false
+        showCategoryPreview: false,
+        catalogUrl: 'config/catalog.json',
+        saveUrl: 'save.php'
     }
 });

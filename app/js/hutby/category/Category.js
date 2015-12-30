@@ -8,7 +8,7 @@ define([
     'hutby/category/FlatDescription',
     'hutby/ui/HorizontalFlatList',
     'dictionary',
-    'hutby/lib/Utils',
+    'utils',
     'hutby/common/Global',
     'hutby/announcements/OnFlatExpanded',
     'hutby/announcements/OnCategoryExpanded',

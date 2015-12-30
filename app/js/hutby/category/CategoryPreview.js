@@ -3,7 +3,7 @@
  */
 define([
         'hutby/category/CategoryPreviewViewHolder',
-        'hutby/lib/Utils',
+        'utils',
         'hutby/common/Global',
         'hutby/announcements/OnFlatExpanded',
         'hutby/announcements/OnCategoryExpanded',

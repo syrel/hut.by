@@ -1,7 +1,7 @@
 /**
  * Created by aliaksei on 03/08/14.
  */
-define(['jquery', 'hutby/lib/Utils'], function($, Utils){
+define(['jquery', 'utils'], function($, Utils){
 
     function CategoryPreviewViewHolder(prefix){
         var _this = this;
