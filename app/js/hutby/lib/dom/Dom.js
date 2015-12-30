@@ -3,7 +3,10 @@
  */
 
 "use strict";
-define(['jquery', 'hutby/lib/Utils', 'polymorphism'], function ($, Utils) {
+define([
+    'jquery',
+    'hutby/lib/Utils',
+    'polymorphism'], function ($, Utils) {
 
     function Dom (html) {
         var _this = $(html);

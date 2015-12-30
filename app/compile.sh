@@ -1,25 +1,51 @@
 #!/bin/bash
+root="./"
 
-node r.js -o index.build.js;
-node r.js -o index.build.css.js
-node r.js -o admin.build.js;
-node r.js -o admin.build.css.js
+js=$root"js/"
+scss=$root"scss/"
+assets=$root"assets/"
+img=$root"img/"
+build=$js"build/"
 
+dist=$root"dist/"
+distCss=$dist"css/"
+distJs=$dist"js/"
+distImg=$dist"img/"
+r=$build"scripts/r.js"
+modules=( "index.js" "index.css.js" "admin.js" "admin.css.js" )
 
-rm -rf build
-mkdir -p build
-cd build
-mkdir -p css
-mkdir -p js
+function prepare {
+	echo "Preparing..."
+	rm -rf $dist
+	mkdir -p $dist
+	mkdir -p $distCss
+	mkdir -p $distJs
+}
 
-mv ../scss/index.style.min.css css/
-mv ../js/index.app.min.js js/
+function compile {
+	echo "Compiling..."
+	for module in "${modules[@]}"
+		do
+			node $r -o $build$module
+		done
+}
 
-mv ../scss/admin.style.min.css css/
-mv ../js/admin.app.min.js js/
+function release {
+	echo "Releasing..."
+	mv $scss"index.min.css" $distCss
+	mv $js"index.min.js" $distJs
+	
+	mv $scss"admin.min.css" $distCss
+	mv $js"admin.min.js" $distJs
+	
+	cp -r $assets $dist
+	cp -rf $img $distImg
+	
+	source=$(echo $scss | sed 's/\//\\\//g')
+	ls $scss | grep -v '.css$' | sed "s/^/$source/" | xargs -J % -n1 cp -rf % $distCss
+	echo "Done!"
+}
 
-cp -r ../assets/ ./
-cp -rf ../img .
-cd ../scss
-ls . | grep -v '.css$' | xargs -J % -n1 cp -rf % ../build/css/
-cd ..
+prepare
+compile
+release

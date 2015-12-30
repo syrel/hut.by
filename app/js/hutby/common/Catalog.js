@@ -2,6 +2,7 @@
  * Created by aliaksei on 03/08/14.
  */
 define ([
+    'config',
     'hutby/common/Flat',
     'dictionary',
     'hutby/announcements/OnFlatExpanded',
@@ -16,6 +17,7 @@ define ([
     'announcer'
 
 ], function(
+    Config,
     Flat,
     Dictionary,
     OnFlatExpanded,
@@ -177,10 +179,12 @@ define ([
          * @param anchor - an anchor element, that should be used to position preview
          */
         _this.showCategoryPreview = function (rooms, anchor) {
+            if (!Config.showCategoryPreview) return;
             _this.announcer().announce(new OnCategoryPreviewShow(rooms, anchor));
         };
 
         _this.hideCategoryPreview = function (rooms, anchor) {
+            if (!Config.showCategoryPreview) return;
             _this.announcer().announce(new OnCategoryPreviewHide(rooms, anchor));
         };
 

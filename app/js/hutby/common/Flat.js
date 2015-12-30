@@ -156,13 +156,13 @@ define([
         };
 
         _this.newFeature = function() {
-            var feature = new ValueHolder('новая особенность');
+            var feature = new ValueHolder('');
             features.push(feature);
             return feature;
         };
 
         _this.newSpec = function() {
-            var spec = new ValueHolder('новая опция');
+            var spec = new ValueHolder('');
             specs.push(spec);
             return spec;
         };
