@@ -2,5 +2,5 @@
 .idea
 .sass-cache
 node_modules
-build
+
 /app/assets/config
